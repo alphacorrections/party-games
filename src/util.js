@@ -158,3 +158,9 @@ export function hashKey(str) {
   for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0;
   return 'k' + (h >>> 0).toString(36);
 }
+
+/** Round header with a final-round callout. */
+export function roundMeta(index, total, noun = 'Round') {
+  const last = total && index === total - 1;
+  return `<div class="qmeta ${last ? 'final' : ''}">${last ? 'Final round' : `${noun} ${index + 1} of ${total}`}</div>`;
+}

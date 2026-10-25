@@ -14,7 +14,7 @@
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown,
          fillBlanks, timerHTML, finalScoreboard,
-         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta } from '../util.js';
 import { loadPack } from '../content.js';
 
 export const meta = {
@@ -327,8 +327,8 @@ export function hostView(round, players) {
   if (round.phase === 'final') return scoreboard(players, 'Final scores');
 
   const byId = Object.fromEntries(playerList(players).map(p => [p.id, p]));
-  const header = `<div class="qmeta">Round ${round.index + 1} of ${round.total}${
-    round.czar ? ` &nbsp;&nbsp; ${esc((byId[round.czar] || {}).name || '')} judges` : ''}</div>`;
+  const header = roundMeta(round.index, round.total) +
+    (round.czar ? `<div class="qmeta">${esc((byId[round.czar] || {}).name || '')} judges</div>` : '');
   const img = round.image
     ? `<img class="memeimg" src="${esc(round.image)}" alt="">` : '';
 

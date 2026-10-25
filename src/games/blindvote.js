@@ -10,7 +10,7 @@
 // ---------------------------------------------------------------------------
 
 import { sample, esc, sortedPlayers, playerList,
-         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta } from '../util.js';
 import { loadPack } from '../content.js';
 
 export const meta = {
@@ -176,7 +176,7 @@ function likelyReveal(round, players) {
 export function hostView(round, players) {
   if (!round) return '<div class="big">Loading…</div>';
   if (round.phase === 'final') return finalScoreboard(players, 'Final scores');
-  const header = `<div class="qmeta">${round.mode === 'wyr' ? 'Would you rather' : "Who's most likely to"} &nbsp;&nbsp; ${round.index + 1} of ${round.total}</div>`;
+  const header = roundMeta(round.index, round.total);
 
   if (round.phase === 'vote') {
     if (round.mode === 'wyr') {

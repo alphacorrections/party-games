@@ -11,7 +11,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList,
-         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta } from '../util.js';
 import { loadPack } from '../content.js';
 
 export const meta = {
@@ -180,7 +180,7 @@ export function hostView(round, players) {
   if (!round) return '<div class="big">Loading…</div>';
   if (round.phase === 'final') return finalScoreboard(players, 'Final scores');
   const byId = Object.fromEntries(playerList(players).map(p => [p.id, p]));
-  const header = `<div class="qmeta">Round ${round.index + 1} of ${round.total}</div>`;
+  const header = roundMeta(round.index, round.total);
 
   if (round.phase === 'write') {
     return `${header}${timerHTML(round.deadline, WRITE_MS)}

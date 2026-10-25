@@ -1435,3 +1435,35 @@ body.offline .pbtn, body.offline .card, body.offline .hugebtn { opacity: .6; poi
 .manage .tagc { font-style: normal; font-size: .7rem; color: var(--hot); border: 1px solid var(--hot); padding: .05rem .35rem; margin-left: .4rem; vertical-align: middle; }
 .manage .list { max-height: 60vh; overflow: auto; }
 @media (max-width: 600px) { .manage .row2, .manage .row4 { grid-template-columns: 1fr; } }
+
+/* ============================ DELTAS / LENGTH ============================ */
+
+#deltas { position: fixed; left: 0; right: 0; bottom: 8%; pointer-events: none; z-index: 45; display: grid; justify-items: center; }
+.delta {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--display); letter-spacing: var(--track-md);
+  font-size: clamp(1.4rem, 3.4vh, 2.4rem); line-height: 1;
+  padding: .35rem .9rem; border-radius: 999px;
+  background: rgba(20, 11, 31, .85); border: 2px solid var(--ink-3);
+  animation: deltaUp 2.2s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: calc(var(--i, 0) * 140ms);
+  transform: translateY(0);
+}
+.delta.up b { color: var(--volt); } .delta.down b { color: var(--hot); }
+.delta span:last-child { font-family: var(--ui); font-weight: 700; font-size: .55em; color: var(--chalk); }
+.demoji { font-family: var(--ui); font-size: .8em; }
+@keyframes deltaUp {
+  0%   { opacity: 0; transform: translateY(30px) scale(.9); }
+  15%  { opacity: 1; transform: translateY(0) scale(1.04); }
+  25%  { transform: translateY(0) scale(1); }
+  80%  { opacity: 1; transform: translateY(-60px); }
+  100% { opacity: 0; transform: translateY(-100px); }
+}
+
+.qmeta.final { color: var(--hot); font-weight: 800; letter-spacing: .1em; }
+
+.menuhead { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.menuhead h2 { margin-bottom: 0; }
+.lenpick { display: inline-flex; gap: .3rem; }
+.lenpick .tab { padding: .35rem .7rem; font-size: .85rem; }
+.pcard .lenpick { margin: 0 0 .2rem; }

@@ -8,7 +8,7 @@ import { esc, playerList, countdown } from './util.js';
 import * as fx from './fx.js';
 import { swapIn, stagger, countUp, confetti, mountSoundToggle, sound } from './fx.js';
 import { installViewport } from './viewport.js';
-import { Director, ENGINES, GAME_MENU } from './director.js';
+import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js';
 
 const el = id => document.getElementById(id);
 
@@ -53,12 +53,18 @@ class HostApp {
     await this.director.claim();
     this.director.attach();
 
-    this.room.on('players', v => { this.players = v || {}; this.onPlayers(); });
+    this.room.on('players', v => {
+      const prev = this.players || {};
+      this.players = v || {};
+      this.onPlayers();
+      this.floatDeltas(prev, this.players);
+    });
     this.room.on('game',    v => this.onGame(v));
     this.room.on('round',   v => { this.round = v; this.render(); });
     this.room.on('board',   v => { this.board = v; this.render(); });
     this.room.on('mini',    v => this.onMini(v));
     this.room.on('phase',   v => { this.phase = v; this.render(); });
+    this.room.on('length',  v => this.renderLength(v || 'standard'));
 
     this.renderMenu();
     this.startTicking();
@@ -104,6 +110,11 @@ class HostApp {
       });
     }
     setText('pcount', list.length);
+  }
+
+  renderLength(cur) {
+    setHTML('lenpick', Object.entries(LENGTHS).map(([k, v]) =>
+      `<button class="tab ${k === cur ? 'on' : ''}" data-len="${k}">${v.label}</button>`).join(''));
   }
 
   renderMenu() {
@@ -216,6 +227,31 @@ class HostApp {
     if (this.round.phase === 'final') this.onFinal();
   }
 
+  /**
+   * Score changes float up from the bottom of the TV as "+600 Jake". One
+   * element per change, staggered so simultaneous payouts don't stack.
+   */
+  floatDeltas(prev, next) {
+    if (document.body.classList.contains('playing') === false) return;
+    const changes = [];
+    for (const [id, p] of Object.entries(next)) {
+      const d = (p.score || 0) - ((prev[id] && prev[id].score) || 0);
+      if (d) changes.push({ name: p.name, emoji: p.emoji, d });
+    }
+    if (!changes.length || fx.reducedMotion()) return;
+    changes.sort((a, b) => b.d - a.d);
+    let layer = document.getElementById('deltas');
+    if (!layer) { layer = document.createElement('div'); layer.id = 'deltas'; document.body.appendChild(layer); }
+    changes.forEach((c, i) => {
+      const n = document.createElement('div');
+      n.className = `delta ${c.d > 0 ? 'up' : 'down'}`;
+      n.style.setProperty('--i', i);
+      n.innerHTML = `<span class="demoji">${c.emoji || ''}</span><b>${c.d > 0 ? '+' : '−'}${Math.abs(c.d)}</b><span>${esc(c.name)}</span>`;
+      layer.appendChild(n);
+      n.addEventListener('animationend', () => n.remove(), { once: true });
+    });
+  }
+
   /** Update the waiting-on chips in place, no full re-render. */
   _patchWaiting(stage) {
     if (!this.mod || !this.round || this.round.phase === 'intro' || this.round.phase === 'final') return;
@@ -243,7 +279,7 @@ class HostApp {
     this._fxKey = key;
     const stage = el('stage');
     const ph = this.round?.phase;
-    if (ph === 'intro')      { sound.reveal(); }
+    if (ph === 'intro')      { sound.intro(); }
     if (ph === 'question')   { stagger(stage, '.opt', 90); sound.reveal(); }
     if (ph === 'vote')       { stagger(stage, '.vcard', 110); sound.reveal(); }
     if (ph === 'reveal')     { stagger(stage, '.vcard, .opt, .rrow', 70); sound.correct(); }
@@ -318,6 +354,8 @@ document.addEventListener('click', async e => {
   if (e.target.closest('#catback')) { document.body.classList.remove('playing'); setHTML('stage', ''); return; }
   const g = e.target.closest('[data-game]');
   if (g) return app.launch(Number(g.dataset.game));
+  const ln = e.target.closest('[data-len]');
+  if (ln) { sound.tap(); return app.director.setLength(ln.dataset.len); }
   const k = e.target.closest('[data-kick]');
   if (k) return app.room.removePlayer(k.dataset.kick);
   if (e.target.closest('#again') || e.target.closest('#endgame')) return app.backToLobby();

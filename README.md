@@ -96,8 +96,15 @@ up for skip (or tap the buttons). iPhones ask once for motion permission.
 If the hosting phone dies, the next phone by join order takes over within about
 fifteen seconds and the round continues from where it was.
 
+### Before a game
+
+- **Game length** — Quick / Standard / Long in the lobby scales every game's round
+  count (and Spiral's turn count). Pick once; it sticks for the room.
+
 ### During a game
 
+- Score changes float up the TV as **+600 Jake** the moment they land.
+- The last round of any game is labelled **Final round**.
 - **Waiting on…** shows who hasn't answered. The host can tap a name to skip them
   so one person on the phone doesn't stall the room.
 - **Next** on every reveal (or Enter/OK on a TV remote) advances when everyone's
@@ -191,8 +198,9 @@ so `--vh` is published from JS; TV user agents get a default 4% overscan inset t
 the remote's arrow keys adjust; and if a screen's content is still taller than the
 viewport it's scaled to fit rather than scrolled.
 
-`fx.js` is the sound, haptics and motion layer — synthesised audio so there are no
-files to load, DOM transitions keyed so a re-render of the same screen doesn't
+`fx.js` is the sound, haptics and motion layer — the cues are synthesised in
+WebAudio (layered voices, filtered noise for hits, a chord for the win) so there
+are no files to load or license, DOM transitions keyed so a re-render of the same screen doesn't
 flicker, and everything degrades to nothing under `prefers-reduced-motion`.
 Sound is off until someone taps the speaker, because browsers won't start audio
 without a gesture anyway. `dice.js` is a six-faced CSS cube; the tumble is a real

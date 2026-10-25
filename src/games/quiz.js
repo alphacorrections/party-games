@@ -4,7 +4,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown, timerHTML, finalScoreboard,
-         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta } from '../util.js';
 import { loadPack } from '../content.js';
 
 export const meta = {
@@ -171,7 +171,7 @@ export function hostView(round, players) {
     return `<div class="${cls}"><span class="letter">${letters[i]}</span>${esc(o)}</div>`;
   }).join('');
 
-  const header = `<div class="qmeta">Question ${round.index + 1} of ${round.total}</div>`;
+  const header = roundMeta(round.index, round.total, 'Question');
   const note = round.phase === 'reveal' && round.note
     ? `<div class="note">${esc(round.note)}</div>` : '';
   const timer = round.phase === 'question' ? timerHTML(round.deadline, ANSWER_MS) : '';

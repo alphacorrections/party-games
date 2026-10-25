@@ -39,6 +39,12 @@ export const GAME_MENU = [
   { id: 'board',      opts: {},                                  label: 'Spiral',                   sub: 'A board. Minigames. Consequences.',     tv: true }
 ];
 
+export const LENGTHS = {
+  quick:    { label: 'Quick',    mult: 0.6 },
+  standard: { label: 'Standard', mult: 1.0 },
+  long:     { label: 'Long',     mult: 1.6 }
+};
+
 const HEARTBEAT_MS = 4000;
 const INTRO_MS     = 2600;
 const STALE_MS     = 12000;
@@ -116,7 +122,11 @@ export class Director {
     this._launching = true;
     try {
       const mod = await ENGINES[choice.id]();
-      const engine = new mod.Host(this.room, { ...choice.opts, ...extraOpts });
+      const length = (await this.room.t.get(`${this.base}/length`)) || 'standard';
+      const mult = (LENGTHS[length] || LENGTHS.standard).mult;
+      const base = (choice.opts && choice.opts.rounds) || mod.meta?.defaultRounds || 8;
+      const rounds = Math.max(1, Math.round(base * mult));
+      const engine = new mod.Host(this.room, { rounds, ...choice.opts, ...extraOpts });
       await engine.load();
       this.mod = mod;
       this.gameId = choice.id;
@@ -159,6 +169,11 @@ export class Director {
     for (const pid of Object.keys(this.players)) {
       await this.room.t.set(`${this.base}/players/${pid}/score`, 0);
     }
+  }
+
+  async setLength(key) {
+    if (!LENGTHS[key]) return;
+    await this.room.t.set(`${this.base}/length`, key);
   }
 
   /** Host screen or hosting phone: advance a reveal, or skip a straggler. */

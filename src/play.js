@@ -11,7 +11,7 @@ import { esc, playerList, countdown } from './util.js';
 import { swapIn, stagger, countUp, sound, haptic, mountSoundToggle, flash, confetti } from './fx.js';
 import { mountDie } from './dice.js';
 import { installViewport } from './viewport.js';
-import { Director, ENGINES, GAME_MENU } from './director.js';
+import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js';
 import { startTilt } from './tilt.js';
 
 const el = id => document.getElementById(id);
@@ -107,6 +107,7 @@ class PlayApp {
     });
 
     room.on('hasScreen', v => { this.hasScreen = Boolean(v); this.render(); });
+    room.on('length',    v => { this.length = v || 'standard'; this.render(); });
     room.on('director',  v => this.onDirector(v));
     // A dead director stops writing, so its staleness is the absence of an
     // event. Check on a timer as well as on change.
@@ -238,7 +239,7 @@ class PlayApp {
       key = `intro|${this.round.title}`;
     } else if (!this.mod || (this.gameId && this.mod.meta && this.mod.meta.id !== this.gameId)) {
       html = this.lobbyHTML();
-      key = `lobby|${this.isDirector}|${Object.keys(this.players || {}).length}|${this.hasScreen}`;
+      key = `lobby|${this.isDirector}|${Object.keys(this.players || {}).length}|${this.hasScreen}|${this.length}`;
     } else if (this.gameId === 'board') {
       html = this.mod.playerView(this.board, this.me, this.round, this.miniMod,
                                  this.hand, this.submitted, this.voted, this.state.draft);
@@ -340,6 +341,9 @@ class PlayApp {
       ${share}
       <h3 class="lobbyh">Players (${list.length})</h3>
       <div class="plist">${chips}</div>
+      <h3 class="lobbyh">Game length</h3>
+      <div class="tabs lenpick">${Object.entries(LENGTHS).map(([k, v]) =>
+        `<button class="tab ${k === (this.length || 'standard') ? 'on' : ''}" data-action="setlen" data-len="${k}">${v.label}</button>`).join('')}</div>
       <h3 class="lobbyh">Pick a game</h3>
       <div class="menu">${menu}</div>
     </div>`;
@@ -385,6 +389,7 @@ class PlayApp {
       if (!this.hasScreen && choice.phoneMode === 'headsup') opts.headsup = true;
       return this.director?.launch(i, opts);
     }
+    if (action.action === 'setlen') return this.director?.setLength(action.len);
     if (action.action === 'mulligan') {
       this.state.draft = [];
       if (this.director) return this.director.nudge('mulligan', this.me.id);
