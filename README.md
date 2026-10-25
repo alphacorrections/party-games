@@ -135,9 +135,19 @@ stranger. Spell your name the same way each time.
 
 ---
 
-## Editing the content
+## Content
 
-Four files, all plain JSON:
+The packs live in Firebase, not in this repo. **Content** on the home page opens an
+editor where anyone in your group can add, disable or delete trivia, prompts, answer
+cards, Would-You-Rather pairs, Most-Likely prompts and charades words. The repo
+carries only a small tame sample in `content/` so a fresh clone runs in local mode.
+
+To seed a new Firebase project: put your full packs in `content-private/` (same
+file names and shapes as `content/`), open `manage.html` on the live site and tap
+**Seed**. It only adds what's missing, so it's safe to run again. `content-private/`
+is gitignored.
+
+The sample files in `content/`, all plain JSON:
 
 - `content/trivia.json` — `answer` is the 0-based index into `options`.
 - `content/fillblank.json` — `____` marks each blank. `blanks` must match how many

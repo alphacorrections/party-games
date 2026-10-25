@@ -1,2 +1,6 @@
 .DS_Store
 node_modules/
+
+# The full content packs live in Firebase (seeded via manage.html). The
+# originals stay here for re-seeding but are not published.
+content-private/

@@ -1,145 +1,81 @@
 {
-  "pack": "Shout It Out",
-  "categories": [
-    {
-      "name": "Act It Out",
-      "emoji": "🎭",
-      "blurb": "Mime it. No talking.",
-      "words": [
-        "shoveling snow", "parallel parking", "popping a zit", "getting pulled over", "giving birth",
-        "changing a diaper", "building IKEA furniture", "plunging a toilet", "flossing", "shaving your legs",
-        "carving a turkey", "reeling in a fish", "jump starting a car", "mowing the lawn", "making a sandwich",
-        "pumping gas", "brushing your teeth", "putting on skinny jeans", "stepping on a Lego", "untangling Christmas lights",
-        "killing a spider", "checking for a pulse", "pulling a muscle", "doing the limbo", "CPR",
-        "blowing out candles", "hailing a cab", "scratching a lottery ticket", "getting a tattoo", "airport security line",
-        "opening a pickle jar", "burning your tongue", "taking a selfie", "juggling", "bowling"
-      ]
-    },
-    {
-      "name": "Impressions",
-      "emoji": "🎤",
-      "blurb": "Do the voice and mannerisms.",
-      "words": [
-        "Christopher Walken", "Gordon Ramsay", "your drunk uncle", "a Boston cop", "Donald Trump",
-        "Kermit the Frog", "a flight attendant", "Matthew McConaughey", "Arnold Schwarzenegger", "Joe Biden",
-        "Bernie Sanders", "Barack Obama", "Owen Wilson", "Jack Nicholson", "Morgan Freeman",
-        "Sean Connery", "Yoda", "Darth Vader", "Scooby-Doo", "Homer Simpson",
-        "Cartman", "Peter Griffin", "Bane", "The Joker", "Shrek",
-        "SpongeBob", "Mickey Mouse", "Elmo", "Snoop Dogg", "Bill Clinton",
-        "Nicolas Cage", "Jeff Goldblum", "Elvis", "Al Pacino", "a soccer mom"
-      ]
-    },
-    {
-      "name": "Movies",
-      "emoji": "🎬",
-      "blurb": "Describe the plot or quote it.",
-      "words": [
-        "Superbad", "The Hangover", "Step Brothers", "Pulp Fiction", "Scarface",
-        "Borat", "Wolf of Wall Street", "Anchorman", "Dumb and Dumber", "Old School",
-        "Wedding Crashers", "Pineapple Express", "Tropic Thunder", "The Big Lebowski", "Fight Club",
-        "Goodfellas", "The Godfather", "Jaws", "Titanic", "Rocky",
-        "Happy Gilmore", "Billy Madison", "Talladega Nights", "Zoolander", "Napoleon Dynamite",
-        "Office Space", "Deadpool", "Django Unchained", "The Shining", "Forrest Gump",
-        "Jurassic Park", "Home Alone", "Austin Powers", "The Matrix", "Ace Ventura"
-      ]
-    },
-    {
-      "name": "TV Shows",
-      "emoji": "📺",
-      "blurb": "Describe characters or quote scenes.",
-      "words": [
-        "Always Sunny", "I Think You Should Leave", "Trailer Park Boys", "South Park", "The Office",
-        "Breaking Bad", "Jackass", "The Sopranos", "Seinfeld", "Friends",
-        "Game of Thrones", "The Simpsons", "Family Guy", "Curb Your Enthusiasm", "Arrested Development",
-        "Parks and Rec", "Eastbound & Down", "Workaholics", "The Wire", "Lost",
-        "Survivor", "The Bachelor", "Jersey Shore", "Cops", "Shark Tank",
-        "Beavis and Butt-Head", "Rick and Morty", "Stranger Things", "The Walking Dead", "Bob's Burgers",
-        "Dexter", "Squid Game", "Impractical Jokers", "Tiger King", "Pawn Stars"
-      ]
-    },
-    {
-      "name": "Famous People",
-      "emoji": "⭐",
-      "blurb": "Describe them. Don't say the name.",
-      "words": [
-        "The Rock", "LeBron James", "Tom Brady", "Taylor Swift", "Beyoncé",
-        "Kanye West", "Kim Kardashian", "Elon Musk", "Oprah", "Britney Spears",
-        "Lindsay Lohan", "Charlie Sheen", "Mike Tyson", "Shaq", "Tiger Woods",
-        "Michael Jordan", "Travis Kelce", "Snooki", "Danny DeVito", "Will Smith",
-        "Johnny Depp", "Dolly Parton", "Post Malone", "Eminem", "Drake",
-        "Bill Gates", "Jeff Bezos", "Martha Stewart", "Guy Fieri", "Joe Rogan",
-        "Steve Irwin", "Bob Ross", "MrBeast", "Hulk Hogan", "Paris Hilton"
-      ]
-    },
-    {
-      "name": "Animals",
-      "emoji": "🐐",
-      "blurb": "Make the noise. Move like it.",
-      "words": [
-        "T-Rex", "sloth", "goat", "seagull", "walrus",
-        "chicken", "rooster", "cow", "pig", "monkey",
-        "gorilla", "kangaroo", "penguin", "flamingo", "giraffe",
-        "elephant", "snake", "frog", "owl", "bat",
-        "shark", "dolphin", "octopus", "crab", "lobster",
-        "skunk", "raccoon", "squirrel", "moose", "bald eagle",
-        "peacock", "hyena", "donkey", "llama", "mosquito"
-      ]
-    },
-    {
-      "name": "Songs",
-      "emoji": "🎵",
-      "blurb": "Hum it. No lyrics.",
-      "words": [
-        "Sweet Caroline", "Mr. Brightside", "Baby Shark", "Africa by Toto", "Bohemian Rhapsody",
-        "Don't Stop Believin'", "Livin' on a Prayer", "Wonderwall", "Hey Jude", "Jingle Bells",
-        "Happy Birthday", "Take On Me", "Eye of the Tiger", "Thriller", "Billie Jean",
-        "Smells Like Teen Spirit", "Seven Nation Army", "Shake It Off", "Uptown Funk", "Old Town Road",
-        "Party in the USA", "Wannabe", "Hey Ya!", "Lose Yourself", "Baby Got Back",
-        "Ice Ice Baby", "Y.M.C.A.", "Dancing Queen", "I Will Survive", "Stayin' Alive",
-        "Sweet Home Alabama", "Wagon Wheel", "Hotel California", "Barbie Girl", "All Star"
-      ]
-    },
-    {
-      "name": "Accents & Voices",
-      "emoji": "🗣️",
-      "blurb": "Talk in that voice.",
-      "words": [
-        "Australian", "New Jersey", "Russian villain", "GPS voice", "movie trailer guy",
-        "drive-thru speaker", "just got dumped", "Southern belle", "Irish", "Scottish",
-        "British butler", "Cockney", "Canadian", "Minnesota", "Valley girl",
-        "surfer dude", "pirate", "cowboy", "auctioneer", "sports announcer",
-        "airport announcement", "robot", "baby talk", "opera singer", "Siri",
-        "infomercial host", "telemarketer", "911 dispatcher", "golf commentator", "hype man",
-        "ASMR", "Jamaican", "French", "Italian", "New York cab driver"
-      ]
-    },
-    {
-      "name": "Jobs & People",
-      "emoji": "👷",
-      "blurb": "Act like them. Describe them.",
-      "words": [
-        "used car salesman", "TSA agent", "strip club DJ", "youth pastor", "gym bro",
-        "MLM mom", "bartender", "Uber driver", "mall cop", "lifeguard",
-        "dentist", "mime", "personal trainer", "wedding DJ", "tattoo artist",
-        "mall Santa", "dog groomer", "substitute teacher", "stripper", "bouncer",
-        "DMV worker", "weatherman", "hibachi chef", "crossing guard", "pizza delivery guy",
-        "construction worker", "hair stylist", "plumber", "cheerleader", "barista",
-        "lunch lady", "surgeon", "referee", "influencer", "drill sergeant"
-      ]
-    },
-    {
-      "name": "Drunk & Disorderly",
-      "emoji": "🍻",
-      "blurb": "Act it out. Describe the damage.",
-      "words": [
-        "texting your ex", "crying in a bathroom", "puking in an Uber", "walk of shame", "bounced from the bar",
-        "late night Taco Bell", "bachelor party", "explaining the tattoo", "keg stand", "beer pong",
-        "shotgunning a beer", "losing your phone", "drunk dial", "stumbling home", "drunk karaoke",
-        "body shots", "blackout", "hangover", "the spins", "tequila shots",
-        "calling in sick", "Irish goodbye", "peeing in public", "passed out on couch", "dancing on a table",
-        "falling off a barstool", "closing the tab", "beer goggles", "drunk cooking", "sobriety test",
-        "pregaming", "picking a fight", "Jell-O shots", "hungover brunch", "popping champagne"
-      ]
-    }
-  ]
+ "pack": "Sample",
+ "categories": [
+  {
+   "name": "Act It Out",
+   "emoji": "🎭",
+   "blurb": "Mime it. No talking.",
+   "words": [
+    "pulling a muscle",
+    "airport security line",
+    "putting on skinny jeans",
+    "shoveling snow",
+    "jump starting a car",
+    "blowing out candles",
+    "scratching a lottery ticket",
+    "hailing a cab",
+    "doing the limbo",
+    "brushing your teeth",
+    "giving birth",
+    "juggling"
+   ]
+  },
+  {
+   "name": "Impressions",
+   "emoji": "🎤",
+   "blurb": "Do the voice and mannerisms.",
+   "words": [
+    "Jack Nicholson",
+    "Elmo",
+    "a Boston cop",
+    "Nicolas Cage",
+    "Al Pacino",
+    "Barack Obama",
+    "Scooby-Doo",
+    "Darth Vader",
+    "a flight attendant",
+    "Yoda",
+    "a soccer mom",
+    "Sean Connery"
+   ]
+  },
+  {
+   "name": "Movies",
+   "emoji": "🎬",
+   "blurb": "Describe the plot or quote it.",
+   "words": [
+    "Talladega Nights",
+    "Deadpool",
+    "Ace Ventura",
+    "Superbad",
+    "Jaws",
+    "Jurassic Park",
+    "Rocky",
+    "Office Space",
+    "The Shining",
+    "Wedding Crashers",
+    "Fight Club",
+    "The Matrix"
+   ]
+  },
+  {
+   "name": "TV Shows",
+   "emoji": "📺",
+   "blurb": "Describe characters or quote scenes.",
+   "words": [
+    "I Think You Should Leave",
+    "Arrested Development",
+    "The Simpsons",
+    "Impractical Jokers",
+    "Stranger Things",
+    "Trailer Park Boys",
+    "Beavis and Butt-Head",
+    "Workaholics",
+    "The Walking Dead",
+    "Seinfeld",
+    "Pawn Stars",
+    "The Bachelor"
+   ]
+  }
+ ]
 }

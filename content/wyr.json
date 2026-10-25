@@ -1,485 +1,53 @@
 {
-  "pack": "Would You Rather",
-  "pairs": [
-    {
-      "a": "have your search history read aloud at your funeral",
-      "b": "have every text to your ex projected at your wedding"
-    },
-    {
-      "a": "sneeze every time you orgasm",
-      "b": "orgasm every time you sneeze"
-    },
-    {
-      "a": "smell faintly of hot dog water forever",
-      "b": "have everyone you kiss taste hot dog water"
-    },
-    {
-      "a": "walk in on your parents once a week",
-      "b": "have your parents walk in on you once a week"
-    },
-    {
-      "a": "narrate your own bowel movements out loud",
-      "b": "have a stranger in the stall next to you narrate them"
-    },
-    {
-      "a": "drink a shot of your best friend's bathwater",
-      "b": "lick the floor of a dive bar bathroom"
-    },
-    {
-      "a": "lose all your teeth",
-      "b": "lose all your hair, eyebrows included"
-    },
-    {
-      "a": "have hiccups for the rest of your life",
-      "b": "feel like you're about to sneeze for the rest of your life"
-    },
-    {
-      "a": "only be able to whisper",
-      "b": "only be able to yell"
-    },
-    {
-      "a": "shit yourself on a first date",
-      "b": "have your date shit themselves and tell everyone it was you"
-    },
-    {
-      "a": "have your nudes sent to your whole office",
-      "b": "have your office's nudes sent to you from your mom's phone"
-    },
-    {
-      "a": "sit on a public toilet seat that's still warm",
-      "b": "wipe with the one square the last person left"
-    },
-    {
-      "a": "get your ex's name tattooed on your face",
-      "b": "get your boss's face tattooed on your lower back"
-    },
-    {
-      "a": "be famous for a sex tape",
-      "b": "be famous for a viral video of you sobbing in a Panera"
-    },
-    {
-      "a": "have sex with the lights on in front of your pets",
-      "b": "have sex in the dark while your pets make eye contact"
-    },
-    {
-      "a": "eat a stranger's toenail clippings",
-      "b": "chew a stranger's used gum for an hour"
-    },
-    {
-      "a": "fart loudly every time you're introduced to someone",
-      "b": "burp loudly every time you say I love you"
-    },
-    {
-      "a": "have your mom read your sexts",
-      "b": "have your boss read your group chat"
-    },
-    {
-      "a": "be stuck in an elevator with your ex and their new partner",
-      "b": "with your parents right after they've had sex"
-    },
-    {
-      "a": "have a permanent visible boner at work",
-      "b": "never be able to get one again"
-    },
-    {
-      "a": "lick a subway pole top to bottom",
-      "b": "lick a gas station bathroom door handle"
-    },
-    {
-      "a": "be the sweatiest person at every event",
-      "b": "have the loudest stomach at every event"
-    },
-    {
-      "a": "have your drunk voicemails leaked",
-      "b": "have your drunk venmo descriptions leaked"
-    },
-    {
-      "a": "only be able to drink warm beer",
-      "b": "only be able to drink room temperature milk"
-    },
-    {
-      "a": "catch your grandparents having sex",
-      "b": "have your grandparents catch you"
-    },
-    {
-      "a": "find out your partner has a secret family",
-      "b": "find out your partner is secretly a Nickelback superfan"
-    },
-    {
-      "a": "have your parents see every photo on your phone",
-      "b": "have your friends see your Notes app"
-    },
-    {
-      "a": "cry every time you drink",
-      "b": "get horny every time you cry"
-    },
-    {
-      "a": "have a dick that whistles when you walk",
-      "b": "have a butt that lights up when you lie"
-    },
-    {
-      "a": "eat only gas station sushi for a month",
-      "b": "only drink from public fountains for a year"
-    },
-    {
-      "a": "accidentally like your crush's 2014 photo",
-      "b": "accidentally send your therapist a nude"
-    },
-    {
-      "a": "wake up in a stranger's bed with no phone",
-      "b": "wake up in your own bed with a stranger and no memory"
-    },
-    {
-      "a": "have your sex noises used as your ringtone",
-      "b": "have your crying noises as your alarm"
-    },
-    {
-      "a": "shower in a truck stop every day for a year",
-      "b": "never be allowed to wash your hands again"
-    },
-    {
-      "a": "be caught stealing from a friend",
-      "b": "be caught stealing from a church"
-    },
-    {
-      "a": "have every text you send autocorrected to a slur",
-      "b": "only be able to text in Minion memes"
-    },
-    {
-      "a": "tell your parents exactly how you lost your virginity",
-      "b": "hear exactly how they conceived you"
-    },
-    {
-      "a": "have your porn history displayed at a job interview",
-      "b": "have your spotify history displayed at a funeral"
-    },
-    {
-      "a": "hook up with your best friend's parent",
-      "b": "find out your best friend hooked up with yours"
-    },
-    {
-      "a": "go to prison for a week",
-      "b": "go to your ex's wedding sober"
-    },
-    {
-      "a": "have sex while a priest watches",
-      "b": "have a priest give you notes afterward"
-    },
-    {
-      "a": "get a tramp stamp that says live laugh love",
-      "b": "get a neck tattoo of your own face"
-    },
-    {
-      "a": "be the one friend everyone secretly hates",
-      "b": "be the one friend everyone openly pities"
-    },
-    {
-      "a": "drink a cup of someone else's spit",
-      "b": "drink a cup of your own sweat"
-    },
-    {
-      "a": "have every orgasm end with a loud honk",
-      "b": "have every orgasm end with you saying your mom's name"
-    },
-    {
-      "a": "be broke but hot",
-      "b": "be rich but have a visible rat tail you can't remove"
-    },
-    {
-      "a": "lose your phone with everything on it unlocked",
-      "b": "lose your wallet with your passport in it"
-    },
-    {
-      "a": "have a threesome with two people you hate",
-      "b": "watch two people you love have a threesome"
-    },
-    {
-      "a": "sweat mayonnaise",
-      "b": "cry ranch dressing"
-    },
-    {
-      "a": "eat a whole stick of butter in one sitting",
-      "b": "drink a bottle of hot sauce with no water"
-    },
-    {
-      "a": "get caught masturbating by your boss",
-      "b": "catch your boss masturbating"
-    },
-    {
-      "a": "have a bellybutton that smells like blue cheese",
-      "b": "have armpits that smell like a wet dog"
-    },
-    {
-      "a": "be known as the one who peed in the pool",
-      "b": "be known as the one who pooped in the hot tub"
-    },
-    {
-      "a": "have one giant nipple in the middle of your chest",
-      "b": "have no nipples at all"
-    },
-    {
-      "a": "have to be naked at every family dinner",
-      "b": "have your family be naked at every dinner"
-    },
-    {
-      "a": "have your Uber rating drop to 1 star forever",
-      "b": "have your credit score drop to 300 forever"
-    },
-    {
-      "a": "be addicted to huffing Sharpies",
-      "b": "be addicted to eating toilet paper"
-    },
-    {
-      "a": "get caught doing coke by a cop",
-      "b": "get caught doing coke by your grandma"
-    },
-    {
-      "a": "have your sex life rated weekly on Yelp",
-      "b": "have your cooking reviewed weekly by Gordon Ramsay in person"
-    },
-    {
-      "a": "only be able to sleep in a shared hostel dorm",
-      "b": "only be able to sleep in a Walmart parking lot"
-    },
-    {
-      "a": "make out with your sibling's partner",
-      "b": "make out with your partner's sibling"
-    },
-    {
-      "a": "eat a hair sandwich",
-      "b": "eat a toenail taco"
-    },
-    {
-      "a": "have genitals that glow in the dark",
-      "b": "have genitals that play a jingle when touched"
-    },
-    {
-      "a": "get a text from your mom saying 'we need to talk'",
-      "b": "get a text from a one-night stand saying 'we need to talk'"
-    },
-    {
-      "a": "fart in a packed elevator every day",
-      "b": "shit yourself once a year with no warning"
-    },
-    {
-      "a": "have to give a toast at your ex's wedding",
-      "b": "have your ex give the toast at yours"
-    },
-    {
-      "a": "get pulled over drunk with your parents in the car",
-      "b": "get pulled over with weed and your boss in the car"
-    },
-    {
-      "a": "have your whole body covered in back hair",
-      "b": "have no hair anywhere except one very long chest hair"
-    },
-    {
-      "a": "be rejected on stage at a concert proposal",
-      "b": "propose and have them say yes then leave you at the altar"
-    },
-    {
-      "a": "have to lick every doorknob before you open it",
-      "b": "have to sniff every seat before you sit in it"
-    },
-    {
-      "a": "live with your in-laws for a year",
-      "b": "live in your car for a year"
-    },
-    {
-      "a": "wear the same underwear for a month",
-      "b": "wear a stranger's underwear every day for a month"
-    },
-    {
-      "a": "have your dealer be your dad",
-      "b": "have your dad be your dealer's best customer"
-    },
-    {
-      "a": "only drink alcohol from a baby bottle",
-      "b": "only eat meals from a dog bowl on the floor"
-    },
-    {
-      "a": "get caught shoplifting a dildo",
-      "b": "get caught shoplifting adult diapers"
-    },
-    {
-      "a": "find a used condom in your bed with no explanation",
-      "b": "find your roommate's toenail clippings in your cereal"
-    },
-    {
-      "a": "be hungover for a week",
-      "b": "have food poisoning for two days"
-    },
-    {
-      "a": "have everyone know your body count",
-      "b": "have everyone know your bank balance"
-    },
-    {
-      "a": "be caught peeing in a sink",
-      "b": "be caught pooping in a shower"
-    },
-    {
-      "a": "have sex to your parents' wedding song",
-      "b": "have sex while your mom texts you nonstop"
-    },
-    {
-      "a": "have a stranger's name tattooed on your dick",
-      "b": "have your own name tattooed on your dick"
-    },
-    {
-      "a": "have your drunk alter ego go on a date for you",
-      "b": "have your sober self go on a date for your drunk alter ego"
-    },
-    {
-      "a": "burp the alphabet at a funeral",
-      "b": "fart the national anthem at a wedding"
-    },
-    {
-      "a": "snort a line of wasabi",
-      "b": "take a shot of warm pickle juice and mayo"
-    },
-    {
-      "a": "have your bachelor party at a Chuck E. Cheese",
-      "b": "have your wedding at a Golden Corral"
-    },
-    {
-      "a": "get a hickey from your grandma",
-      "b": "give a hickey to your grandpa"
-    },
-    {
-      "a": "find out your partner faked every orgasm",
-      "b": "find out your partner told their friends everything"
-    },
-    {
-      "a": "only be able to flirt by quoting Shrek",
-      "b": "only be able to dirty talk in a Minnie Mouse voice"
-    },
-    {
-      "a": "have your ex pick your next tattoo",
-      "b": "have your mom pick your next partner"
-    },
-    {
-      "a": "be the drunkest person at every party",
-      "b": "be the only sober person at every party"
-    },
-    {
-      "a": "have a visible sweat stain on your crotch forever",
-      "b": "have visible nipple sweat forever"
-    },
-    {
-      "a": "have to tell your partner every sexual thought you have",
-      "b": "hear every sexual thought your partner has"
-    },
-    {
-      "a": "drink a smoothie made from your own hair",
-      "b": "eat a salad with someone else's hair in it"
-    },
-    {
-      "a": "get a boner during a eulogy",
-      "b": "queef during a moment of silence"
-    },
-    {
-      "a": "have your sex tape only visible to your family",
-      "b": "have it visible to everyone except your family"
-    },
-    {
-      "a": "be caught crying in your car by a coworker",
-      "b": "be caught singing in your car by a crush"
-    },
-    {
-      "a": "kiss a frog every morning",
-      "b": "kiss your ex every night"
-    },
-    {
-      "a": "wake up every day with a new random tattoo",
-      "b": "wake up every day with a new random haircut"
-    },
-    {
-      "a": "have your Tinder messages read at Thanksgiving",
-      "b": "have your Thanksgiving conversations posted on Tinder"
-    },
-    {
-      "a": "eat a used band-aid",
-      "b": "drink the juice from the bottom of a trash bag"
-    },
-    {
-      "a": "have your mother approve every hookup in advance",
-      "b": "have every hookup meet your mother afterward"
-    },
-    {
-      "a": "have a dick tattooed on your forehead",
-      "b": "have your forehead tattooed on your dick"
-    },
-    {
-      "a": "get drunk off one sip of anything",
-      "b": "never be able to get drunk again"
-    },
-    {
-      "a": "get a UTI every time you have sex",
-      "b": "get pink eye every time you fart"
-    },
-    {
-      "a": "hook up with someone who still has a Myspace",
-      "b": "hook up with someone who runs a crypto podcast"
-    },
-    {
-      "a": "have your whole family watch you lose your virginity on video",
-      "b": "watch your whole family lose theirs"
-    },
-    {
-      "a": "be known as the one who got too drunk at the work party",
-      "b": "the one who got way too sober at the work party"
-    },
-    {
-      "a": "lick the armpit of a stranger after a marathon",
-      "b": "lick the inside of a stranger's shoe after a marathon"
-    },
-    {
-      "a": "have your partner's ex live with you",
-      "b": "have your ex live with your partner's family"
-    },
-    {
-      "a": "eat dinner from a stranger's belly button",
-      "b": "have a stranger eat dinner out of yours"
-    },
-    {
-      "a": "only be able to have sex while a dog barks",
-      "b": "only be able to have sex while someone says 'nice'"
-    },
-    {
-      "a": "get busted for peeing on a cop car",
-      "b": "get busted for sleeping in a cop car"
-    },
-    {
-      "a": "get walked in on every time you poop",
-      "b": "have to poop with the door open at your in-laws'"
-    },
-    {
-      "a": "have your face on every billboard with the word 'herpes'",
-      "b": "have your name on every billboard with the word 'wanted'"
-    },
-    {
-      "a": "have your partner call you by their ex's name once a week",
-      "b": "have your partner call you by your dad's name once"
-    },
-    {
-      "a": "have to pay for every drink with an original poem",
-      "b": "have to pay with a 30-second striptease"
-    },
-    {
-      "a": "be stuck at a party where everyone knows your worst secret",
-      "b": "a party where nobody knows you but everyone hates you"
-    },
-    {
-      "a": "find a stranger's pube in every meal",
-      "b": "find your own pube in every meal, somehow"
-    },
-    {
-      "a": "have your sex life narrated by Morgan Freeman",
-      "b": "have it narrated by your mother"
-    },
-    {
-      "a": "throw up on your crush",
-      "b": "have your crush throw up in your mouth"
-    }
-  ]
+ "pack": "Sample",
+ "pairs": [
+  {
+   "a": "be famous for a sex tape",
+   "b": "be famous for a viral video of you sobbing in a Panera"
+  },
+  {
+   "a": "eat a used band-aid",
+   "b": "drink the juice from the bottom of a trash bag"
+  },
+  {
+   "a": "lick a subway pole top to bottom",
+   "b": "lick a gas station bathroom door handle"
+  },
+  {
+   "a": "get pulled over drunk with your parents in the car",
+   "b": "get pulled over with weed and your boss in the car"
+  },
+  {
+   "a": "lick the armpit of a stranger after a marathon",
+   "b": "lick the inside of a stranger's shoe after a marathon"
+  },
+  {
+   "a": "get caught masturbating by your boss",
+   "b": "catch your boss masturbating"
+  },
+  {
+   "a": "have a threesome with two people you hate",
+   "b": "watch two people you love have a threesome"
+  },
+  {
+   "a": "have genitals that glow in the dark",
+   "b": "have genitals that play a jingle when touched"
+  },
+  {
+   "a": "get a boner during a eulogy",
+   "b": "queef during a moment of silence"
+  },
+  {
+   "a": "walk in on your parents once a week",
+   "b": "have your parents walk in on you once a week"
+  },
+  {
+   "a": "make out with your sibling's partner",
+   "b": "make out with your partner's sibling"
+  },
+  {
+   "a": "drink a shot of your best friend's bathwater",
+   "b": "lick the floor of a dive bar bathroom"
+  }
+ ]
 }

@@ -1,305 +1,45 @@
 {
-  "pack": "Liar's Trivia",
-  "questions": [
-    {
-      "q": "In 2016, a Florida man was charged with assault with a deadly weapon after throwing ____ through a Wendy's drive-thru window.",
-      "answer": "a live alligator",
-      "note": "Three and a half feet long. He said it was a prank. The gator was released unharmed."
-    },
-    {
-      "q": "In 1945, a Colorado chicken named Mike survived without his head for ____.",
-      "answer": "18 months",
-      "note": "Fed with an eyedropper. Toured the country. Died in a motel in Phoenix."
-    },
-    {
-      "q": "Fredric Baur, the man who designed the Pringles can, was buried ____.",
-      "answer": "in a pringles can",
-      "note": "His kids stopped at Walgreens on the way to the funeral home. They went with Original."
-    },
-    {
-      "q": "The Great Molasses Flood of 1919 killed ____ people in Boston's North End.",
-      "answer": "21",
-      "note": "A two-story wave of syrup moving 35 mph. Locals swear it still smells on hot days."
-    },
-    {
-      "q": "Until 1948, 7 Up contained ____.",
-      "answer": "lithium",
-      "note": "Original name: Bib-Label Lithiated Lemon-Lime Soda. Really rolls off the tongue."
-    },
-    {
-      "q": "Wisconsin man Don Gorske has eaten more than ____ Big Macs since 1972.",
-      "answer": "34,000",
-      "note": "He keeps the receipts in boxes. Guinness has verified it. His wife has not left."
-    },
-    {
-      "q": "In 2007, an American woman named Erika held a commitment ceremony and 'married' ____.",
-      "answer": "the eiffel tower",
-      "note": "She took its last name. Before that she was in a serious relationship with her bow."
-    },
-    {
-      "q": "A 1997 episode of Pokémon sent ____ Japanese children to the hospital.",
-      "answer": "685",
-      "note": "Flashing red-and-blue Pikachu attack. The episode has never aired again anywhere."
-    },
-    {
-      "q": "In 2010, the millionaire owner of the Segway company died after ____.",
-      "answer": "riding a segway off a cliff",
-      "note": "Into a river. On his own estate. You could not write this."
-    },
-    {
-      "q": "In 2006, an Australian man put ____ up for auction on eBay with a starting price of one cent.",
-      "answer": "new zealand",
-      "note": "Bids reached $3,000 before eBay pulled it. New Zealand was not consulted."
-    },
-    {
-      "q": "In 2009, a California woman sued PepsiCo because Cap'n Crunch's Crunch Berries ____.",
-      "answer": "aren't real fruit",
-      "note": "Dismissed. The judge ruled a reasonable consumer would know. Harsh but fair."
-    },
-    {
-      "q": "In 2014, Red Bull paid $13 million to settle a class action lawsuit alleging that ____.",
-      "answer": "it does not actually give you wings",
-      "note": "Anyone who'd bought a can since 2002 could claim $10. Nobody grew wings."
-    },
-    {
-      "q": "In 2018, a Florida man was arrested after trying to pay for his McDonald's order with ____.",
-      "answer": "a bag of weed",
-      "note": "At the drive-thru. The employee declined. He left without food."
-    },
-    {
-      "q": "Iowa farmer Charles Osborne had the hiccups nonstop for ____.",
-      "answer": "68 years",
-      "note": "1922 to 1990. An estimated 430 million hiccups. They stopped a year before he died."
-    },
-    {
-      "q": "In 1567, the mayor of Braunau, Austria died after tripping over ____.",
-      "answer": "his own beard",
-      "note": "Four and a half feet long. He usually kept it rolled up in a pouch. Not that day."
-    },
-    {
-      "q": "Astronomer Tycho Brahe kept a pet moose that died after ____.",
-      "answer": "getting drunk and falling down the stairs",
-      "note": "At a party. It drank too much beer. Tycho also had a metal nose. Different story."
-    },
-    {
-      "q": "In 2017, a Florida woman was charged with DUI while riding ____ down a highway.",
-      "answer": "a horse",
-      "note": "Blood alcohol twice the legal limit. The horse was charged with nothing."
-    },
-    {
-      "q": "In 2007, a New Jersey judge tossed a drunk-driving charge because the man was driving ____, which legally isn't a motor vehicle.",
-      "answer": "a zamboni",
-      "note": "Top speed in the single digits. Can't leave the rink. Case closed."
-    },
-    {
-      "q": "In 2014, a California woman had to be rescued by firefighters after getting stuck in ____ of a man she'd met online.",
-      "answer": "the chimney",
-      "note": "Six dates in. He'd ended it. They had to take the chimney apart to get her out."
-    },
-    {
-      "q": "The 1814 London Beer Flood killed ____ people when a brewery vat burst.",
-      "answer": "8",
-      "note": "A 15-foot wave of porter. The brewery was found not liable. Ruled an act of God."
-    },
-    {
-      "q": "In 2015, a Colorado Springs man got fed up with his computer, carried it into an alley and ____.",
-      "answer": "shot it eight times",
-      "note": "Months of blue screens. He got a ticket for discharging a firearm. Said he felt better."
-    },
-    {
-      "q": "Turkish construction worker Ilker Yilmaz holds the world record for squirting milk out of his eye a distance of ____.",
-      "answer": "9 feet 2 inches",
-      "note": "Snorted it up his nose first. Set in 2004. The record still stands, somehow."
-    },
-    {
-      "q": "In 2015, Nicolas Cage agreed to hand over a $276,000 item he'd bought at auction after learning it was stolen: ____.",
-      "answer": "a dinosaur skull",
-      "note": "Tyrannosaurus bataar, smuggled out of Mongolia. He outbid Leonardo DiCaprio for it."
-    },
-    {
-      "q": "Keith Richards once told a magazine that he had snorted ____.",
-      "answer": "his father's ashes",
-      "note": "Mixed with cocaine, he said. Then he said he was joking. Then he said he wasn't."
-    },
-    {
-      "q": "On his 20th birthday in 1970, Bill Murray was arrested at Chicago O'Hare for ____.",
-      "answer": "trying to fly with 10 pounds of weed",
-      "note": "He'd joked to another passenger that he had bombs in his bag. They searched it."
-    },
-    {
-      "q": "In 1961, Alan Shepard became the first American in space and spent the flight ____.",
-      "answer": "sitting in his own pee",
-      "note": "Four-hour launch delay. Fifteen-minute flight. Nobody had planned for a bathroom."
-    },
-    {
-      "q": "In 2002, 72-year-old Buzz Aldrin ____ a man who called him a coward and a liar.",
-      "answer": "punched",
-      "note": "Right hook, outside a Beverly Hills hotel. No charges filed."
-    },
-    {
-      "q": "Before Sally Ride's week-long shuttle flight, NASA engineers asked her if ____ tampons would be enough.",
-      "answer": "100",
-      "note": "Her answer: 'No. That would not be the right number.'"
-    },
-    {
-      "q": "In 2009, a Florida woman called 911 three times because McDonald's ____.",
-      "answer": "was out of chicken mcnuggets",
-      "note": "She'd already paid. They offered a McDouble. She called it an emergency."
-    },
-    {
-      "q": "In 2017, a Florida man called the sheriff's office to report that someone had stolen ____ from his car.",
-      "answer": "his cocaine",
-      "note": "Deputies found more in his pocket. Arrested on the spot. Case solved, sort of."
-    },
-    {
-      "q": "Australian Graham Barker holds the Guinness record for the world's largest collection of ____.",
-      "answer": "his own belly button lint",
-      "note": "Harvested nightly since 1984. Stored in jars. Mostly one color."
-    },
-    {
-      "q": "A male honeybee dies immediately after mating because ____.",
-      "answer": "his genitals explode",
-      "note": "With an audible pop. The queen then moves on to the next one. And the next."
-    },
-    {
-      "q": "The Argentine lake duck has the longest penis of any bird, measuring up to ____.",
-      "answer": "17 inches, the length of its body",
-      "note": "Corkscrew-shaped. The duck itself is about 17 inches long. Do the math."
-    },
-    {
-      "q": "Nearly every turkey sold in American supermarkets was conceived by ____.",
-      "answer": "artificial insemination",
-      "note": "Bred so top-heavy they physically can't do it themselves. Somebody has that job."
-    },
-    {
-      "q": "During Prohibition, the US government killed an estimated ____ people by deliberately poisoning industrial alcohol.",
-      "answer": "10,000",
-      "note": "To discourage drinking. Bootleggers stole it anyway. People kept drinking."
-    },
-    {
-      "q": "The Guinness Book of Records was created in the 1950s to ____.",
-      "answer": "settle arguments in pubs",
-      "note": "The Guinness boss lost a bar argument about the fastest game bird. So he made a book."
-    },
-    {
-      "q": "In the 1890s, Pope Leo XIII awarded a Vatican gold medal to ____.",
-      "answer": "a cocaine-laced wine",
-      "note": "Vin Mariani. He reportedly carried a flask of it. Thomas Edison was also a fan."
-    },
-    {
-      "q": "During World War II, the German army issued its soldiers tens of millions of tablets of ____.",
-      "answer": "methamphetamine",
-      "note": "Brand name Pervitin. Also sold in chocolates marketed to housewives."
-    },
-    {
-      "q": "In 2011, firefighters in Sweden had to rescue a moose that got stuck in a tree after ____.",
-      "answer": "getting drunk on fermented apples",
-      "note": "It was climbing for more apples. After the rescue it slept it off on the lawn."
-    },
-    {
-      "q": "In 1970, Oregon highway officials tried to dispose of a dead eight-ton whale using ____.",
-      "answer": "half a ton of dynamite",
-      "note": "Blubber came down a quarter mile away and crushed a car. Most of the whale stayed put."
-    },
-    {
-      "q": "The world's shortest scheduled airline flight, in Scotland's Orkney Islands, covers ____.",
-      "answer": "1.7 miles",
-      "note": "Scheduled at 90 seconds. The record is 53. There is no beverage service."
-    },
-    {
-      "q": "The chainsaw was invented in the 1780s to help with ____.",
-      "answer": "childbirth",
-      "note": "For cutting through the pelvis when the baby got stuck. Hand-cranked. You're welcome."
-    },
-    {
-      "q": "In 1932, Pittsburgh millionaire Eben Byers died after drinking roughly ____ bottles of radium-laced 'energy' water.",
-      "answer": "1,400",
-      "note": "His jaw fell off. He's buried in a lead-lined coffin."
-    },
-    {
-      "q": "In 2012, thieves in the Czech Republic made off with ____.",
-      "answer": "an entire 10-ton steel bridge",
-      "note": "They showed up with fake paperwork saying it was being demolished. Sold it for scrap."
-    },
-    {
-      "q": "In 1923, jockey Frank Hayes won his first and only race while ____.",
-      "answer": "dead",
-      "note": "Heart attack mid-race. The horse, Sweet Kiss, finished first anyway. Buried in his silks."
-    },
-    {
-      "q": "The winner of the 1904 Olympic marathon was kept on his feet by trainers feeding him ____.",
-      "answer": "strychnine and brandy",
-      "note": "Rat poison, booze, and raw egg whites. He was hallucinating. He got the gold."
-    },
-    {
-      "q": "In 1970, Pirates pitcher Dock Ellis threw a no-hitter while ____.",
-      "answer": "tripping on lsd",
-      "note": "He thought it was his day off. Walked eight. Could only see the catcher's glove."
-    },
-    {
-      "q": "In 2014, an Orlando man was arrested after witnesses saw him ____ at Lake Eola Park.",
-      "answer": "practicing karate on swans",
-      "note": "Also kicked a sleeping duck. Charged with animal cruelty. The swans are fine."
-    },
-    {
-      "q": "In 2007, Texan Jackie Bibby set a world record by sitting in a bathtub with ____ live rattlesnakes.",
-      "answer": "87",
-      "note": "He wore shorts. He holds a separate record for rattlesnakes held in his mouth."
-    },
-    {
-      "q": "In 1962, three schools in Tanganyika had to close because of an epidemic of ____.",
-      "answer": "uncontrollable laughing",
-      "note": "Started with three girls. Spread for 18 months. Nobody was having a good time."
-    },
-    {
-      "q": "French entertainer Michel Lotito, known as Mr. Eat-Everything, spent two years eating ____.",
-      "answer": "an entire cessna airplane",
-      "note": "Also bikes, shopping carts and a coffin. Guinness gave him a brass plaque. He ate it."
-    },
-    {
-      "q": "In the 1950s and 60s, the CIA paid sex workers in San Francisco to lure men to a safehouse so agents could ____.",
-      "answer": "dose them with lsd",
-      "note": "Operation Midnight Climax. Agents watched through a two-way mirror, drinking martinis."
-    },
-    {
-      "q": "In the 1960s, the CIA spent years and millions of dollars trying to turn ____ into listening devices.",
-      "answer": "cats",
-      "note": "Microphone in the ear, antenna in the tail. Project abandoned. The cats did not care."
-    },
-    {
-      "q": "In 1975, a physics paper in a respected journal listed ____ as a co-author.",
-      "answer": "the author's cat",
-      "note": "F.D.C. Willard. The author had written 'we' throughout and didn't want to retype it."
-    },
-    {
-      "q": "Mozart wrote a six-part canon in B-flat major titled ____.",
-      "answer": "lick me in the ass",
-      "note": "K. 231. There's a follow-up in the catalog: 'Lick My Ass Nice and Clean.' Genius."
-    },
-    {
-      "q": "In 2012, Wisconsin police arrested a man on drug charges whose legal name was ____.",
-      "answer": "beezow doo-doo zopittybop-bop-bop",
-      "note": "Changed from Jeffrey Wilschke in 2011. Arrested again in 2013 and 2017. Same name."
-    },
-    {
-      "q": "Since 1961, a city ordinance in Gainesville, Georgia has made it illegal to eat fried chicken with ____.",
-      "answer": "a fork",
-      "note": "Gainesville calls itself the poultry capital of the world. Still on the books."
-    },
-    {
-      "q": "The tiny town of Rabbit Hash, Kentucky has repeatedly elected ____ as its mayor.",
-      "answer": "a dog",
-      "note": "Recent mayors include a pit bull, a border collie, and a French bulldog named Wilbur."
-    },
-    {
-      "q": "In 1989, the Soviet Union paid Pepsi for soda syrup with ____ submarines and three warships.",
-      "answer": "17",
-      "note": "Briefly made Pepsi one of the largest navies on Earth. They sold it all for scrap."
-    },
-    {
-      "q": "In 1986, Cleveland tried to set a world record by releasing ____ balloons at once.",
-      "answer": "1.5 million",
-      "note": "They came right back down. Shut an airport, a highway, and a Coast Guard rescue."
-    }
-  ]
+ "pack": "Sample",
+ "questions": [
+  {
+   "q": "On his 20th birthday in 1970, Bill Murray was arrested at Chicago O'Hare for ____.",
+   "answer": "trying to fly with 10 pounds of weed",
+   "note": "He'd joked to another passenger that he had bombs in his bag. They searched it."
+  },
+  {
+   "q": "French entertainer Michel Lotito, known as Mr. Eat-Everything, spent two years eating ____.",
+   "answer": "an entire cessna airplane",
+   "note": "Also bikes, shopping carts and a coffin. Guinness gave him a brass plaque. He ate it."
+  },
+  {
+   "q": "Iowa farmer Charles Osborne had the hiccups nonstop for ____.",
+   "answer": "68 years",
+   "note": "1922 to 1990. An estimated 430 million hiccups. They stopped a year before he died."
+  },
+  {
+   "q": "In 2007, an American woman named Erika held a commitment ceremony and 'married' ____.",
+   "answer": "the eiffel tower",
+   "note": "She took its last name. Before that she was in a serious relationship with her bow."
+  },
+  {
+   "q": "A male honeybee dies immediately after mating because ____.",
+   "answer": "his genitals explode",
+   "note": "With an audible pop. The queen then moves on to the next one. And the next."
+  },
+  {
+   "q": "In 1945, a Colorado chicken named Mike survived without his head for ____.",
+   "answer": "18 months",
+   "note": "Fed with an eyedropper. Toured the country. Died in a motel in Phoenix."
+  },
+  {
+   "q": "In 1975, a physics paper in a respected journal listed ____ as a co-author.",
+   "answer": "the author's cat",
+   "note": "F.D.C. Willard. The author had written 'we' throughout and didn't want to retype it."
+  },
+  {
+   "q": "In 1986, Cleveland tried to set a world record by releasing ____ balloons at once.",
+   "answer": "1.5 million",
+   "note": "They came right back down. Shut an airport, a highway, and a Coast Guard rescue."
+  }
+ ]
 }
