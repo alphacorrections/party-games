@@ -18,9 +18,17 @@ state. No server to run.
 | **Fill In The Blank — Judge** | Same, but one rotating judge picks the winner instead of a group vote. | 3+ |
 | **Write Your Own** | Open prompt, everyone types their own answer, funniest wins the votes. | 3+ |
 | **Shout It Out** | Word shows huge on the TV. The active player faces away and taps GOT IT / SKIP while everyone screams clues. | 3+ |
+| **Spiral** | A board of 16 tiles. Roll on your phone, move, and deal with what you land on — payouts, setbacks, score swaps, or a one-round minigame pulled from the games above. | 2+ |
 
-All content is original and lives in `content/*.json`. Edit those files to make the
-games yours — they are plain JSON, no build step, no code changes needed.
+All content is original and lives in `content/*.json`: 110 trivia questions, 159
+fill-in-the-blank prompts with 499 answer cards, 150 open prompts, and 410
+charades words across 10 categories. Edit those files to make the games yours —
+plain JSON, no build step, no code changes needed.
+
+**Spiral** reuses the other engines rather than reimplementing them. Landing on a
+minigame tile instantiates one of them for a single round, with `onFinish` wired
+to hand control back to the board. Board state lives at `rooms/{code}/board` and
+the running minigame at `rooms/{code}/round`, so the two never fight over a node.
 
 ---
 
@@ -73,6 +81,9 @@ instead of **local only**.
 3. Host picks a game. It runs itself from there.
 4. Scores land on the leaderboard when the game ends.
 
+**End game** in the top corner drops everyone back to the menu without closing the
+room or kicking anyone out. An abandoned game isn't written to the leaderboard.
+
 Rooms expire six hours after they're made and are deleted when the host closes the tab.
 
 ---
@@ -86,8 +97,11 @@ Rooms expire six hours after they're made and are deleted when the host closes t
   but keeps their history; *delete* wipes the record.
 - **Recent games** — the last 30 results.
 
-Players are matched by a normalised version of their name, so the same person scores
-to the same record whichever phone they use. Spell your name the same way each time.
+Players are matched by a normalised version of their name — both on the leaderboard
+and inside a room. That matters more than it sounds: phones get backgrounded, the OS
+discards the tab, and the page silently reloads. Keying off the name means that phone
+rejoins as the same player with its hand and score intact instead of showing up as a
+stranger. Spell your name the same way each time.
 
 ---
 

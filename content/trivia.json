@@ -1,885 +1,1215 @@
 {
-  "pack": "Degenerate Trivia",
-  "questions": [
-    {
-      "q": "Which animal has the largest testicles on earth, at roughly 1,100 pounds each?",
-      "options": [
-        "Right whale",
-        "African elephant",
-        "Hippopotamus",
-        "Blue whale"
-      ],
-      "answer": 0,
-      "note": "Each one outweighs you and everybody you came here with."
-    },
-    {
-      "q": "The Argentine lake duck holds the record for the longest penis of any bird. How long does it get?",
-      "options": [
-        "About 4 inches",
-        "About 9 inches",
-        "About 17 inches",
-        "About 4 feet"
-      ],
-      "answer": 2,
-      "note": "On a duck that is barely 16 inches long. Nature plays favorites."
-    },
-    {
-      "q": "Relative to its own body size, which creature has the longest penis in the animal kingdom?",
-      "options": [
-        "Barnacle",
-        "Blue whale",
-        "Bull",
-        "Giant tortoise"
-      ],
-      "answer": 0,
-      "note": "Up to eight times its body length. It is cemented to a rock, so it has to reach."
-    },
-    {
-      "q": "Female spotted hyenas are famous for giving birth through what?",
-      "options": [
-        "An enlarged clitoris",
-        "Their mouth",
-        "A cloaca",
-        "A pouch"
-      ],
-      "answer": 0,
-      "note": "First-time hyena mothers often lose the first cub. The matriarchy has a brutal entry fee."
-    },
-    {
-      "q": "Male honeybees that successfully mate with the queen experience what immediately afterward?",
-      "options": [
-        "Their genitals rip off and they die",
-        "They lose the ability to fly",
-        "They turn female",
-        "They go blind"
-      ],
-      "answer": 0,
-      "note": "He explodes mid-air and his junk stays behind as a plug. Best day and last day."
-    },
-    {
-      "q": "What happens to the male deep-sea anglerfish when he finds a mate?",
-      "options": [
-        "He fuses to her body permanently and becomes a sperm sac",
-        "He eats her",
-        "He changes color and leaves",
-        "He guards the eggs for a year"
-      ],
-      "answer": 0,
-      "note": "His eyes and guts dissolve. He is now a testicle with a commute of zero."
-    },
-    {
-      "q": "Kangaroos have how many vaginas?",
-      "options": [
-        "One",
-        "Two",
-        "Three",
-        "Five"
-      ],
-      "answer": 2,
-      "note": "Two for incoming, one in the middle for outgoing. Infrastructure."
-    },
-    {
-      "q": "The echidna has a penis with how many heads?",
-      "options": [
-        "Two",
-        "Three",
-        "Four",
-        "Seven"
-      ],
-      "answer": 2,
-      "note": "Four heads, but only two work at a time, and it alternates sides. Australia again."
-    },
-    {
-      "q": "Why do vultures deliberately urinate on their own legs?",
-      "options": [
-        "To mark territory",
-        "To cool off and kill bacteria",
-        "To attract mates",
-        "To soften their skin"
-      ],
-      "answer": 1,
-      "note": "Pee as both air conditioning and hand sanitizer. Say what you want, it works."
-    },
-    {
-      "q": "Hippos secrete a thick red fluid often called blood sweat. What does it actually do?",
-      "options": [
-        "Warns off rivals",
-        "Acts as sunscreen and antibiotic",
-        "Attracts mates",
-        "Repels crocodiles"
-      ],
-      "answer": 1,
-      "note": "A two-ton animal oozing its own SPF. You paid nineteen dollars for a tube."
-    },
-    {
-      "q": "Wombat droppings are famously what shape?",
-      "options": [
-        "Spherical",
-        "Cubic",
-        "Flat discs",
-        "Spiral"
-      ],
-      "answer": 1,
-      "note": "Cube-shaped so they do not roll off the rocks the wombat is marking. Precision pooping."
-    },
-    {
-      "q": "The emerald cockroach wasp does what to a cockroach?",
-      "options": [
-        "Eats it alive on the spot",
-        "Stings its brain, makes it docile, and walks it to a burrow to be eaten by larvae",
-        "Lays eggs in its eyes",
-        "Uses it to build a nest wall"
-      ],
-      "answer": 1,
-      "note": "It leads the roach by the antenna like a dog on a leash. Hell is real and it is tiny."
-    },
-    {
-      "q": "Cymothoa exigua, the tongue-eating louse, does what to its host fish?",
-      "options": [
-        "Burrows into the brain",
-        "Lives in the gills",
-        "Severs the tongue and takes its place",
-        "Eats the eyes"
-      ],
-      "answer": 2,
-      "note": "The fish keeps living with a crustacean as its tongue. Think about that next time you order fish."
-    },
-    {
-      "q": "Male antechinus, a small Australian marsupial, do what during their one breeding season?",
-      "options": [
-        "Eat their own young",
-        "Fight to the death over territory",
-        "Mate until their immune systems collapse and they die",
-        "Abandon the females immediately"
-      ],
-      "answer": 2,
-      "note": "Two weeks of nonstop sex, then organ failure. He knew the deal going in."
-    },
-    {
-      "q": "Ophiocordyceps fungus is known for doing what to ants?",
-      "options": [
-        "Making them sterile",
-        "Causing them to attack their own colony",
-        "Turning them translucent",
-        "Taking over their behavior, marching them up a stem, then erupting from their head"
-      ],
-      "answer": 3,
-      "note": "Yes, this is where the zombie show got it. Nature wrote it first and did not need a budget."
-    },
-    {
-      "q": "Naegleria fowleri, the brain-eating amoeba, usually enters a person how?",
-      "options": [
-        "By swallowing contaminated water",
-        "Through the ear canal",
-        "Through a cut",
-        "Up the nose in warm freshwater"
-      ],
-      "answer": 3,
-      "note": "Swallowing it is fine. Snorting the lake is the problem. Keep your nose out of warm ponds."
-    },
-    {
-      "q": "Roughly how many Demodex mites are living on the average adult human face right now?",
-      "options": [
-        "Zero for most people",
-        "A handful",
-        "Hundreds to thousands",
-        "Millions"
-      ],
-      "answer": 2,
-      "note": "They live in your pores, eat your oil, and mate on your face while you sleep. Good night."
-    },
-    {
-      "q": "When threatened, a sea cucumber may do what?",
-      "options": [
-        "Release ink",
-        "Detach its head",
-        "Inflate to triple size",
-        "Expel its own internal organs"
-      ],
-      "answer": 3,
-      "note": "It shoots its guts at you and grows new ones. Petty and effective."
-    },
-    {
-      "q": "Pineapple makes your mouth sting because it contains an enzyme that does what?",
-      "options": [
-        "Strips enamel",
-        "Triggers a mild allergy in everyone",
-        "Burns like capsaicin",
-        "Breaks down protein, including yours"
-      ],
-      "answer": 3,
-      "note": "Bromelain. You are eating the pineapple and the pineapple is eating you. Mutual."
-    },
-    {
-      "q": "Castoreum, historically used as a vanilla-ish flavoring and fragrance, comes from what?",
-      "options": [
-        "Deer saliva",
-        "Whale earwax",
-        "Civet urine",
-        "Beaver castor sacs near the anus"
-      ],
-      "answer": 3,
-      "note": "Barely used in food anymore because milking a beaver is expensive and insane."
-    },
-    {
-      "q": "Ambergris, long prized by perfumers, is what?",
-      "options": [
-        "A waxy substance from sperm whale intestines",
-        "Dried whale blood",
-        "Compressed krill shells",
-        "Fossilized tree sap"
-      ],
-      "answer": 0,
-      "note": "Whale gut rock that washes up on beaches. People have paid six figures for it."
-    },
-    {
-      "q": "Carmine, the red food coloring, is made from what?",
-      "options": [
-        "Crushed cochineal insects",
-        "Iron oxide",
-        "Red algae",
-        "Beets"
-      ],
-      "answer": 0,
-      "note": "Thousands of bugs per pound. That strawberry yogurt has a body count."
-    },
-    {
-      "q": "Casu marzu, a Sardinian cheese, is distinguished by what?",
-      "options": [
-        "It contains live maggots",
-        "It is made from donkey milk",
-        "It is fermented in seawater",
-        "It is aged in a cave for 20 years"
-      ],
-      "answer": 0,
-      "note": "The maggots can jump six inches, so people eat it with their eyes shielded. Dinner and a show."
-    },
-    {
-      "q": "Hakarl, the Icelandic delicacy, is made by fermenting what?",
-      "options": [
-        "Shark",
-        "Whale blubber",
-        "Horse",
-        "Puffin"
-      ],
-      "answer": 0,
-      "note": "Greenland shark meat is toxic fresh, so they bury it until it is merely horrifying."
-    },
-    {
-      "q": "Surstromming, the Swedish fermented herring, is notable for being what?",
-      "options": [
-        "Smelly enough that some airlines refuse to carry it",
-        "Served only at funerals",
-        "Illegal in Sweden",
-        "The most expensive fish in Europe"
-      ],
-      "answer": 0,
-      "note": "The cans bulge from internal pressure. Open it outdoors or lose your security deposit."
-    },
-    {
-      "q": "The corpse flower smells like rotting meat in order to attract what?",
-      "options": [
-        "Bats",
-        "Carrion beetles and flesh flies",
-        "Hummingbirds",
-        "Nothing, it is a side effect"
-      ],
-      "answer": 1,
-      "note": "It spends up to a decade building up to one weekend of smelling like a dead body. Relatable."
-    },
-    {
-      "q": "The gympie-gympie, one of the most painful plants on earth, grows where?",
-      "options": [
-        "Brazil",
-        "Australia",
-        "Madagascar",
-        "The Philippines"
-      ],
-      "answer": 1,
-      "note": "The sting can flare for months and the hairs survive in dried specimens for a century. Australia stays undefeated."
-    },
-    {
-      "q": "The strongest commercially sold spirit, Polish Spirytus Rektyfikowany, is what proof?",
-      "options": [
-        "151 proof",
-        "170 proof",
-        "192 proof",
-        "200 proof"
-      ],
-      "answer": 2,
-      "note": "Ninety-six percent alcohol. It is not a drink, it is a dare with a tax stamp."
-    },
-    {
-      "q": "What does the alcohol term proof originally come from?",
-      "options": [
-        "A French certification stamp",
-        "A British navy test where spirit-soaked gunpowder was lit",
-        "The number of distillation runs",
-        "A Dutch shipping tax"
-      ],
-      "answer": 1,
-      "note": "If the gunpowder still burned, the rum was proved. Sailors invented quality control with fire."
-    },
-    {
-      "q": "The nasty part of a hangover is largely caused by which byproduct of alcohol metabolism?",
-      "options": [
-        "Lactic acid",
-        "Acetaldehyde",
-        "Glucose",
-        "Ammonia"
-      ],
-      "answer": 1,
-      "note": "Your liver turns booze into something more toxic than booze before finishing the job. Thanks, liver."
-    },
-    {
-      "q": "Methanol in badly made moonshine is dangerous because the body turns it into what?",
-      "options": [
-        "Nitrous oxide",
-        "Acetone",
-        "Formaldehyde and formic acid",
-        "Pure ethanol"
-      ],
-      "answer": 2,
-      "note": "Blindness is the famous outcome. Buy your liquor from people with a license and a lawyer."
-    },
-    {
-      "q": "The hallucinogenic reputation of absinthe comes from thujone. What does the science actually say?",
-      "options": [
-        "Thujone causes permanent blindness",
-        "Thujone is a potent hallucinogen",
-        "Absinthe contains far too little thujone to do anything",
-        "Thujone only works with wine"
-      ],
-      "answer": 2,
-      "note": "The green fairy was just 140 proof. People were obliterated, not enlightened."
-    },
-    {
-      "q": "Albert Hofmann accidentally dosed himself with LSD and rode his bicycle home on which date, now celebrated as Bicycle Day?",
-      "options": [
-        "April 19, 1943",
-        "July 4, 1955",
-        "October 31, 1938",
-        "June 6, 1961"
-      ],
-      "answer": 0,
-      "note": "The worst commute in the history of chemistry."
-    },
-    {
-      "q": "MDMA was first synthesized and patented by which company, decades before anyone took it recreationally?",
-      "options": [
-        "Bayer",
-        "Sandoz",
-        "Pfizer",
-        "Merck"
-      ],
-      "answer": 3,
-      "note": "Patented in 1912 and then ignored for sixty years. Worst product launch ever, best eventual word of mouth."
-    },
-    {
-      "q": "Ketamine was originally developed and is still widely used as what?",
-      "options": [
-        "An antidepressant only",
-        "A migraine drug",
-        "A muscle relaxant",
-        "An anesthetic, including in veterinary medicine"
-      ],
-      "answer": 3,
-      "note": "Yes, the horse thing is real, and no, that is not why it is in the clinic."
-    },
-    {
-      "q": "Nitrous oxide was being used recreationally at upper-class parties as early as when?",
-      "options": [
-        "The 1950s",
-        "The 1920s",
-        "The early 1800s",
-        "The 1970s"
-      ],
-      "answer": 2,
-      "note": "Humphry Davy threw laughing gas parties for poets. Nothing is new, including your Saturday."
-    },
-    {
-      "q": "Amyl nitrite, better known as poppers, was originally prescribed for what?",
-      "options": [
-        "Insomnia",
-        "Motion sickness",
-        "Asthma",
-        "Chest pain from angina"
-      ],
-      "answer": 3,
-      "note": "A heart drug that found a second career. Happens to the best of us."
-    },
-    {
-      "q": "Viagra was originally being developed to treat what?",
-      "options": [
-        "Depression",
-        "Glaucoma",
-        "Male pattern baldness",
-        "Angina and high blood pressure"
-      ],
-      "answer": 3,
-      "note": "The trial participants kept declining to return their leftover pills. Data is data."
-    },
-    {
-      "q": "Minoxidil, sold as a hair-regrowth treatment, started out as what?",
-      "options": [
-        "A diuretic for livestock",
-        "An antihistamine",
-        "A topical anesthetic",
-        "A blood pressure medication"
-      ],
-      "answer": 3,
-      "note": "Patients grew hair in places they did not ask about. Somebody in marketing had a very good day."
-    },
-    {
-      "q": "Caffeine's estimated lethal dose for an adult works out to roughly how much brewed coffee?",
-      "options": [
-        "About 10 cups",
-        "About 25 cups",
-        "Somewhere north of 75 cups",
-        "About 300 cups"
-      ],
-      "answer": 2,
-      "note": "Your bladder files for divorce around cup nine, so you are statistically safe."
-    },
-    {
-      "q": "Nicotine's original industrial use was as what?",
-      "options": [
-        "An insecticide",
-        "A dye fixative",
-        "A solvent",
-        "A preservative"
-      ],
-      "answer": 0,
-      "note": "You are smoking bug spray with a filter on it."
-    },
-    {
-      "q": "A 2022 study counted the nerve fibers in the human clitoris for the first time. Roughly how many did it find?",
-      "options": [
-        "About 800",
-        "About 2,000",
-        "About 4,000",
-        "More than 10,000"
-      ],
-      "answer": 3,
-      "note": "More than 10,000, which is roughly double the old textbook guess. Textbooks were written by guys who did not check."
-    },
-    {
-      "q": "A 2015 review of 17 studies put the average erect human penis length at about what?",
-      "options": [
-        "4.2 inches",
-        "5.2 inches",
-        "6.5 inches",
-        "7.1 inches"
-      ],
-      "answer": 1,
-      "note": "13.1 centimeters. Everyone in this room just did math."
-    },
-    {
-      "q": "A study of penile fracture injuries found which sex position was involved most often?",
-      "options": [
-        "Woman-on-top positions",
-        "Falling asleep",
-        "Cold weather",
-        "Standing positions"
-      ],
-      "answer": 0,
-      "note": "Woman-on-top came out on top, so to speak. There is a whole body of urology literature on this."
-    },
-    {
-      "q": "Semen is made up of sperm plus fluid. Roughly what percentage is actual sperm?",
-      "options": [
-        "Less than 5 percent",
-        "About 25 percent",
-        "About half",
-        "About 80 percent"
-      ],
-      "answer": 0,
-      "note": "The rest is sugar, enzymes and transport fluid. Mostly packaging, like everything else."
-    },
-    {
-      "q": "The medical term for an erection that will not go away and requires emergency care is what?",
-      "options": [
-        "Priapism",
-        "Peyronie's",
-        "Paraphimosis",
-        "Phimosis"
-      ],
-      "answer": 0,
-      "note": "Named after Priapus, a Greek god with a famously permanent situation. Four hours and you call someone."
-    },
-    {
-      "q": "Which of these is true about the human G-spot?",
-      "options": [
-        "There is no agreed-upon distinct structure; it is likely part of the internal clitoral network",
-        "It was removed from medical texts in 1970",
-        "It only exists in about half of people",
-        "It is a distinct anatomical organ confirmed by dissection"
-      ],
-      "answer": 0,
-      "note": "Decades of searching and nobody has produced the thing. The clitoris is just bigger than advertised."
-    },
-    {
-      "q": "The widely repeated story that Victorian doctors invented the vibrator to treat female hysteria is what?",
-      "options": [
-        "Well documented in medical journals",
-        "Largely unsupported by evidence and traced to one poorly sourced book",
-        "Confirmed by patent records",
-        "True but only in France"
-      ],
-      "answer": 1,
-      "note": "A 2018 review tore it apart. Great movie premise, bad history."
-    },
-    {
-      "q": "Which animal, besides humans, is well documented to have sex for pleasure and use it socially?",
-      "options": [
-        "Komodo dragon",
-        "Bonobo",
-        "Giraffe",
-        "Wolf"
-      ],
-      "answer": 1,
-      "note": "Bonobos resolve basically every conflict this way. World peace is one strategy away."
-    },
-    {
-      "q": "The clitoris and penis develop from which embryonic structure?",
-      "options": [
-        "Different structures entirely",
-        "The same structure, the genital tubercle",
-        "The urogenital ridge only",
-        "The mesonephric duct"
-      ],
-      "answer": 1,
-      "note": "Same raw material, different final assembly. We are all working from one blueprint."
-    },
-    {
-      "q": "Nocturnal erections, sometimes called morning wood, happen roughly how often per night in healthy adult males?",
-      "options": [
-        "Never, it is a myth",
-        "Once, right before waking",
-        "Three to five times",
-        "Continuously all night"
-      ],
-      "answer": 2,
-      "note": "It is tied to REM sleep. Your body is just doing maintenance checks."
-    },
-    {
-      "q": "In 897, the Catholic Church held the Cadaver Synod, in which a dead pope was what?",
-      "options": [
-        "Canonized",
-        "Exhumed, dressed in robes, and put on trial",
-        "Reburied in Jerusalem",
-        "Declared still alive"
-      ],
-      "answer": 1,
-      "note": "They propped up the corpse and assigned a deacon to answer for it. Guilty, obviously."
-    },
-    {
-      "q": "Napoleon's preserved penis has reportedly done what since his death?",
-      "options": [
-        "Been buried with him",
-        "Stayed in Paris under guard",
-        "Been sold at auction more than once and ended up in a New Jersey collection",
-        "Been destroyed in a fire"
-      ],
-      "answer": 2,
-      "note": "Allegedly removed during the autopsy. The provenance is murky but the auction records are not."
-    },
-    {
-      "q": "Abraham Lincoln's coffin was reportedly opened or moved roughly how many times after his funeral?",
-      "options": [
-        "Never",
-        "Twice",
-        "Around 17 times",
-        "Around 50 times"
-      ],
-      "answer": 2,
-      "note": "Grave robbers, relocations and anxious officials checking he was still in there. Let the man rest."
-    },
-    {
-      "q": "In 1518 Strasbourg, dozens of people were struck by what strange affliction?",
-      "options": [
-        "Mass sleepwalking",
-        "Uncontrollable laughing",
-        "Compulsive dancing that went on for weeks",
-        "Collective muteness"
-      ],
-      "answer": 2,
-      "note": "Some reportedly danced until they collapsed. Authorities responded by hiring musicians. Bold call."
-    },
-    {
-      "q": "Astronomer Tycho Brahe died shortly after a banquet, reportedly from what?",
-      "options": [
-        "Mercury he ingested himself",
-        "Poisoned wine",
-        "A bladder or kidney problem after refusing to leave the table to urinate",
-        "A duel wound"
-      ],
-      "answer": 2,
-      "note": "Too polite to pee. Modern tests ruled out the mercury poisoning theory."
-    },
-    {
-      "q": "Tycho Brahe also famously wore a prosthetic nose. Why?",
-      "options": [
-        "A laboratory accident",
-        "Frostbite",
-        "A childhood illness",
-        "He lost the original in a sword duel over a math argument"
-      ],
-      "answer": 3,
-      "note": "A duel. Over mathematics. With his cousin. Peak sixteenth century."
-    },
-    {
-      "q": "Mummy brown, a real Victorian artist's pigment, was made from what?",
-      "options": [
-        "Burnt bone char",
-        "Iron-rich Nile clay",
-        "Bitumen from the Dead Sea",
-        "Ground-up Egyptian mummies"
-      ],
-      "answer": 3,
-      "note": "Painters stopped using it when they realized what was in the tube. Some took a while."
-    },
-    {
-      "q": "Scheele's green, a wildly popular Victorian wallpaper color, was dangerous because it contained what?",
-      "options": [
-        "Mercury",
-        "Radium",
-        "Lead",
-        "Arsenic"
-      ],
-      "answer": 3,
-      "note": "People slowly poisoned themselves because the drawing room looked fantastic. Priorities."
-    },
-    {
-      "q": "Eben Byers, a wealthy American, died in 1932 after years of drinking what?",
-      "options": [
-        "Chloroform cordial",
-        "Arsenic wine",
-        "Mercury tonic",
-        "Radium-infused water sold as a health drink"
-      ],
-      "answer": 3,
-      "note": "He drank roughly 1,400 bottles. His jaw and skull deteriorated. The product was called Radithor."
-    },
-    {
-      "q": "The Great Stink of 1858 finally forced London to build proper sewers because the smell did what?",
-      "options": [
-        "Overwhelmed Parliament, sitting right on the Thames",
-        "Spread to Paris",
-        "Ruined the Queen's garden party",
-        "Killed a thousand people in a week"
-      ],
-      "answer": 0,
-      "note": "Nothing motivates legislators like the problem reaching their own windows."
-    },
-    {
-      "q": "Bayer trademarked and marketed heroin in 1898 as what?",
-      "options": [
-        "A non-addictive cough suppressant",
-        "A treatment for malaria",
-        "A dental anesthetic",
-        "A sleep aid for infants"
-      ],
-      "answer": 0,
-      "note": "Sold over the counter alongside aspirin. One of those became the problem child."
-    },
-    {
-      "q": "Vin Mariani, a nineteenth-century cocaine-laced wine, famously received an endorsement from whom?",
-      "options": [
-        "Pope Leo XIII",
-        "Charles Darwin",
-        "The Tsar of Russia",
-        "Queen Victoria"
-      ],
-      "answer": 0,
-      "note": "He reportedly carried a hip flask of it and gave the company a gold medal. Blessed be the dose."
-    },
-    {
-      "q": "The 1919 Boston Molasses Disaster killed how many people?",
-      "options": [
-        "Nobody, it was property damage only",
-        "21",
-        "107",
-        "Over 300"
-      ],
-      "answer": 1,
-      "note": "A wave of molasses moving around 35 miles an hour. The harbor reportedly smelled sweet for years."
-    },
-    {
-      "q": "Mike the Headless Chicken survived for roughly how long after losing his head in 1945?",
-      "options": [
-        "Two days",
-        "Three weeks",
-        "About 18 months",
-        "Nine years"
-      ],
-      "answer": 2,
-      "note": "The axe missed the brain stem. He was fed with a dropper and toured the country."
-    },
-    {
-      "q": "Which one-man wrecking crew invented both leaded gasoline and chlorofluorocarbons?",
-      "options": [
-        "Thomas Midgley Jr.",
-        "Wallace Carothers",
-        "Robert Kehoe",
-        "Fritz Haber"
-      ],
-      "answer": 0,
-      "note": "Two world-scale environmental disasters, one resume. He has been called the most destructive organism in history."
-    },
-    {
-      "q": "Ozzy Osbourne bit the head off a bat onstage in 1982 and then had to get what?",
-      "options": [
-        "Stitches in his tongue",
-        "A course of rabies shots",
-        "A tetanus booster",
-        "Nothing, he was fine"
-      ],
-      "answer": 1,
-      "note": "He thought it was rubber. It was not rubber."
-    },
-    {
-      "q": "Honey essentially does not spoil. Why?",
-      "options": [
-        "It is sterile when sealed",
-        "Low water content, acidity and bee-made peroxide block microbes",
-        "Bees add a natural preservative salt",
-        "It is simply too sweet for bacteria to notice"
-      ],
-      "answer": 1,
-      "note": "The famous edible-tomb-honey story is thinly sourced, but the chemistry is real. Honey does not spoil, it just gets smug."
-    },
-    {
-      "q": "The record for longest documented time a person has gone without sleep, set in 1964, is about what?",
-      "options": [
-        "48 hours",
-        "About 11 days",
-        "About 20 days",
-        "About 40 days"
-      ],
-      "answer": 1,
-      "note": "264 hours. By the end he was hallucinating and failing basic math. Guinness stopped accepting attempts."
-    },
-    {
-      "q": "Joey Chestnut's record for hot dogs and buns eaten in 10 minutes stands at what?",
-      "options": [
-        "54",
-        "63",
-        "76",
-        "91"
-      ],
-      "answer": 2,
-      "note": "Seventy-six. Set in 2021. Do not think about the hours afterward."
-    },
-    {
-      "q": "A fart is flammable mainly because of which gases?",
-      "options": [
-        "Carbon dioxide and oxygen",
-        "Hydrogen and methane",
-        "Nitrogen and argon",
-        "Hydrogen sulfide alone"
-      ],
-      "answer": 1,
-      "note": "Hydrogen sulfide does the smelling, hydrogen and methane do the burning. Different departments."
-    },
-    {
-      "q": "Not everybody's gut produces methane. Roughly what share of people are methane producers?",
-      "options": [
-        "All of them",
-        "Fewer than 5 percent",
-        "Somewhere between a third and half",
-        "About 95 percent"
-      ],
-      "answer": 2,
-      "note": "Estimates vary by population, but plenty of people make none at all. So only some of you can be lit on fire."
-    },
-    {
-      "q": "Which of these is actually in the top tier of strongest known natural poisons by weight?",
-      "options": [
-        "Cyanide",
-        "Botulinum toxin",
-        "Arsenic",
-        "Strychnine"
-      ],
-      "answer": 1,
-      "note": "And people pay to have small amounts injected into their foreheads. Context is everything."
-    },
-    {
-      "q": "Mount Everest has a growing problem with what, enough that climbers are now required to pack it out?",
-      "options": [
-        "Abandoned tents",
-        "Oxygen canisters",
-        "Human feces",
-        "Dead batteries"
-      ],
-      "answer": 2,
-      "note": "Decades of accumulated human waste on a frozen mountain. The view is still nice."
-    },
-    {
-      "q": "The Icelandic Phallological Museum in Reykjavik collects what?",
-      "options": [
-        "Volcanic rock formations",
-        "Fertility statues",
-        "Penile specimens from Icelandic mammals",
-        "Ancient Norse weapons"
-      ],
-      "answer": 2,
-      "note": "Over two hundred specimens, including human donations. Tourism is a broad church."
-    },
-    {
-      "q": "What was Listerine aggressively marketed as before it was mouthwash?",
-      "options": [
-        "A hair tonic only",
-        "An aftershave",
-        "A cough syrup",
-        "A floor cleaner and surgical antiseptic"
-      ],
-      "answer": 3,
-      "note": "They basically invented the idea that bad breath was a social emergency, then sold the cure."
-    },
-    {
-      "q": "Beer goggles have been studied scientifically. What do the better studies generally find?",
-      "options": [
-        "No effect whatsoever",
-        "A reverse effect",
-        "A huge effect on perceived attractiveness",
-        "A modest effect, with bigger effects on confidence and willingness to approach"
-      ],
-      "answer": 3,
-      "note": "Alcohol does not fix their face, it fixes your judgment about approaching it."
-    },
-    {
-      "q": "What does alcohol do to your sleep?",
-      "options": [
-        "Has no measurable effect",
-        "Only affects REM in heavy drinkers",
-        "Deepens it across the whole night",
-        "Knocks you out faster but wrecks the second half of the night"
-      ],
-      "answer": 3,
-      "note": "You pass out quickly and then wake at 4 a.m. staring at the ceiling, reviewing your decisions."
-    },
-    {
-      "q": "Hangovers get worse with age mainly because of what?",
-      "options": [
-        "Changing stomach acid only",
-        "Nothing, it is psychological",
-        "Your liver literally shrinks",
-        "A mix of slower metabolism, less water in the body, and worse sleep"
-      ],
-      "answer": 3,
-      "note": "It is not one thing. It is everything, slowly, at once. Enjoy your thirties."
-    },
-    {
-      "q": "Which of these drinks is most likely to give you a worse hangover at the same alcohol dose?",
-      "options": [
-        "Gin",
-        "Light rum",
-        "Vodka",
-        "Bourbon"
-      ],
-      "answer": 3,
-      "note": "Darker spirits carry more congeners. The brown stuff tastes better and charges interest."
-    }
-  ]
+ "pack": "Degenerate Trivia",
+ "questions": [
+  {
+   "q": "Which animal has the largest testicles on earth, at roughly 1,100 pounds each?",
+   "options": [
+    "Right whale",
+    "African elephant",
+    "Hippopotamus",
+    "Blue whale"
+   ],
+   "answer": 0,
+   "note": "Each one outweighs you and everybody you came here with."
+  },
+  {
+   "q": "The Argentine lake duck holds the record for the longest penis of any bird. How long does it get?",
+   "options": [
+    "About 4 inches",
+    "About 9 inches",
+    "About 17 inches",
+    "About 4 feet"
+   ],
+   "answer": 2,
+   "note": "On a duck that is barely 16 inches long. Nature plays favorites."
+  },
+  {
+   "q": "Relative to its own body size, which creature has the longest penis in the animal kingdom?",
+   "options": [
+    "Barnacle",
+    "Blue whale",
+    "Bull",
+    "Giant tortoise"
+   ],
+   "answer": 0,
+   "note": "Up to eight times its body length. It is cemented to a rock, so it has to reach."
+  },
+  {
+   "q": "Female spotted hyenas are famous for giving birth through what?",
+   "options": [
+    "An enlarged clitoris",
+    "Their mouth",
+    "A cloaca",
+    "A pouch"
+   ],
+   "answer": 0,
+   "note": "First-time hyena mothers often lose the first cub. The matriarchy has a brutal entry fee."
+  },
+  {
+   "q": "Male honeybees that successfully mate with the queen experience what immediately afterward?",
+   "options": [
+    "Their genitals rip off and they die",
+    "They lose the ability to fly",
+    "They turn female",
+    "They go blind"
+   ],
+   "answer": 0,
+   "note": "He explodes mid-air and his junk stays behind as a plug. Best day and last day."
+  },
+  {
+   "q": "What happens to the male deep-sea anglerfish when he finds a mate?",
+   "options": [
+    "He fuses to her body permanently and becomes a sperm sac",
+    "He eats her",
+    "He changes color and leaves",
+    "He guards the eggs for a year"
+   ],
+   "answer": 0,
+   "note": "His eyes and guts dissolve. He is now a testicle with a commute of zero."
+  },
+  {
+   "q": "Kangaroos have how many vaginas?",
+   "options": [
+    "One",
+    "Two",
+    "Three",
+    "Five"
+   ],
+   "answer": 2,
+   "note": "Two for incoming, one in the middle for outgoing. Infrastructure."
+  },
+  {
+   "q": "The echidna has a penis with how many heads?",
+   "options": [
+    "Two",
+    "Three",
+    "Four",
+    "Seven"
+   ],
+   "answer": 2,
+   "note": "Four heads, but only two work at a time, and it alternates sides. Australia again."
+  },
+  {
+   "q": "Why do vultures deliberately urinate on their own legs?",
+   "options": [
+    "To mark territory",
+    "To cool off and kill bacteria",
+    "To attract mates",
+    "To soften their skin"
+   ],
+   "answer": 1,
+   "note": "Pee as both air conditioning and hand sanitizer. Say what you want, it works."
+  },
+  {
+   "q": "Hippos secrete a thick red fluid often called blood sweat. What does it actually do?",
+   "options": [
+    "Warns off rivals",
+    "Acts as sunscreen and antibiotic",
+    "Attracts mates",
+    "Repels crocodiles"
+   ],
+   "answer": 1,
+   "note": "A two-ton animal oozing its own SPF. You paid nineteen dollars for a tube."
+  },
+  {
+   "q": "Wombat droppings are famously what shape?",
+   "options": [
+    "Spherical",
+    "Cubic",
+    "Flat discs",
+    "Spiral"
+   ],
+   "answer": 1,
+   "note": "Cube-shaped so they do not roll off the rocks the wombat is marking. Precision pooping."
+  },
+  {
+   "q": "The emerald cockroach wasp does what to a cockroach?",
+   "options": [
+    "Eats it alive on the spot",
+    "Stings its brain, makes it docile, and walks it to a burrow to be eaten by larvae",
+    "Lays eggs in its eyes",
+    "Uses it to build a nest wall"
+   ],
+   "answer": 1,
+   "note": "It leads the roach by the antenna like a dog on a leash. Hell is real and it is tiny."
+  },
+  {
+   "q": "Cymothoa exigua, the tongue-eating louse, does what to its host fish?",
+   "options": [
+    "Burrows into the brain",
+    "Lives in the gills",
+    "Severs the tongue and takes its place",
+    "Eats the eyes"
+   ],
+   "answer": 2,
+   "note": "The fish keeps living with a crustacean as its tongue. Think about that next time you order fish."
+  },
+  {
+   "q": "Male antechinus, a small Australian marsupial, do what during their one breeding season?",
+   "options": [
+    "Eat their own young",
+    "Fight to the death over territory",
+    "Mate until their immune systems collapse and they die",
+    "Abandon the females immediately"
+   ],
+   "answer": 2,
+   "note": "Two weeks of nonstop sex, then organ failure. He knew the deal going in."
+  },
+  {
+   "q": "Ophiocordyceps fungus is known for doing what to ants?",
+   "options": [
+    "Making them sterile",
+    "Causing them to attack their own colony",
+    "Turning them translucent",
+    "Taking over their behavior, marching them up a stem, then erupting from their head"
+   ],
+   "answer": 3,
+   "note": "Yes, this is where the zombie show got it. Nature wrote it first and did not need a budget."
+  },
+  {
+   "q": "Naegleria fowleri, the brain-eating amoeba, usually enters a person how?",
+   "options": [
+    "By swallowing contaminated water",
+    "Through the ear canal",
+    "Through a cut",
+    "Up the nose in warm freshwater"
+   ],
+   "answer": 3,
+   "note": "Swallowing it is fine. Snorting the lake is the problem. Keep your nose out of warm ponds."
+  },
+  {
+   "q": "Roughly how many Demodex mites are living on the average adult human face right now?",
+   "options": [
+    "Zero for most people",
+    "A handful",
+    "Hundreds to thousands",
+    "Millions"
+   ],
+   "answer": 2,
+   "note": "They live in your pores, eat your oil, and mate on your face while you sleep. Good night."
+  },
+  {
+   "q": "When threatened, a sea cucumber may do what?",
+   "options": [
+    "Release ink",
+    "Detach its head",
+    "Inflate to triple size",
+    "Expel its own internal organs"
+   ],
+   "answer": 3,
+   "note": "It shoots its guts at you and grows new ones. Petty and effective."
+  },
+  {
+   "q": "Pineapple makes your mouth sting because it contains an enzyme that does what?",
+   "options": [
+    "Strips enamel",
+    "Triggers a mild allergy in everyone",
+    "Burns like capsaicin",
+    "Breaks down protein, including yours"
+   ],
+   "answer": 3,
+   "note": "Bromelain. You are eating the pineapple and the pineapple is eating you. Mutual."
+  },
+  {
+   "q": "Castoreum, historically used as a vanilla-ish flavoring and fragrance, comes from what?",
+   "options": [
+    "Deer saliva",
+    "Whale earwax",
+    "Civet urine",
+    "Beaver castor sacs near the anus"
+   ],
+   "answer": 3,
+   "note": "Barely used in food anymore because milking a beaver is expensive and insane."
+  },
+  {
+   "q": "Ambergris, long prized by perfumers, is what?",
+   "options": [
+    "A waxy substance from sperm whale intestines",
+    "Dried whale blood",
+    "Compressed krill shells",
+    "Fossilized tree sap"
+   ],
+   "answer": 0,
+   "note": "Whale gut rock that washes up on beaches. People have paid six figures for it."
+  },
+  {
+   "q": "Carmine, the red food coloring, is made from what?",
+   "options": [
+    "Crushed cochineal insects",
+    "Iron oxide",
+    "Red algae",
+    "Beets"
+   ],
+   "answer": 0,
+   "note": "Thousands of bugs per pound. That strawberry yogurt has a body count."
+  },
+  {
+   "q": "Casu marzu, a Sardinian cheese, is distinguished by what?",
+   "options": [
+    "It contains live maggots",
+    "It is made from donkey milk",
+    "It is fermented in seawater",
+    "It is aged in a cave for 20 years"
+   ],
+   "answer": 0,
+   "note": "The maggots can jump six inches, so people eat it with their eyes shielded. Dinner and a show."
+  },
+  {
+   "q": "Hakarl, the Icelandic delicacy, is made by fermenting what?",
+   "options": [
+    "Shark",
+    "Whale blubber",
+    "Horse",
+    "Puffin"
+   ],
+   "answer": 0,
+   "note": "Greenland shark meat is toxic fresh, so they bury it until it is merely horrifying."
+  },
+  {
+   "q": "Surstromming, the Swedish fermented herring, is notable for being what?",
+   "options": [
+    "Smelly enough that some airlines refuse to carry it",
+    "Served only at funerals",
+    "Illegal in Sweden",
+    "The most expensive fish in Europe"
+   ],
+   "answer": 0,
+   "note": "The cans bulge from internal pressure. Open it outdoors or lose your security deposit."
+  },
+  {
+   "q": "The corpse flower smells like rotting meat in order to attract what?",
+   "options": [
+    "Bats",
+    "Carrion beetles and flesh flies",
+    "Hummingbirds",
+    "Nothing, it is a side effect"
+   ],
+   "answer": 1,
+   "note": "It spends up to a decade building up to one weekend of smelling like a dead body. Relatable."
+  },
+  {
+   "q": "The gympie-gympie, one of the most painful plants on earth, grows where?",
+   "options": [
+    "Brazil",
+    "Australia",
+    "Madagascar",
+    "The Philippines"
+   ],
+   "answer": 1,
+   "note": "The sting can flare for months and the hairs survive in dried specimens for a century. Australia stays undefeated."
+  },
+  {
+   "q": "The strongest commercially sold spirit, Polish Spirytus Rektyfikowany, is what proof?",
+   "options": [
+    "151 proof",
+    "170 proof",
+    "192 proof",
+    "200 proof"
+   ],
+   "answer": 2,
+   "note": "Ninety-six percent alcohol. It is not a drink, it is a dare with a tax stamp."
+  },
+  {
+   "q": "What does the alcohol term proof originally come from?",
+   "options": [
+    "A French certification stamp",
+    "A British navy test where spirit-soaked gunpowder was lit",
+    "The number of distillation runs",
+    "A Dutch shipping tax"
+   ],
+   "answer": 1,
+   "note": "If the gunpowder still burned, the rum was proved. Sailors invented quality control with fire."
+  },
+  {
+   "q": "The nasty part of a hangover is largely caused by which byproduct of alcohol metabolism?",
+   "options": [
+    "Lactic acid",
+    "Acetaldehyde",
+    "Glucose",
+    "Ammonia"
+   ],
+   "answer": 1,
+   "note": "Your liver turns booze into something more toxic than booze before finishing the job. Thanks, liver."
+  },
+  {
+   "q": "Methanol in badly made moonshine is dangerous because the body turns it into what?",
+   "options": [
+    "Nitrous oxide",
+    "Acetone",
+    "Formaldehyde and formic acid",
+    "Pure ethanol"
+   ],
+   "answer": 2,
+   "note": "Blindness is the famous outcome. Buy your liquor from people with a license and a lawyer."
+  },
+  {
+   "q": "The hallucinogenic reputation of absinthe comes from thujone. What does the science actually say?",
+   "options": [
+    "Thujone causes permanent blindness",
+    "Thujone is a potent hallucinogen",
+    "Absinthe contains far too little thujone to do anything",
+    "Thujone only works with wine"
+   ],
+   "answer": 2,
+   "note": "The green fairy was just 140 proof. People were obliterated, not enlightened."
+  },
+  {
+   "q": "Albert Hofmann accidentally dosed himself with LSD and rode his bicycle home on which date, now celebrated as Bicycle Day?",
+   "options": [
+    "April 19, 1943",
+    "July 4, 1955",
+    "October 31, 1938",
+    "June 6, 1961"
+   ],
+   "answer": 0,
+   "note": "The worst commute in the history of chemistry."
+  },
+  {
+   "q": "MDMA was first synthesized and patented by which company, decades before anyone took it recreationally?",
+   "options": [
+    "Bayer",
+    "Sandoz",
+    "Pfizer",
+    "Merck"
+   ],
+   "answer": 3,
+   "note": "Patented in 1912 and then ignored for sixty years. Worst product launch ever, best eventual word of mouth."
+  },
+  {
+   "q": "Ketamine was originally developed and is still widely used as what?",
+   "options": [
+    "An antidepressant only",
+    "A migraine drug",
+    "A muscle relaxant",
+    "An anesthetic, including in veterinary medicine"
+   ],
+   "answer": 3,
+   "note": "Yes, the horse thing is real, and no, that is not why it is in the clinic."
+  },
+  {
+   "q": "Nitrous oxide was being used recreationally at upper-class parties as early as when?",
+   "options": [
+    "The 1950s",
+    "The 1920s",
+    "The early 1800s",
+    "The 1970s"
+   ],
+   "answer": 2,
+   "note": "Humphry Davy threw laughing gas parties for poets. Nothing is new, including your Saturday."
+  },
+  {
+   "q": "Amyl nitrite, better known as poppers, was originally prescribed for what?",
+   "options": [
+    "Insomnia",
+    "Motion sickness",
+    "Asthma",
+    "Chest pain from angina"
+   ],
+   "answer": 3,
+   "note": "A heart drug that found a second career. Happens to the best of us."
+  },
+  {
+   "q": "Viagra was originally being developed to treat what?",
+   "options": [
+    "Depression",
+    "Glaucoma",
+    "Male pattern baldness",
+    "Angina and high blood pressure"
+   ],
+   "answer": 3,
+   "note": "The trial participants kept declining to return their leftover pills. Data is data."
+  },
+  {
+   "q": "Minoxidil, sold as a hair-regrowth treatment, started out as what?",
+   "options": [
+    "A diuretic for livestock",
+    "An antihistamine",
+    "A topical anesthetic",
+    "A blood pressure medication"
+   ],
+   "answer": 3,
+   "note": "Patients grew hair in places they did not ask about. Somebody in marketing had a very good day."
+  },
+  {
+   "q": "Caffeine's estimated lethal dose for an adult works out to roughly how much brewed coffee?",
+   "options": [
+    "About 10 cups",
+    "About 25 cups",
+    "Somewhere north of 75 cups",
+    "About 300 cups"
+   ],
+   "answer": 2,
+   "note": "Your bladder files for divorce around cup nine, so you are statistically safe."
+  },
+  {
+   "q": "Nicotine's original industrial use was as what?",
+   "options": [
+    "An insecticide",
+    "A dye fixative",
+    "A solvent",
+    "A preservative"
+   ],
+   "answer": 0,
+   "note": "You are smoking bug spray with a filter on it."
+  },
+  {
+   "q": "A 2022 study counted the nerve fibers in the human clitoris for the first time. Roughly how many did it find?",
+   "options": [
+    "About 800",
+    "About 2,000",
+    "About 4,000",
+    "More than 10,000"
+   ],
+   "answer": 3,
+   "note": "More than 10,000, which is roughly double the old textbook guess. Textbooks were written by guys who did not check."
+  },
+  {
+   "q": "A 2015 review of 17 studies put the average erect human penis length at about what?",
+   "options": [
+    "4.2 inches",
+    "5.2 inches",
+    "6.5 inches",
+    "7.1 inches"
+   ],
+   "answer": 1,
+   "note": "13.1 centimeters. Everyone in this room just did math."
+  },
+  {
+   "q": "A study of penile fracture injuries found which sex position was involved most often?",
+   "options": [
+    "Woman-on-top positions",
+    "Falling asleep",
+    "Cold weather",
+    "Standing positions"
+   ],
+   "answer": 0,
+   "note": "Woman-on-top came out on top, so to speak. There is a whole body of urology literature on this."
+  },
+  {
+   "q": "Semen is made up of sperm plus fluid. Roughly what percentage is actual sperm?",
+   "options": [
+    "Less than 5 percent",
+    "About 25 percent",
+    "About half",
+    "About 80 percent"
+   ],
+   "answer": 0,
+   "note": "The rest is sugar, enzymes and transport fluid. Mostly packaging, like everything else."
+  },
+  {
+   "q": "The medical term for an erection that will not go away and requires emergency care is what?",
+   "options": [
+    "Priapism",
+    "Peyronie's",
+    "Paraphimosis",
+    "Phimosis"
+   ],
+   "answer": 0,
+   "note": "Named after Priapus, a Greek god with a famously permanent situation. Four hours and you call someone."
+  },
+  {
+   "q": "Which of these is true about the human G-spot?",
+   "options": [
+    "There is no agreed-upon distinct structure; it is likely part of the internal clitoral network",
+    "It was removed from medical texts in 1970",
+    "It only exists in about half of people",
+    "It is a distinct anatomical organ confirmed by dissection"
+   ],
+   "answer": 0,
+   "note": "Decades of searching and nobody has produced the thing. The clitoris is just bigger than advertised."
+  },
+  {
+   "q": "The widely repeated story that Victorian doctors invented the vibrator to treat female hysteria is what?",
+   "options": [
+    "Well documented in medical journals",
+    "Largely unsupported by evidence and traced to one poorly sourced book",
+    "Confirmed by patent records",
+    "True but only in France"
+   ],
+   "answer": 1,
+   "note": "A 2018 review tore it apart. Great movie premise, bad history."
+  },
+  {
+   "q": "Which animal, besides humans, is well documented to have sex for pleasure and use it socially?",
+   "options": [
+    "Komodo dragon",
+    "Bonobo",
+    "Giraffe",
+    "Wolf"
+   ],
+   "answer": 1,
+   "note": "Bonobos resolve basically every conflict this way. World peace is one strategy away."
+  },
+  {
+   "q": "The clitoris and penis develop from which embryonic structure?",
+   "options": [
+    "Different structures entirely",
+    "The same structure, the genital tubercle",
+    "The urogenital ridge only",
+    "The mesonephric duct"
+   ],
+   "answer": 1,
+   "note": "Same raw material, different final assembly. We are all working from one blueprint."
+  },
+  {
+   "q": "Nocturnal erections, sometimes called morning wood, happen roughly how often per night in healthy adult males?",
+   "options": [
+    "Never, it is a myth",
+    "Once, right before waking",
+    "Three to five times",
+    "Continuously all night"
+   ],
+   "answer": 2,
+   "note": "It is tied to REM sleep. Your body is just doing maintenance checks."
+  },
+  {
+   "q": "In 897, the Catholic Church held the Cadaver Synod, in which a dead pope was what?",
+   "options": [
+    "Canonized",
+    "Exhumed, dressed in robes, and put on trial",
+    "Reburied in Jerusalem",
+    "Declared still alive"
+   ],
+   "answer": 1,
+   "note": "They propped up the corpse and assigned a deacon to answer for it. Guilty, obviously."
+  },
+  {
+   "q": "Napoleon's preserved penis has reportedly done what since his death?",
+   "options": [
+    "Been buried with him",
+    "Stayed in Paris under guard",
+    "Been sold at auction more than once and ended up in a New Jersey collection",
+    "Been destroyed in a fire"
+   ],
+   "answer": 2,
+   "note": "Allegedly removed during the autopsy. The provenance is murky but the auction records are not."
+  },
+  {
+   "q": "Abraham Lincoln's coffin was reportedly opened or moved roughly how many times after his funeral?",
+   "options": [
+    "Never",
+    "Twice",
+    "Around 17 times",
+    "Around 50 times"
+   ],
+   "answer": 2,
+   "note": "Grave robbers, relocations and anxious officials checking he was still in there. Let the man rest."
+  },
+  {
+   "q": "In 1518 Strasbourg, dozens of people were struck by what strange affliction?",
+   "options": [
+    "Mass sleepwalking",
+    "Uncontrollable laughing",
+    "Compulsive dancing that went on for weeks",
+    "Collective muteness"
+   ],
+   "answer": 2,
+   "note": "Some reportedly danced until they collapsed. Authorities responded by hiring musicians. Bold call."
+  },
+  {
+   "q": "Astronomer Tycho Brahe died shortly after a banquet, reportedly from what?",
+   "options": [
+    "Mercury he ingested himself",
+    "Poisoned wine",
+    "A bladder or kidney problem after refusing to leave the table to urinate",
+    "A duel wound"
+   ],
+   "answer": 2,
+   "note": "Too polite to pee. Modern tests ruled out the mercury poisoning theory."
+  },
+  {
+   "q": "Tycho Brahe also famously wore a prosthetic nose. Why?",
+   "options": [
+    "A laboratory accident",
+    "Frostbite",
+    "A childhood illness",
+    "He lost the original in a sword duel over a math argument"
+   ],
+   "answer": 3,
+   "note": "A duel. Over mathematics. With his cousin. Peak sixteenth century."
+  },
+  {
+   "q": "Mummy brown, a real Victorian artist's pigment, was made from what?",
+   "options": [
+    "Burnt bone char",
+    "Iron-rich Nile clay",
+    "Bitumen from the Dead Sea",
+    "Ground-up Egyptian mummies"
+   ],
+   "answer": 3,
+   "note": "Painters stopped using it when they realized what was in the tube. Some took a while."
+  },
+  {
+   "q": "Scheele's green, a wildly popular Victorian wallpaper color, was dangerous because it contained what?",
+   "options": [
+    "Mercury",
+    "Radium",
+    "Lead",
+    "Arsenic"
+   ],
+   "answer": 3,
+   "note": "People slowly poisoned themselves because the drawing room looked fantastic. Priorities."
+  },
+  {
+   "q": "Eben Byers, a wealthy American, died in 1932 after years of drinking what?",
+   "options": [
+    "Chloroform cordial",
+    "Arsenic wine",
+    "Mercury tonic",
+    "Radium-infused water sold as a health drink"
+   ],
+   "answer": 3,
+   "note": "He drank roughly 1,400 bottles. His jaw and skull deteriorated. The product was called Radithor."
+  },
+  {
+   "q": "The Great Stink of 1858 finally forced London to build proper sewers because the smell did what?",
+   "options": [
+    "Overwhelmed Parliament, sitting right on the Thames",
+    "Spread to Paris",
+    "Ruined the Queen's garden party",
+    "Killed a thousand people in a week"
+   ],
+   "answer": 0,
+   "note": "Nothing motivates legislators like the problem reaching their own windows."
+  },
+  {
+   "q": "Bayer trademarked and marketed heroin in 1898 as what?",
+   "options": [
+    "A non-addictive cough suppressant",
+    "A treatment for malaria",
+    "A dental anesthetic",
+    "A sleep aid for infants"
+   ],
+   "answer": 0,
+   "note": "Sold over the counter alongside aspirin. One of those became the problem child."
+  },
+  {
+   "q": "Vin Mariani, a nineteenth-century cocaine-laced wine, famously received an endorsement from whom?",
+   "options": [
+    "Pope Leo XIII",
+    "Charles Darwin",
+    "The Tsar of Russia",
+    "Queen Victoria"
+   ],
+   "answer": 0,
+   "note": "He reportedly carried a hip flask of it and gave the company a gold medal. Blessed be the dose."
+  },
+  {
+   "q": "The 1919 Boston Molasses Disaster killed how many people?",
+   "options": [
+    "Nobody, it was property damage only",
+    "21",
+    "107",
+    "Over 300"
+   ],
+   "answer": 1,
+   "note": "A wave of molasses moving around 35 miles an hour. The harbor reportedly smelled sweet for years."
+  },
+  {
+   "q": "Mike the Headless Chicken survived for roughly how long after losing his head in 1945?",
+   "options": [
+    "Two days",
+    "Three weeks",
+    "About 18 months",
+    "Nine years"
+   ],
+   "answer": 2,
+   "note": "The axe missed the brain stem. He was fed with a dropper and toured the country."
+  },
+  {
+   "q": "Which one-man wrecking crew invented both leaded gasoline and chlorofluorocarbons?",
+   "options": [
+    "Thomas Midgley Jr.",
+    "Wallace Carothers",
+    "Robert Kehoe",
+    "Fritz Haber"
+   ],
+   "answer": 0,
+   "note": "Two world-scale environmental disasters, one resume. He has been called the most destructive organism in history."
+  },
+  {
+   "q": "Ozzy Osbourne bit the head off a bat onstage in 1982 and then had to get what?",
+   "options": [
+    "Stitches in his tongue",
+    "A course of rabies shots",
+    "A tetanus booster",
+    "Nothing, he was fine"
+   ],
+   "answer": 1,
+   "note": "He thought it was rubber. It was not rubber."
+  },
+  {
+   "q": "Honey essentially does not spoil. Why?",
+   "options": [
+    "It is sterile when sealed",
+    "Low water content, acidity and bee-made peroxide block microbes",
+    "Bees add a natural preservative salt",
+    "It is simply too sweet for bacteria to notice"
+   ],
+   "answer": 1,
+   "note": "The famous edible-tomb-honey story is thinly sourced, but the chemistry is real. Honey does not spoil, it just gets smug."
+  },
+  {
+   "q": "The record for longest documented time a person has gone without sleep, set in 1964, is about what?",
+   "options": [
+    "48 hours",
+    "About 11 days",
+    "About 20 days",
+    "About 40 days"
+   ],
+   "answer": 1,
+   "note": "264 hours. By the end he was hallucinating and failing basic math. Guinness stopped accepting attempts."
+  },
+  {
+   "q": "Joey Chestnut's record for hot dogs and buns eaten in 10 minutes stands at what?",
+   "options": [
+    "54",
+    "63",
+    "76",
+    "91"
+   ],
+   "answer": 2,
+   "note": "Seventy-six. Set in 2021. Do not think about the hours afterward."
+  },
+  {
+   "q": "A fart is flammable mainly because of which gases?",
+   "options": [
+    "Carbon dioxide and oxygen",
+    "Hydrogen and methane",
+    "Nitrogen and argon",
+    "Hydrogen sulfide alone"
+   ],
+   "answer": 1,
+   "note": "Hydrogen sulfide does the smelling, hydrogen and methane do the burning. Different departments."
+  },
+  {
+   "q": "Not everybody's gut produces methane. Roughly what share of people are methane producers?",
+   "options": [
+    "All of them",
+    "Fewer than 5 percent",
+    "Somewhere between a third and half",
+    "About 95 percent"
+   ],
+   "answer": 2,
+   "note": "Estimates vary by population, but plenty of people make none at all. So only some of you can be lit on fire."
+  },
+  {
+   "q": "Which of these is actually in the top tier of strongest known natural poisons by weight?",
+   "options": [
+    "Cyanide",
+    "Botulinum toxin",
+    "Arsenic",
+    "Strychnine"
+   ],
+   "answer": 1,
+   "note": "And people pay to have small amounts injected into their foreheads. Context is everything."
+  },
+  {
+   "q": "Mount Everest has a growing problem with what, enough that climbers are now required to pack it out?",
+   "options": [
+    "Abandoned tents",
+    "Oxygen canisters",
+    "Human feces",
+    "Dead batteries"
+   ],
+   "answer": 2,
+   "note": "Decades of accumulated human waste on a frozen mountain. The view is still nice."
+  },
+  {
+   "q": "The Icelandic Phallological Museum in Reykjavik collects what?",
+   "options": [
+    "Volcanic rock formations",
+    "Fertility statues",
+    "Penile specimens from Icelandic mammals",
+    "Ancient Norse weapons"
+   ],
+   "answer": 2,
+   "note": "Over two hundred specimens, including human donations. Tourism is a broad church."
+  },
+  {
+   "q": "What was Listerine aggressively marketed as before it was mouthwash?",
+   "options": [
+    "A hair tonic only",
+    "An aftershave",
+    "A cough syrup",
+    "A floor cleaner and surgical antiseptic"
+   ],
+   "answer": 3,
+   "note": "They basically invented the idea that bad breath was a social emergency, then sold the cure."
+  },
+  {
+   "q": "Beer goggles have been studied scientifically. What do the better studies generally find?",
+   "options": [
+    "No effect whatsoever",
+    "A reverse effect",
+    "A huge effect on perceived attractiveness",
+    "A modest effect, with bigger effects on confidence and willingness to approach"
+   ],
+   "answer": 3,
+   "note": "Alcohol does not fix their face, it fixes your judgment about approaching it."
+  },
+  {
+   "q": "What does alcohol do to your sleep?",
+   "options": [
+    "Has no measurable effect",
+    "Only affects REM in heavy drinkers",
+    "Deepens it across the whole night",
+    "Knocks you out faster but wrecks the second half of the night"
+   ],
+   "answer": 3,
+   "note": "You pass out quickly and then wake at 4 a.m. staring at the ceiling, reviewing your decisions."
+  },
+  {
+   "q": "Hangovers get worse with age mainly because of what?",
+   "options": [
+    "Changing stomach acid only",
+    "Nothing, it is psychological",
+    "Your liver literally shrinks",
+    "A mix of slower metabolism, less water in the body, and worse sleep"
+   ],
+   "answer": 3,
+   "note": "It is not one thing. It is everything, slowly, at once. Enjoy your thirties."
+  },
+  {
+   "q": "Which of these drinks is most likely to give you a worse hangover at the same alcohol dose?",
+   "options": [
+    "Gin",
+    "Light rum",
+    "Vodka",
+    "Bourbon"
+   ],
+   "answer": 3,
+   "note": "Darker spirits carry more congeners. The brown stuff tastes better and charges interest."
+  },
+  {
+   "q": "Bayer marketed heroin as a non-addictive substitute for morphine and sold it as a remedy for what?",
+   "options": [
+    "Coughs",
+    "Toothache",
+    "Baldness",
+    "Seasickness"
+   ],
+   "answer": 0,
+   "note": "Bayer sold it as a cough medicine from 1898. Turned out it had one of the highest addiction rates of anything they ever bottled."
+  },
+  {
+   "q": "The Great Molasses Flood of 1919 killed 21 people in Boston's North End. How fast was the molasses wave estimated to be moving?",
+   "options": [
+    "About 5 mph",
+    "About 12 mph",
+    "About 35 mph",
+    "About 90 mph"
+   ],
+   "answer": 2,
+   "note": "Around 35 mph. People were killed by syrup moving faster than the cars of the day."
+  },
+  {
+   "q": "Pittsburgh industrialist Eben Byers drank roughly 1,400 bottles of a radium tonic called Radithor. What eventually had to be removed?",
+   "options": [
+    "Most of his upper and lower jaw",
+    "His stomach",
+    "Both of his hands",
+    "One lung"
+   ],
+   "answer": 0,
+   "note": "Most of his jaw. He was buried in a lead-lined coffin in 1932, and he is still radioactive."
+  },
+  {
+   "q": "In 1848 a tamping iron blew through Phineas Gage's skull behind his left eye. How long did he live afterward?",
+   "options": [
+    "Three days",
+    "Eleven months",
+    "Just under 12 years",
+    "Forty years"
+   ],
+   "answer": 2,
+   "note": "He died in 1860, nearly 12 years later. He kept working, and he kept the iron."
+  },
+  {
+   "q": "Mike the Headless Chicken of Fruita, Colorado survived decapitation in 1945. For how long?",
+   "options": [
+    "Nine days",
+    "Six weeks",
+    "About 18 months",
+    "Nine years"
+   ],
+   "answer": 2,
+   "note": "About 18 months. The axe missed the jugular and most of the brain stem. He was fed with an eyedropper."
+  },
+  {
+   "q": "Henry Ford built a rubber-plantation company town in the Brazilian Amazon in 1928. What sparked the 1930 worker revolt there?",
+   "options": [
+    "Unpaid wages",
+    "A snake infestation",
+    "A ban on soccer",
+    "The cafeteria food"
+   ],
+   "answer": 3,
+   "note": "The cafeteria. Ford imposed oatmeal, brown rice and canned peaches on Amazonian laborers, and they drove the managers into the jungle."
+  },
+  {
+   "q": "The London Beer Flood of 1814 released a wave of porter into the St Giles slum. How many people died?",
+   "options": [
+    "Nobody",
+    "Eight",
+    "Forty-two",
+    "Over two hundred"
+   ],
+   "answer": 1,
+   "note": "Eight, five of them mourners at a wake. The inquest ruled it an act of misfortune and the brewery paid nothing."
+  },
+  {
+   "q": "King Mithridates VI spent years taking small doses of poison to build immunity. How did that work out when he tried to poison himself?",
+   "options": [
+    "It failed and he needed a sword",
+    "It worked instantly",
+    "He changed his mind",
+    "He was rescued"
+   ],
+   "answer": 0,
+   "note": "It failed. By Appian's account he had to ask his bodyguard to finish the job with a blade."
+  },
+  {
+   "q": "Typhoid Mary spent about 26 years in forced quarantine. What got her locked up the second time?",
+   "options": [
+    "Escaping to Canada",
+    "Refusing surgery",
+    "Selling contaminated milk",
+    "Cooking at a maternity hospital under a fake name"
+   ],
+   "answer": 3,
+   "note": "She took a job as a hospital cook calling herself Mary Brown, and started another outbreak."
+  },
+  {
+   "q": "In the 1518 dancing plague of Strasbourg, dozens of people danced uncontrollably for weeks. What did the city authorities first try?",
+   "options": [
+    "Hiring musicians to play for them",
+    "Arresting them",
+    "Burning the town square",
+    "Draining the wells"
+   ],
+   "answer": 0,
+   "note": "They brought in musicians and a guildhall, on the theory that the dancers needed to dance it out. It did not help."
+  },
+  {
+   "q": "Outlaw Elmer McCurdy's mummified corpse was found in 1976 hanging in a California funhouse. Who found it?",
+   "options": [
+    "A health inspector",
+    "A group of teenagers",
+    "The park's new owner",
+    "A TV crew filming an episode"
+   ],
+   "answer": 3,
+   "note": "A crew filming The Six Million Dollar Man. A prop man moved what he thought was a dummy and its arm came off."
+  },
+  {
+   "q": "Cocaine was removed from Coca-Cola in 1903. What does the company reportedly still import coca leaves for?",
+   "options": [
+    "Spent, cocaine-free leaf as a flavoring",
+    "Nothing, it stopped entirely",
+    "Caffeine extraction",
+    "Red food coloring"
+   ],
+   "answer": 0,
+   "note": "Spent leaf. A New Jersey plant strips the cocaine for pharmaceutical use and the leftovers reportedly still go into the syrup."
+  },
+  {
+   "q": "Trepanation, drilling a hole in a living skull, is among the oldest known surgeries. How far back does the archaeological evidence go?",
+   "options": [
+    "About 500 years",
+    "About 1,500 years",
+    "About 3,000 years",
+    "7,000 to 10,000 years"
+   ],
+   "answer": 3,
+   "note": "Seven to ten thousand years. At one French site, 40 of 120 skulls had holes, and many show signs of healing."
+  },
+  {
+   "q": "Walter Freeman performed or supervised more than 3,500 transorbital lobotomies. What was his original instrument?",
+   "options": [
+    "A surgical drill",
+    "A sharpened spoon",
+    "A dental probe",
+    "An ice pick from his kitchen"
+   ],
+   "answer": 3,
+   "note": "A kitchen ice pick. He also toured hospitals in a customized van the press later called the lobotomobile."
+  },
+  {
+   "q": "Thalidomide caused severe birth defects in an estimated 10,000 to 20,000 babies. What was it sold to treat?",
+   "options": [
+    "Morning sickness and anxiety",
+    "Infections",
+    "High blood pressure",
+    "Arthritis"
+   ],
+   "answer": 0,
+   "note": "It was a sedative pitched to pregnant women for morning sickness. Roughly 40 percent of affected infants died at or shortly after birth."
+  },
+  {
+   "q": "Pervitin, issued widely to German forces starting in 1938, was which drug?",
+   "options": [
+    "Cocaine",
+    "Methamphetamine",
+    "Heroin",
+    "Morphine"
+   ],
+   "answer": 1,
+   "note": "Methamphetamine, in tablet form. The withdrawal was bad enough that the army started cutting back by 1940."
+  },
+  {
+   "q": "The beef tapeworm, Taenia saginata, can live about 25 years in a human. How long can one get?",
+   "options": [
+    "Under 1 meter",
+    "About 2 meters",
+    "4 to 10 meters, with reports over 22",
+    "Around 50 meters"
+   ],
+   "answer": 2,
+   "note": "Usually 4 to 10 meters. Specimens over 22 meters have been reported, which is longer than a school bus."
+  },
+  {
+   "q": "The Demodex mites living in the pores of most adult human faces do what at night?",
+   "options": [
+    "Hibernate",
+    "Burrow into muscle",
+    "Migrate to the scalp",
+    "Crawl out and mate on your skin"
+   ],
+   "answer": 3,
+   "note": "They come out in the dark to mate on your face, then crawl back into your pores before morning."
+  },
+  {
+   "q": "In 1858 the Thames got so foul that Parliament rushed through a sewer bill. What finally forced their hand?",
+   "options": [
+    "The smell reaching their own chamber",
+    "A cholera outbreak in the Commons",
+    "A collapsed bridge",
+    "The Queen's complaint"
+   ],
+   "answer": 0,
+   "note": "The stench. They had ignored it for years, then passed a 3 million pound sewer bill in 18 days once it reached their windows."
+  },
+  {
+   "q": "In the 1618 Defenestration of Prague, three men were thrown about 70 feet from a window. What happened to them?",
+   "options": [
+    "All three died",
+    "All three survived",
+    "Two died, one survived",
+    "They were caught in a net"
+   ],
+   "answer": 1,
+   "note": "All three lived. Catholics credited angels, and Protestant pamphleteers later claimed they landed in a dung heap."
+  },
+  {
+   "q": "Charles Osborne holds the record for the longest attack of hiccups. How long did it last?",
+   "options": [
+    "Nine days",
+    "Eight months",
+    "Twelve years",
+    "Sixty-eight years"
+   ],
+   "answer": 3,
+   "note": "Sixty-eight years, from 1922 to 1990, estimated at 430 million hiccups. They stopped on their own a year before he died."
+  },
+  {
+   "q": "The corpse flower, Amorphophallus titanum, stinks of rotting meat. How far away can the smell be detected?",
+   "options": [
+    "About 10 feet",
+    "About 100 feet",
+    "Up to half a mile",
+    "Up to 20 miles"
+   ],
+   "answer": 2,
+   "note": "Up to half a mile. The blend includes compounds that smell like feces, rotting fish and sweaty socks, and it peaks at night."
+  },
+  {
+   "q": "The Donner Party set out with 87 members in 1846. How many survived?",
+   "options": [
+    "Twelve",
+    "Forty-eight",
+    "Seventy-one",
+    "Only two"
+   ],
+   "answer": 1,
+   "note": "Forty-eight. Some ate the dead, and two Miwok guides were murdered and eaten."
+  },
+  {
+   "q": "The Radium Girls got radiation poisoning at a New Jersey watch-dial factory. How was the radium getting into them?",
+   "options": [
+    "They inhaled dust",
+    "They pointed the brushes with their lips",
+    "It soaked through their gloves",
+    "It was in the drinking water"
+   ],
+   "answer": 1,
+   "note": "They put the brushes in their mouths to shape the tips. Some painted their teeth with it for fun on dates."
+  },
+  {
+   "q": "Tollund Man, a bog body from around 400 BCE, was so well preserved researchers identified his last meal. What was it?",
+   "options": [
+    "Roast pork",
+    "Honey and figs",
+    "Barley porridge",
+    "Nothing, he starved"
+   ],
+   "answer": 2,
+   "note": "Barley porridge with seeds and a bit of fish, eaten 12 to 24 hours before he was hanged. His stubble and eyelashes survived too."
+  },
+  {
+   "q": "In parts of Britain and Ireland, a \"sin-eater\" was paid to do what at a funeral?",
+   "options": [
+    "Dig the grave at night",
+    "Eat bread and ale over the corpse",
+    "Burn the dead person's clothes",
+    "Sleep in the coffin first"
+   ],
+   "answer": 1,
+   "note": "Eat a meal off or over the body to absorb the dead person's sins. The pay was lousy and the job made you an outcast."
+  },
+  {
+   "q": "Cannabinoid hyperemesis syndrome causes relentless vomiting. What famously relieves it?",
+   "options": [
+    "Ice packs",
+    "Standing on your head",
+    "Very hot showers",
+    "Black coffee"
+   ],
+   "answer": 2,
+   "note": "Scalding hot showers, so reliably that compulsive bathing is treated as a diagnostic clue. Some patients burn themselves doing it."
+  },
+  {
+   "q": "The \"wick effect\" is the natural explanation for bodies that burn almost completely in otherwise undamaged rooms. What acts as the wick?",
+   "options": [
+    "The hair",
+    "Charred clothing soaked in body fat",
+    "The bones",
+    "The carpet"
+   ],
+   "answer": 1,
+   "note": "Burned clothing wicks up melted subcutaneous fat and keeps the body burning like a candle for hours. It has been tested with pig tissue."
+  },
+  {
+   "q": "Sarah Winchester's bizarre San Jose mansion has stairs that go nowhere and doors opening onto walls. What actually explains most of it?",
+   "options": [
+    "Instructions from a medium",
+    "A hidden vault",
+    "Earthquake damage and endless remodeling",
+    "Deliberate anti-burglar design"
+   ],
+   "answer": 2,
+   "note": "The 1906 earthquake plus 22 years of unplanned additions. The ghost story came later and sells better."
+  },
+  {
+   "q": "What is the medical term for a stomach rumble?",
+   "options": [
+    "Borborygmus",
+    "Bruxism",
+    "Tinnitus",
+    "Singultus"
+   ],
+   "answer": 0,
+   "note": "Borborygmus. It is just gas and fluid being squeezed through your intestines, and it has nothing to do with being hungry."
+  }
+ ]
 }

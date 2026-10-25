@@ -117,6 +117,9 @@ export class Host {
 
   async finish() {
     clearTimeout(this.timer);
+    // When something else is driving (the board game), hand control back
+    // instead of declaring the party over.
+    if (this.onFinish) return this.onFinish();
     await this.room.patchRound({ phase: 'final' });
     await this.room.setPhase('scoreboard');
   }

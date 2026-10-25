@@ -697,3 +697,151 @@ body.playing #endgame + .badge { margin-left: .6rem; }
   * { animation: none !important; transition: none !important; }
   .vgrid .vcard, .vcard.won { transform: none; }
 }
+
+/* ============================== BOARD ==================================== */
+
+.boardgrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: .5rem;
+  width: min(1250px, 100%);
+  aspect-ratio: 6 / 4;
+  max-height: 68dvh;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .15rem;
+  border: 3px solid var(--ink-3);
+  background: var(--ink-2);
+  border-radius: 4px;
+  padding: .4rem;
+  text-align: center;
+  min-width: 0;
+}
+.tlabel {
+  font-weight: 800;
+  font-size: clamp(.6rem, 1.05vw, .95rem);
+  line-height: 1.1;
+  color: var(--chalk);
+}
+.tamt {
+  font-family: var(--display);
+  letter-spacing: var(--track-md);
+  font-size: clamp(.75rem, 1.3vw, 1.2rem);
+  line-height: 1;
+}
+
+.tile.tmini  { border-color: var(--hot); background: rgba(255,45,122,.14); }
+.tile.tmini  .tlabel { color: var(--hot); }
+.tile.tpay   { border-color: var(--volt); }
+.tile.tpay   .tamt { color: var(--volt); }
+.tile.tloss  { border-color: var(--hot-deep); }
+.tile.tloss  .tamt { color: var(--hot); }
+.tile.tswap  { border-color: var(--mute); }
+.tile.twild  { border-style: dashed; border-color: var(--chalk); }
+.tile.trest  { opacity: .55; }
+
+.tokens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .1rem;
+  margin-top: .15rem;
+  min-height: 1.4em;
+}
+.token { font-size: clamp(.9rem, 1.7vw, 1.5rem); line-height: 1; }
+.token.up {
+  filter: drop-shadow(0 0 7px var(--hot));
+}
+
+.bcentre {
+  grid-area: 2 / 2 / 4 / 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  text-align: center;
+  padding: 1rem;
+  min-width: 0;
+}
+.bturn { color: var(--mute); font-size: clamp(.85rem, 1.3vw, 1.1rem); }
+.bname {
+  font-family: var(--display);
+  letter-spacing: var(--track-lg);
+  font-size: clamp(1.6rem, 4vw, 3.4rem);
+  color: var(--card);
+  line-height: 1.1;
+}
+.bhint { color: var(--mute); font-size: clamp(.9rem, 1.5vw, 1.3rem); }
+.bdie {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1;
+  color: var(--hot);
+}
+.bmsg {
+  font-family: var(--display);
+  letter-spacing: var(--track-lg);
+  font-size: clamp(1.1rem, 2.6vw, 2.2rem);
+  color: var(--card);
+  line-height: 1.2;
+  max-width: 24ch;
+}
+
+.bscores {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+.bchip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: var(--ink-2);
+  border: 2px solid var(--ink-3);
+  padding: .35rem .7rem;
+  font-weight: 600;
+  font-size: .95rem;
+}
+.bchip b {
+  font-family: var(--display);
+  letter-spacing: var(--track-md);
+  color: var(--hot);
+}
+
+.miniwrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .8rem;
+  width: 100%;
+}
+.minibadge {
+  border: 2px solid var(--hot);
+  color: var(--hot);
+  font-weight: 800;
+  font-size: .9rem;
+  padding: .3rem .8rem;
+}
+
+.hugebtn.roll {
+  background: var(--hot);
+  color: var(--ink);
+  min-height: 14rem;
+  font-size: 3.4rem;
+}
+
+@media (max-width: 760px) {
+  .boardgrid { gap: .3rem; max-height: 52dvh; }
+  .tlabel { font-size: .55rem; }
+  .tokens { min-height: 1.1em; }
+}

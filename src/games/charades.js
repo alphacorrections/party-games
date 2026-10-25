@@ -29,6 +29,9 @@ export class Host {
     this.room      = room;
     this.categoryName = opts.category || null;
     this.turnsEach = opts.rounds || meta.defaultRounds;
+    // When the board game runs this as a one-tile minigame it names the single
+    // player who has to do it, instead of queueing a turn for everybody.
+    this.only      = opts.only || null;
     this.timer     = null;
     this.words     = [];
     this.queue     = [];
@@ -54,12 +57,16 @@ export class Host {
     await this.room.setGame('charades');
     await this.room.setPhase('playing');
 
-    const players = playerList(await this.room.players())
+    const all = playerList(await this.room.players())
       .sort((a, b) => (a.joinedAt || 0) - (b.joinedAt || 0));
+    const players = this.only
+      ? all.filter(p => this.only.includes(p.id))
+      : all;
     this.queue = [];
     for (let t = 0; t < this.turnsEach; t++) {
       for (const p of players) this.queue.push(p.id);
     }
+    if (!this.queue.length) this.queue = all.slice(0, 1).map(p => p.id);
     this.turnNo = 0;
     await this.ready();
   }
@@ -134,6 +141,9 @@ export class Host {
 
   async finish() {
     clearTimeout(this.timer);
+    // When something else is driving (the board game), hand control back
+    // instead of declaring the party over.
+    if (this.onFinish) return this.onFinish();
     await this.room.patchRound({ phase: 'final' });
     await this.room.setPhase('scoreboard');
   }

@@ -11,7 +11,8 @@ import { esc, playerList, sortedPlayers, countdown } from './util.js';
 const ENGINES = {
   quiz:       () => import('./games/quiz.js'),
   promptvote: () => import('./games/promptvote.js'),
-  charades:   () => import('./games/charades.js')
+  charades:   () => import('./games/charades.js'),
+  board:      () => import('./games/board.js')
 };
 
 const GAME_MENU = [
@@ -19,7 +20,8 @@ const GAME_MENU = [
   { id: 'promptvote', opts: { mode: 'pick', judge: 'all' },    label: 'Fill In The Blank',  sub: 'Play a card. Everyone votes.' },
   { id: 'promptvote', opts: { mode: 'pick', judge: 'czar' },   label: 'Fill In The Blank — Judge', sub: 'One rotating judge picks.' },
   { id: 'promptvote', opts: { mode: 'type', judge: 'all' },    label: 'Write Your Own',     sub: 'Type an answer. Funniest wins.' },
-  { id: 'charades',   opts: {},                               label: 'Shout It Out',       sub: 'Word on the TV, you face away.' }
+  { id: 'charades',   opts: {},                               label: 'Shout It Out',       sub: 'Word on the TV, you face away.' },
+  { id: 'board',      opts: {},                               label: 'Spiral',             sub: 'A board. Minigames. Consequences.' }
 ];
 
 const el = id => document.getElementById(id);
@@ -57,6 +59,8 @@ class HostApp {
       this.engine?.onPlayers?.(this.players);
     });
     this.room.on('round',   v => { this.round = v; this.render(); });
+    this.room.on('board',   v => { this.board = v; this.render(); });
+    this.room.on('mini',    v => this.onMini(v));
     this.room.on('phase',   v => { this.phase = v; this.render(); });
     this.room.on('submissions', v => this.engine?.onSubmissions?.(v || {}, this.players));
     this.room.on('votes',       v => this.engine?.onVotes?.(v || {}, this.players));
@@ -118,33 +122,57 @@ class HostApp {
     await this.engine.begin();
   }
 
+  /** Load the engine module for a minigame the board just started. */
+  async onMini(mini) {
+    if (!mini || !mini.id) { this.miniMod = null; return this.render(); }
+    this.miniMod = await ENGINES[mini.id]();
+    this.render();
+  }
+
   async onIntent(intent) {
-    if (!intent || this.gameId !== 'charades' || !this.engine) return;
+    if (!intent || !this.engine) return;
     if (intent.at && intent.at === this._lastIntentAt) return;
     this._lastIntentAt = intent.at;
-    await this.engine.resolve(intent.result);
+
+    if (intent.action === 'roll') {
+      await this.engine.onIntent?.(intent);
+    } else if (intent.result) {
+      // Charades GOT IT / SKIP, standalone or running inside the board.
+      if (this.gameId === 'charades') await this.engine.resolve(intent.result);
+      else await this.engine.charadesResolve?.(intent.result);
+    }
     await this.room.t.remove(`${this.room.base}/intent`);
   }
 
   render() {
+    if (this.gameId === 'board' && this.board && this.phase !== 'lobby') {
+      document.body.classList.add('playing');
+      setHTML('stage', this.mod.hostView(this.board, this.players, this.round, this.miniMod));
+      if (this.board.phase === 'final' && !this._committed) this.commitResults();
+      return;
+    }
     if (!this.round || this.phase === 'lobby') {
       document.body.classList.remove('playing');
       setHTML('stage', '');
       return;
     }
     document.body.classList.add('playing');
-    setHTML('stage', this.mod ? this.mod.hostView(this.round, this.players) : '');
+    setHTML('stage', this.gameId === 'board'
+      ? this.mod.hostView(this.board, this.players, this.round, this.miniMod)
+      : (this.mod ? this.mod.hostView(this.round, this.players) : ''));
 
-    if (this.round.phase === 'final' && !this._committed) {
-      this._committed = true;
-      const results = sortedPlayers(this.players)
-        .map(p => ({ name: p.name, score: p.score || 0 }));
-      commitGame(this.gameId, this.room.code, results).catch(console.error);
-      // Bring the lobby back underneath the final scores so "play again" works.
-      document.body.classList.remove('playing');
-      const again = el('again');
-      if (again) again.hidden = false;
-    }
+    if (this.round.phase === 'final' && !this._committed) this.commitResults();
+  }
+
+  commitResults() {
+    this._committed = true;
+    const results = sortedPlayers(this.players)
+      .map(p => ({ name: p.name, score: p.score || 0 }));
+    commitGame(this.gameId, this.room.code, results).catch(console.error);
+    // Bring the lobby back underneath the final scores so "play again" works.
+    document.body.classList.remove('playing');
+    const again = el('again');
+    if (again) again.hidden = false;
   }
 
   /** Keep countdown elements ticking without re-rendering the whole stage. */
@@ -175,6 +203,10 @@ class HostApp {
     await this.room.setRound(null);
     await this.room.clearRoundData();
     await this.room.t.remove(`${this.room.base}/hands`);
+    await this.room.t.remove(`${this.room.base}/board`);
+    await this.room.t.remove(`${this.room.base}/mini`);
+    this.board = null;
+    this.miniMod = null;
     await this.room.setPhase('lobby');
     for (const pid of Object.keys(this.players)) {
       await this.room.t.set(`${this.room.base}/players/${pid}/score`, 0);
@@ -196,6 +228,10 @@ class HostApp {
     await this.room.setRound(null);
     await this.room.clearRoundData();
     await this.room.t.remove(`${this.room.base}/hands`);
+    await this.room.t.remove(`${this.room.base}/board`);
+    await this.room.t.remove(`${this.room.base}/mini`);
+    this.board = null;
+    this.miniMod = null;
     for (const pid of Object.keys(this.players)) {
       await this.room.t.set(`${this.room.base}/players/${pid}/score`, 0);
     }

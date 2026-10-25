@@ -9,7 +9,8 @@ import { esc } from './util.js';
 const ENGINES = {
   quiz:       () => import('./games/quiz.js'),
   promptvote: () => import('./games/promptvote.js'),
-  charades:   () => import('./games/charades.js')
+  charades:   () => import('./games/charades.js'),
+  board:      () => import('./games/board.js')
 };
 
 const el = id => document.getElementById(id);
@@ -20,8 +21,10 @@ class PlayApp {
     this.me = {};
     this.state = { draft: [] };
     this.mod = null;
+    this.miniMod = null;
     this.gameId = null;
     this.round = null;
+    this.board = null;
     this.hand = [];
     this.submitted = false;
     this.voted = false;
@@ -57,6 +60,8 @@ class PlayApp {
 
     room.on('game',  v => this.onGame(v));
     room.on('round', v => this.onRound(v));
+    room.on('board', v => { this.board = v; this.render(); });
+    room.on('mini',  v => this.onMini(v));
     room.on('phase', v => { this.phase = v; this.render(); });
     room.on(`hands/${this.me.id}`,       v => { this.hand = v || []; this.render(); });
     room.on(`submissions/${this.me.id}`, v => { this.submitted = Boolean(v); this.render(); });
@@ -81,6 +86,8 @@ class PlayApp {
       this.mod = null;
       this.round = null;
       this.hand = [];
+      this.board = null;
+      this.miniMod = null;
       this.submitted = false;
       this.voted = false;
       this.state.draft = [];
@@ -88,6 +95,12 @@ class PlayApp {
     }
     this.gameId = id;
     this.mod = await ENGINES[id]();
+    this.render();
+  }
+
+  async onMini(mini) {
+    if (!mini || !mini.id) { this.miniMod = null; this.state.draft = []; return this.render(); }
+    this.miniMod = await ENGINES[mini.id]();
     this.render();
   }
 
@@ -109,7 +122,11 @@ class PlayApp {
         `<div class="pcard"><h2>You're in</h2><p>Waiting for the host to pick a game.</p></div>`);
       return;
     }
-    if (this.gameId === 'promptvote') {
+    if (this.gameId === 'board') {
+      setHTML('pstage', this.mod.playerView(
+        this.board, this.me, this.round, this.miniMod,
+        this.hand, this.submitted, this.voted, this.state.draft));
+    } else if (this.gameId === 'promptvote') {
       setHTML('pstage', this.mod.playerView(
         this.round, this.me, this.hand, this.submitted, this.voted, this.state.draft));
     } else if (this.gameId === 'charades') {
@@ -121,7 +138,10 @@ class PlayApp {
 
   async act(action) {
     if (!this.mod || !this.mod.handleAction) return;
-    const res = await this.mod.handleAction(this.room, this.me, action, this.round, this.state);
+    const res = this.gameId === 'board'
+      ? await this.mod.handleAction(this.room, this.me, action, this.board,
+                                    this.state, this.round, this.miniMod)
+      : await this.mod.handleAction(this.room, this.me, action, this.round, this.state);
     if (res && res.rerender) this.render();
   }
 
