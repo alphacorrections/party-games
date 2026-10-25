@@ -100,17 +100,17 @@ function buildTiles() {
     const m = shuffle(mix).slice(0, idxs.length);
     idxs.forEach((i, k) => { t[i] = m[k] || { t: 'rest', label: 'Nothing' }; });
   };
-  fill(ZONES[0], [ { t:'mini',label:'Minigame' }, { t:'pay',label:'Tab Paid',amount:400 }, { t:'item',label:'Item' },
+  fill(ZONES[0], [ { t:'mini',label:'Minigame' }, { t:'pay',label:'Found Cash',amount:400 }, { t:'item',label:'Item' },
                    { t:'loss',label:'Bar Tab',amount:400 }, { t:'mini',label:'Minigame' }, { t:'event',label:'Last Call',ev:'lastcall' },
-                   { t:'item',label:'Item' } ]);
+                   { t:'event',label:'Round On You',ev:'roundonyou' } ]);
   fill(ZONES[1], [ { t:'mini',label:'Minigame' }, { t:'loss',label:'Fine',amount:600 }, { t:'event',label:'Audit',ev:'audit' },
                    { t:'item',label:'Item' }, { t:'pay',label:'Settlement',amount:700 }, { t:'loss',label:'Bail',amount:900 },
-                   { t:'mini',label:'Minigame' } ]);
+                   { t:'event',label:'Snitch',ev:'snitch' } ]);
   fill(ZONES[2], [ { t:'mini',label:'Minigame' }, { t:'pay',label:'Copay Back',amount:500 }, { t:'item',label:'Item' },
                    { t:'event',label:'Group',ev:'group' }, { t:'loss',label:'Relapse',amount:700 }, { t:'mini',label:'Minigame' },
-                   { t:'pay',label:'Refund',amount:300 } ]);
+                   { t:'event',label:'Urine Test',ev:'uatest' } ]);
   fill(ZONES[3], [ { t:'mini',label:'Minigame' }, { t:'event',label:'Flip',ev:'flip' }, { t:'item',label:'Item' },
-                   { t:'pay',label:'Windfall',amount:900 }, { t:'mini',label:'Minigame' }, { t:'loss',label:'Hangover',amount:500 } ]);
+                   { t:'pay',label:'Windfall',amount:900 }, { t:'event',label:'Blackout',ev:'blackout' }, { t:'loss',label:'Hangover',amount:500 } ]);
   return t;
 }
 
@@ -267,6 +267,7 @@ export class Host {
     const lap = passedStart ? ` (+${LAP_BONUS} for the lap)` : '';
     const zone = zoneOf(idx);
     let tile = b.tiles[idx];
+    const endgame = b.turnNo >= b.maxTurns - 1;            // last two turns: stakes double
 
     // Duel: someone else is already here.
     const others = (b.order || []).filter(id => id !== b.active && (b.positions[id] || 0) === idx);
@@ -276,14 +277,15 @@ export class Host {
     }
 
     let message = null; const patch = {}; let shieldPatch = null;
-    const pay = Math.round((tile.amount || 0) * zone.payMult);
+    const pay = Math.round((tile.amount || 0) * zone.payMult * (endgame ? 2 : 1));
+    const stakes = endgame ? ' (double stakes)' : '';
 
     switch (tile.t) {
       case 'start':  message = `${who.name} lands on Start${lap}`; break;
-      case 'pay':    await this.room.addScore(b.active, pay); message = `${who.name} collects ${pay}${lap}`; break;
+      case 'pay':    await this.room.addScore(b.active, pay); message = `${who.name} collects ${pay}${stakes}${lap}`; break;
       case 'loss': {
         const took = await this.charge(b.active, pay, b);
-        if (took) { patch.pot = (b.pot || 0) + took; message = `${who.name} loses ${took} to the pot${lap}`; }
+        if (took) { patch.pot = (b.pot || 0) + took; message = `${who.name} loses ${took} to the pot${stakes}${lap}`; }
         else message = `${who.name}'s Shield eats the ${tile.label}${lap}`;
         break;
       }
@@ -329,6 +331,33 @@ export class Host {
       const pot = b.pot || 0, n = ranked.length;
       if (pot && n) { const each = Math.floor(pot / n); for (const p of ranked) await this.room.addScore(p.id, each); patch.pot = pot - each * n; return `Group: the pot (${pot}) is split ${each} each`; }
       return `Group: nothing in the pot to share`;
+    }
+    if (ev === 'roundonyou') {
+      // You buy the round: pay 150 to every other player.
+      let paid = 0;
+      for (const p of ranked) if (p.id !== b.active) { const took = await this.charge(b.active, 150, b); if (took) { await this.room.addScore(p.id, took); paid += took; } }
+      return `${who.name} buys a round: ${paid} spread across the table`;
+    }
+    if (ev === 'snitch') {
+      // Name someone: the player directly ahead of you in score loses 400 to you.
+      const me = ranked.findIndex(p => p.id === b.active);
+      const target = me > 0 ? ranked[me - 1] : null;
+      if (target) { const took = await this.charge(target.id, 400, b); await this.room.addScore(b.active, took); return `${who.name} snitches on ${target.name} and takes ${took}`; }
+      return `${who.name} has nobody above them to snitch on`;
+    }
+    if (ev === 'uatest') {
+      // Random: clean = +400, dirty = -400 and you lose your items.
+      if (Math.random() < 0.55) { await this.room.addScore(b.active, 400); return `${who.name} pisses clean: +400`; }
+      const took = await this.charge(b.active, 400, b); patch.pot = (b.pot || 0) + took;
+      patch.items = { ...(b.items || {}), [b.active]: [] };
+      return `${who.name} pisses dirty: −${took} and your items are confiscated`;
+    }
+    if (ev === 'blackout') {
+      // Everyone's tokens scatter: each player moves back 1-4 tiles.
+      const positions = { ...b.positions };
+      for (const id of (b.order || [])) positions[id] = ((positions[id] || 0) - (1 + Math.floor(Math.random() * 4)) + b.tiles.length) % b.tiles.length;
+      patch.positions = positions;
+      return `Blackout: nobody remembers how they got here. Everyone stumbles back.`;
     }
     if (ev === 'flip') {
       // Reverse the standings. Brutal, rare.
@@ -561,7 +590,8 @@ export function patchBoard(stage, board, players, fx) {
   let html;
   if (board.phase === 'turn') {
     const held = (board.items || {})[board.active] || [];
-    html = `<div class="bturn">${board.turnNo >= board.maxTurns ? 'Final turn' : `Turn ${board.turnNo} of ${board.maxTurns}`}</div>
+    const endgame = board.turnNo >= board.maxTurns - 1;
+    html = `<div class="bturn ${endgame ? 'hot' : ''}">${board.turnNo >= board.maxTurns ? 'FINAL TURN · double stakes' : endgame ? `Turn ${board.turnNo} of ${board.maxTurns} · double stakes` : `Turn ${board.turnNo} of ${board.maxTurns}`}</div>
       <div class="bname">${who.emoji || '🎲'} ${esc(who.name || '')}</div>
       <div class="bhint">${held.length ? `Holding ${held.map(k2 => ITEMS[k2]?.emoji || '').join(' ')} — use one or roll` : 'Roll on your phone'}</div>`;
   } else if (board.phase === 'moving') {

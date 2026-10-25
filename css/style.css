@@ -1614,3 +1614,4 @@ body.offline .pbtn, body.offline .card, body.offline .hugebtn { opacity: .6; poi
 .atchip b { font-family: var(--display); letter-spacing: var(--track-md); color: var(--hot); margin-left: .2rem; }
 .atchip i { font-style: normal; color: var(--mute); font-size: .8em; margin-left: .3rem; }
 .atchip.lead { border-color: var(--hot); }
+.bturn.hot { color: var(--hot); font-weight: 800; animation: pulse .7s ease-in-out infinite alternate; }
