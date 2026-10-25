@@ -61,13 +61,23 @@ function rowFor(pack, data, source = 'custom') {
 }
 
 /** Push the bundled JSON into the database. Safe to run again: it only adds. */
+/** Full packs if present (content-private/, not published), else the sample. */
+async function loadSeedFile(file) {
+  try {
+    const priv = new URL(`../content-private/${file}`, import.meta.url).href;
+    const r = await fetch(priv, { cache: 'no-cache' });
+    if (r.ok) return r.json();
+  } catch {}
+  return loadJSON(contentURL(file));
+}
+
 export async function seedFromBundle(onProgress = () => {}) {
   const t = await getTransport();
   if (t.mode !== 'firebase') throw new Error('Seeding needs Firebase.');
   let added = 0, kept = 0;
   for (const pack of PACKS) {
     const shape = SHAPES[pack];
-    const json = await loadJSON(contentURL(shape.file));
+    const json = await loadSeedFile(shape.file);
     const items = json[shape.key] || [];
     const existing = (await t.get(`content/${pack}`)) || {};
     const batch = {};
