@@ -125,12 +125,33 @@ export class Host {
     this.timer = setTimeout(() => this.startVote(), ANSWER_MS);
   }
 
+  /**
+   * Called whenever the player list changes. Anyone who joined mid-round — or
+   * whose phone dropped and came back — has no cards, and without this they
+   * would stare at an empty hand until the next round started.
+   */
+  async onPlayers(players) {
+    if (this.mode !== 'pick') return;
+    const round = await this.room.t.get(`${this.room.base}/round`);
+    if (!round || round.phase !== 'answer') return;
+
+    const hands = (await this.room.t.get(`${this.room.base}/hands`)) || {};
+    for (const pid of Object.keys(players || {})) {
+      const hand = hands[pid] || [];
+      if (hand.length < HAND_SIZE) await this.dealTo(pid, hand);
+    }
+  }
+
   /** Everyone who needs to answer has answered -> move on early. */
   async onSubmissions(subs, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'answer') return;
+    const hands = this.mode === 'pick'
+      ? ((await this.room.t.get(`${this.room.base}/hands`)) || {})
+      : null;
     const expected = playerList(players)
-      .filter(p => p.connected !== false && p.id !== round.czar).length;
+      .filter(p => p.connected !== false && p.id !== round.czar)
+      .filter(p => !hands || (hands[p.id] || []).length > 0).length;
     if (expected && Object.keys(subs || {}).length >= expected) {
       clearTimeout(this.timer);
       await this.startVote();

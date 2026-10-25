@@ -18,6 +18,12 @@
   --mute:     #9B86B5;
 
   --display: 'Anton', 'Haettenschweiler', 'Arial Narrow', sans-serif;
+
+  /* Anton is condensed enough that it needs tracking to stay readable,
+     more of it at smaller sizes. */
+  --track-xl: .02em;
+  --track-lg: .03em;
+  --track-md: .045em;
   --ui: 'Archivo', system-ui, -apple-system, sans-serif;
 
   --shadow-hard: 6px 6px 0 var(--ink);
@@ -73,7 +79,7 @@ a { color: var(--hot); }
 .brand {
   font-family: var(--display);
   font-size: 1.6rem;
-  letter-spacing: .02em;
+  letter-spacing: var(--track-md);
   color: var(--hot);
 }
 
@@ -119,7 +125,8 @@ a { color: var(--hot); }
 .question {
   font-family: var(--display);
   font-size: clamp(2rem, 5.5vw, 5rem);
-  line-height: 1.04;
+  line-height: 1.1;
+  letter-spacing: var(--track-xl);
   max-width: 22ch;
   margin: .2em 0 .5em;
   color: var(--card);
@@ -128,7 +135,8 @@ a { color: var(--hot); }
 .subq {
   font-family: var(--display);
   font-size: clamp(1.4rem, 3vw, 2.6rem);
-  line-height: 1.1;
+  line-height: 1.15;
+  letter-spacing: var(--track-lg);
   max-width: 28ch;
   color: var(--card);
 }
@@ -218,7 +226,8 @@ a { color: var(--hot); }
 .word {
   font-family: var(--display);
   font-size: clamp(3rem, 13vw, 11rem);
-  line-height: 1;
+  line-height: 1.05;
+  letter-spacing: var(--track-xl);
   color: var(--card);
   padding: .1em .2em;
   max-width: 100%;
@@ -263,7 +272,7 @@ a { color: var(--hot); }
 }
 .srow .rank { font-family: var(--display); color: var(--mute); }
 .srow .emoji { font-size: 1.5em; }
-.srow .spts { font-family: var(--display); color: var(--hot); }
+.srow .spts { font-family: var(--display); letter-spacing: var(--track-lg); color: var(--hot); }
 .srow.lead {
   background: var(--ink-2);
   box-shadow: inset 5px 0 0 var(--hot);
@@ -294,6 +303,7 @@ body.playing #lobby { display: none; }
 .joinpanel h2 {
   font-family: var(--display);
   font-size: clamp(1.6rem, 3vw, 2.6rem);
+  letter-spacing: var(--track-lg);
   color: var(--card);
 }
 #qr {
@@ -346,12 +356,36 @@ body.playing #lobby { display: none; }
   cursor: pointer;
   transition: none;
 }
-.gamebtn b { font-family: var(--display); font-size: 1.5rem; color: var(--card); }
+.gamebtn b {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  letter-spacing: var(--track-md);
+  color: var(--card);
+}
 .gamebtn span { color: var(--mute); }
 .gamebtn:hover, .gamebtn:focus-visible {
   border-color: var(--hot);
   background: var(--ink-3);
 }
+
+#endgame {
+  display: none;
+  margin-left: auto;
+  background: none;
+  border: 2px solid var(--ink-3);
+  color: var(--mute);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: .85rem;
+  padding: .4rem .8rem;
+  cursor: pointer;
+}
+#endgame:hover, #endgame:focus-visible {
+  border-color: var(--hot);
+  color: var(--hot);
+}
+body.playing #endgame { display: block; }
+body.playing #endgame + .badge { margin-left: .6rem; }
 
 #again {
   margin-top: 1.5rem;
@@ -401,6 +435,7 @@ body.playing #lobby { display: none; }
 .pcard h2 {
   font-family: var(--display);
   font-size: 2rem;
+  letter-spacing: var(--track-lg);
   color: var(--card);
 }
 .pcard.win h2  { color: var(--volt); }
@@ -437,6 +472,7 @@ body.playing #lobby { display: none; }
   border-color: var(--hot);
   font-family: var(--display);
   font-size: 1.4rem;
+  letter-spacing: var(--track-lg);
 }
 .pbtn.primary:disabled {
   background: var(--ink-2);
@@ -505,6 +541,7 @@ body.playing #lobby { display: none; }
   border-radius: 4px;
   font-family: var(--display);
   font-size: 2.6rem;
+  letter-spacing: var(--track-lg);
   cursor: pointer;
 }
 .hugebtn.got  { background: var(--volt); color: var(--ink); }
@@ -522,7 +559,8 @@ body.playing #lobby { display: none; }
   font-family: var(--display);
   font-size: clamp(2.2rem, 11vw, 3.4rem);
   color: var(--hot);
-  line-height: .95;
+  line-height: 1;
+  letter-spacing: var(--track-xl);
   margin-bottom: .5rem;
 }
 .field { display: grid; gap: .35rem; margin-bottom: 1rem; }
@@ -555,7 +593,8 @@ body.playing #lobby { display: none; }
 .landing h1 {
   font-family: var(--display);
   font-size: clamp(2.6rem, 13vw, 5.5rem);
-  line-height: .92;
+  line-height: .98;
+  letter-spacing: var(--track-xl);
   color: var(--hot);
   margin-bottom: .3em;
 }
@@ -571,7 +610,12 @@ body.playing #lobby { display: none; }
   text-decoration: none;
 }
 .bigchoice a:hover { border-color: var(--hot); background: var(--ink-3); }
-.bigchoice b { font-family: var(--display); font-size: 1.7rem; color: var(--card); }
+.bigchoice b {
+  font-family: var(--display);
+  font-size: 1.7rem;
+  letter-spacing: var(--track-md);
+  color: var(--card);
+}
 .bigchoice span { color: var(--mute); }
 
 .setupnote {
@@ -586,6 +630,7 @@ body.playing #lobby { display: none; }
 .board h1 {
   font-family: var(--display);
   font-size: clamp(2.2rem, 9vw, 3.6rem);
+  letter-spacing: var(--track-xl);
   color: var(--hot);
 }
 .board .srow { font-size: 1.15rem; grid-template-columns: 2.2rem 2.4rem 1fr auto auto; }

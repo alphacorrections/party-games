@@ -51,7 +51,11 @@ class HostApp {
     el('joinurl').textContent = joinURL.href.replace(/^https?:\/\//, '');
     this.renderQR(joinURL.href);
 
-    this.room.on('players', v => { this.players = v || {}; this.onPlayers(); });
+    this.room.on('players', v => {
+      this.players = v || {};
+      this.onPlayers();
+      this.engine?.onPlayers?.(this.players);
+    });
     this.room.on('round',   v => { this.round = v; this.render(); });
     this.room.on('phase',   v => { this.phase = v; this.render(); });
     this.room.on('submissions', v => this.engine?.onSubmissions?.(v || {}, this.players));
@@ -155,6 +159,34 @@ class HostApp {
     }, 250);
   }
 
+  /**
+   * Abandon the game in progress and go back to the menu. Players stay in the
+   * room and keep their place; the abandoned game is NOT written to the
+   * leaderboard, because a game nobody finished isn't a result.
+   */
+  async endGame() {
+    this.engine?.stop();
+    this.engine = null;
+    this.mod = null;
+    this.gameId = null;
+    this._committed = false;
+    this.round = null;
+    await this.room.setGame(null);
+    await this.room.setRound(null);
+    await this.room.clearRoundData();
+    await this.room.t.remove(`${this.room.base}/hands`);
+    await this.room.setPhase('lobby');
+    for (const pid of Object.keys(this.players)) {
+      await this.room.t.set(`${this.room.base}/players/${pid}/score`, 0);
+    }
+    const again = el('again');
+    if (again) again.hidden = true;
+    document.body.classList.remove('playing');
+    setHTML('stage', '');
+    this.renderMenu();
+    this.onPlayers();
+  }
+
   async playAgain() {
     this._committed = false;
     this.engine?.stop();
@@ -162,6 +194,8 @@ class HostApp {
     this.round = null;
     await this.room.setPhase('lobby');
     await this.room.setRound(null);
+    await this.room.clearRoundData();
+    await this.room.t.remove(`${this.room.base}/hands`);
     for (const pid of Object.keys(this.players)) {
       await this.room.t.set(`${this.room.base}/players/${pid}/score`, 0);
     }
@@ -189,4 +223,5 @@ document.addEventListener('click', async e => {
   if (k) return app.room.removePlayer(k.dataset.kick);
 
   if (e.target.closest('#again')) return app.playAgain();
+  if (e.target.closest('#endgame')) return app.endGame();
 });

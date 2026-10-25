@@ -2,7 +2,7 @@
 // Phone controller. Join a room, then render whatever the active game needs.
 // ---------------------------------------------------------------------------
 
-import { Room, localPlayerId, rememberName, recalledName } from './room.js';
+import { Room, playerIdFor, rememberName, recalledName } from './room.js';
 import { getTransport } from './transport.js';
 import { esc } from './util.js';
 
@@ -17,7 +17,7 @@ const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
 
 class PlayApp {
   constructor() {
-    this.me = { id: localPlayerId() };
+    this.me = {};
     this.state = { draft: [] };
     this.mod = null;
     this.gameId = null;
@@ -46,6 +46,7 @@ class PlayApp {
     if (await room.isExpired())  return this.err('That room has expired.');
 
     this.room = room;
+    this.me.id = playerIdFor(name);
     this.me.name = name;
     rememberName(name);
     this.me.emoji = await room.addPlayer(this.me.id, name);
@@ -73,7 +74,18 @@ class PlayApp {
   }
 
   async onGame(id) {
-    if (!id || id === this.gameId) return;
+    if (id === this.gameId) return;
+    if (!id) {
+      // Host ended the game and went back to the menu.
+      this.gameId = null;
+      this.mod = null;
+      this.round = null;
+      this.hand = [];
+      this.submitted = false;
+      this.voted = false;
+      this.state.draft = [];
+      return this.render();
+    }
     this.gameId = id;
     this.mod = await ENGINES[id]();
     this.render();

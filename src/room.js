@@ -36,16 +36,29 @@ export function newId() {
 }
 
 /**
- * Per-TAB identity. Survives a refresh (sessionStorage), but two tabs are two
- * different players — which is what you want, since local mode runs several
- * players in one browser and two people on one laptop would otherwise collide
- * into a single scoring record.
+ * A player's id is a slug of the name they joined with.
+ *
+ * This matters more than it looks. A phone that gets backgrounded can have its
+ * tab discarded and silently reloaded by the OS; anything held in session
+ * storage is gone. Deriving the id from the name means that phone rejoins as
+ * the SAME player and keeps its hand and its score, instead of reappearing as
+ * a stranger with nothing. It also means two people on one laptop are two
+ * players, as long as they type different names.
  */
+export function playerIdFor(name) {
+  return String(name)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 24) || 'player';
+}
+
+/** Random per-tab id, used for the host (which has no name). */
 export function localPlayerId() {
-  let id = sessionStorage.getItem('pg_player_id');
+  let id = sessionStorage.getItem('pg_host_id');
   if (!id) {
     id = newId();
-    sessionStorage.setItem('pg_player_id', id);
+    sessionStorage.setItem('pg_host_id', id);
   }
   return id;
 }
