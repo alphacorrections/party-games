@@ -10,8 +10,9 @@
 // Phases: write -> pick -> reveal -> ... -> final
 // ---------------------------------------------------------------------------
 
-import { shuffle, sample, esc, sortedPlayers, playerList, loadJSON, contentURL,
+import { shuffle, sample, esc, sortedPlayers, playerList,
          timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
+import { loadPack } from '../content.js';
 
 export const meta = {
   id: 'liars',
@@ -36,8 +37,8 @@ export class Host {
   }
 
   async load() {
-    const data = await loadJSON(contentURL('liars.json'));
-    this.deck = await sampleUnseen(this.room, 'liars', data.questions, this.rounds, q => q.q);
+    const questions = await loadPack('liars');
+    this.deck = await sampleUnseen(this.room, 'liars', questions, this.rounds, q => q.q);
     return this;
   }
 

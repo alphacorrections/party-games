@@ -9,8 +9,9 @@
 // Phases: vote -> reveal -> ... -> final
 // ---------------------------------------------------------------------------
 
-import { sample, esc, sortedPlayers, playerList, loadJSON, contentURL,
+import { sample, esc, sortedPlayers, playerList,
          timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
+import { loadPack } from '../content.js';
 
 export const meta = {
   id: 'blindvote',
@@ -36,11 +37,11 @@ export class Host {
 
   async load() {
     if (this.mode === 'wyr') {
-      const d = await loadJSON(contentURL('wyr.json'));
-      this.deck = await sampleUnseen(this.room, 'wyr', d.pairs, this.rounds, p => p.a + '|' + p.b);
+      const pairs = await loadPack('wyr');
+      this.deck = await sampleUnseen(this.room, 'wyr', pairs, this.rounds, p => p.a + '|' + p.b);
     } else {
-      const d = await loadJSON(contentURL('likely.json'));
-      this.deck = (await sampleUnseen(this.room, 'likely', d.prompts, this.rounds, p => p)).map(p => ({ text: p }));
+      const prompts = await loadPack('likely');
+      this.deck = (await sampleUnseen(this.room, 'likely', prompts, this.rounds, p => p)).map(p => ({ text: p }));
     }
     return this;
   }

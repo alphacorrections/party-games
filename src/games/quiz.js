@@ -3,8 +3,9 @@
 // Fastest correct answer scores most. Phases: question -> reveal -> ... -> final
 // ---------------------------------------------------------------------------
 
-import { shuffle, sample, esc, sortedPlayers, playerList, countdown, loadJSON, contentURL, timerHTML, finalScoreboard,
+import { shuffle, sample, esc, sortedPlayers, playerList, countdown, timerHTML, finalScoreboard,
          pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
+import { loadPack } from '../content.js';
 
 export const meta = {
   id: 'quiz',
@@ -28,8 +29,8 @@ export class Host {
   }
 
   async load() {
-    const data = await loadJSON(contentURL('trivia.json'));
-    this.deck = await sampleUnseen(this.room, 'trivia', data.questions, this.rounds, q => q.q);
+    const questions = await loadPack('trivia');
+    this.deck = await sampleUnseen(this.room, 'trivia', questions, this.rounds, q => q.q);
     return this;
   }
 

@@ -13,8 +13,9 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown,
-         fillBlanks, loadJSON, contentURL, timerHTML, finalScoreboard,
+         fillBlanks, timerHTML, finalScoreboard,
          pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
+import { loadPack } from '../content.js';
 
 export const meta = {
   id: 'promptvote',
@@ -46,13 +47,13 @@ export class Host {
 
   async load() {
     if (this.mode === 'pick') {
-      const data = await loadJSON(contentURL('fillblank.json'));
-      this.prompts    = await sampleUnseen(this.room, 'fillblank', data.prompts, this.rounds, p => p.text);
-      this.answerDeck = shuffle(data.answers);
+      const prompts = await loadPack('fillblank');
+      const answers = await loadPack('answers');
+      this.prompts    = await sampleUnseen(this.room, 'fillblank', prompts, this.rounds, p => p.text);
+      this.answerDeck = shuffle(answers);
     } else {
-      const file = this.mode === 'meme' ? 'memes.json' : 'quiplash.json';
-      const data = await loadJSON(contentURL(file));
-      const raw = data.prompts.map(p => (typeof p === 'string' ? { text: p } : p));
+      const prompts = await loadPack(this.mode === 'meme' ? 'memes' : 'quiplash');
+      const raw = prompts.map(p => (typeof p === 'string' ? { text: p } : p));
       this.prompts = await sampleUnseen(this.room, this.mode === 'meme' ? 'memes' : 'quiplash', raw, this.rounds, p => p.text);
     }
     return this;

@@ -1419,3 +1419,19 @@ body.offline::before {
   padding: .35rem; font-size: .9rem;
 }
 body.offline .pbtn, body.offline .card, body.offline .hugebtn { opacity: .6; pointer-events: none; }
+
+/* ============================== MANAGE =================================== */
+
+.manage .addform { display: grid; gap: .5rem; margin: .6rem 0 1.2rem; }
+.manage .addform input, .manage .addform select {
+  background: var(--ink-3); border: 3px solid var(--ink-3); border-radius: 4px; color: var(--chalk);
+  font-family: inherit; font-size: 1rem; padding: .6rem .7rem; width: 100%;
+}
+.manage .addform input:focus, .manage .addform select:focus { border-color: var(--hot); }
+.manage .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.manage .row4 { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.manage .addform .pbtn { min-height: 3rem; }
+.manage .rosterrow.off .rname { opacity: .45; text-decoration: line-through; }
+.manage .tagc { font-style: normal; font-size: .7rem; color: var(--hot); border: 1px solid var(--hot); padding: .05rem .35rem; margin-left: .4rem; vertical-align: middle; }
+.manage .list { max-height: 60vh; overflow: auto; }
+@media (max-width: 600px) { .manage .row2, .manage .row4 { grid-template-columns: 1fr; } }

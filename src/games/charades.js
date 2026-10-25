@@ -9,7 +9,8 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, esc, sortedPlayers, playerList, countdown,
-         loadJSON, contentURL, timerHTML, finalScoreboard, hashKey } from '../util.js';
+         timerHTML, finalScoreboard, hashKey } from '../util.js';
+import { loadPack } from '../content.js';
 
 export const meta = {
   id: 'charades',
@@ -44,8 +45,7 @@ export class Host {
   }
 
   async load() {
-    const data = await loadJSON(contentURL('charades.json'));
-    this.categories = data.categories || [];
+    this.categories = await loadPack('charades');
     const chosen = this.categoryName
       ? this.categories.find(c => c.name === this.categoryName)
       : this.categories[Math.floor(Math.random() * this.categories.length)];
@@ -63,8 +63,8 @@ export class Host {
 
   /** For the host's category picker: name/emoji/blurb/count per category. */
   static async listCategories() {
-    const data = await loadJSON(contentURL('charades.json'));
-    return (data.categories || []).map(c => ({
+    const cats = await loadPack('charades');
+    return cats.map(c => ({
       name: c.name, emoji: c.emoji || '', blurb: c.blurb || '', count: (c.words || []).length
     }));
   }
