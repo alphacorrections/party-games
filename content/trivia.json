@@ -2,136 +2,136 @@
  "pack": "Sample",
  "questions": [
   {
-   "q": "When threatened, a sea cucumber may do what?",
+   "q": "Before it was a club drug, GHB was sold in the US in 1990 as what?",
    "options": [
-    "Release ink",
-    "Detach its head",
-    "Inflate to triple size",
-    "Expel its own internal organs"
-   ],
-   "answer": 3,
-   "note": "It shoots its guts at you and grows new ones. Petty and effective."
-  },
-  {
-   "q": "Which of these is actually in the top tier of strongest known natural poisons by weight?",
-   "options": [
-    "Cyanide",
-    "Botulinum toxin",
-    "Arsenic",
-    "Strychnine"
+    "A sleep aid for infants",
+    "A dietary supplement for bodybuilders",
+    "A hangover cure",
+    "A veterinary sedative"
    ],
    "answer": 1,
-   "note": "And people pay to have small amounts injected into their foreheads. Context is everything."
+   "note": "The FDA said stop in November. People did not stop."
   },
   {
-   "q": "Sarah Winchester's bizarre San Jose mansion has stairs that go nowhere and doors opening onto walls. What actually explains most of it?",
+   "q": "Who won the 1949 Nobel Prize in Medicine for inventing the lobotomy?",
    "options": [
-    "Instructions from a medium",
-    "A hidden vault",
-    "Earthquake damage and endless remodeling",
-    "Deliberate anti-burglar design"
+    "Walter Freeman",
+    "Sigmund Freud",
+    "Emil Kraepelin",
+    "Egas Moniz"
+   ],
+   "answer": 3,
+   "note": "The Nobel committee has never taken it back."
+  },
+  {
+   "q": "Hunter S. Thompson's ashes were shot out of a cannon in 2005. Who paid for it?",
+   "options": [
+    "Bill Murray",
+    "Keith Richards",
+    "Johnny Depp",
+    "Jack Nicholson"
    ],
    "answer": 2,
-   "note": "The 1906 earthquake plus 22 years of unplanned additions. The ghost story came later and sells better."
+   "note": "About three million dollars. The fist-shaped tower was 153 feet."
   },
   {
-   "q": "The Donner Party set out with 87 members in 1846. How many survived?",
+   "q": "Len Bias died of a cocaine overdose two days after being drafted by which NBA team?",
    "options": [
-    "Twelve",
-    "Forty-eight",
-    "Seventy-one",
-    "Only two"
-   ],
-   "answer": 1,
-   "note": "Forty-eight. Some ate the dead, and two Miwok guides were murdered and eaten."
-  },
-  {
-   "q": "The Demodex mites living in the pores of most adult human faces do what at night?",
-   "options": [
-    "Hibernate",
-    "Burrow into muscle",
-    "Migrate to the scalp",
-    "Crawl out and mate on your skin"
+    "Los Angeles Lakers",
+    "Chicago Bulls",
+    "Detroit Pistons",
+    "Boston Celtics"
    ],
    "answer": 3,
-   "note": "They come out in the dark to mate on your face, then crawl back into your pores before morning."
+   "note": "The 1986 drug law that followed carries his name. So does a lot of federal time."
   },
   {
-   "q": "Why do vultures deliberately urinate on their own legs?",
+   "q": "'Krokodil,' the Russian street drug that rots skin into scales around the injection site, is which opioid?",
    "options": [
-    "To mark territory",
-    "To cool off and kill bacteria",
-    "To attract mates",
-    "To soften their skin"
-   ],
-   "answer": 1,
-   "note": "Pee as both air conditioning and hand sanitizer. Say what you want, it works."
-  },
-  {
-   "q": "Albert Hofmann accidentally dosed himself with LSD and rode his bicycle home on which date, now celebrated as Bicycle Day?",
-   "options": [
-    "April 19, 1943",
-    "July 4, 1955",
-    "October 31, 1938",
-    "June 6, 1961"
-   ],
-   "answer": 0,
-   "note": "The worst commute in the history of chemistry."
-  },
-  {
-   "q": "Naegleria fowleri, the brain-eating amoeba, usually enters a person how?",
-   "options": [
-    "By swallowing contaminated water",
-    "Through the ear canal",
-    "Through a cut",
-    "Up the nose in warm freshwater"
-   ],
-   "answer": 3,
-   "note": "Swallowing it is fine. Snorting the lake is the problem. Keep your nose out of warm ponds."
-  },
-  {
-   "q": "The 1919 Boston Molasses Disaster killed how many people?",
-   "options": [
-    "Nobody, it was property damage only",
-    "21",
-    "107",
-    "Over 300"
-   ],
-   "answer": 1,
-   "note": "A wave of molasses moving around 35 miles an hour. The harbor reportedly smelled sweet for years."
-  },
-  {
-   "q": "Mummy brown, a real Victorian artist's pigment, was made from what?",
-   "options": [
-    "Burnt bone char",
-    "Iron-rich Nile clay",
-    "Bitumen from the Dead Sea",
-    "Ground-up Egyptian mummies"
-   ],
-   "answer": 3,
-   "note": "Painters stopped using it when they realized what was in the tube. Some took a while."
-  },
-  {
-   "q": "The Great Stink of 1858 finally forced London to build proper sewers because the smell did what?",
-   "options": [
-    "Overwhelmed Parliament, sitting right on the Thames",
-    "Spread to Paris",
-    "Ruined the Queen's garden party",
-    "Killed a thousand people in a week"
-   ],
-   "answer": 0,
-   "note": "Nothing motivates legislators like the problem reaching their own windows."
-  },
-  {
-   "q": "In 1848 a tamping iron blew through Phineas Gage's skull behind his left eye. How long did he live afterward?",
-   "options": [
-    "Three days",
-    "Eleven months",
-    "Just under 12 years",
-    "Forty years"
+    "Oxymorphone",
+    "Carfentanil",
+    "Desomorphine",
+    "Nitazene"
    ],
    "answer": 2,
-   "note": "He died in 1860, nearly 12 years later. He kept working, and he kept the iron."
+   "note": "Homemade from codeine, gasoline, and whatever was under the sink."
+  },
+  {
+   "q": "Alcoholics Anonymous was founded in 1935 in which city?",
+   "options": [
+    "Minneapolis, Minnesota",
+    "Akron, Ohio",
+    "Hartford, Connecticut",
+    "New York, New York"
+   ],
+   "answer": 1,
+   "note": "Two drunks and a kitchen table in Ohio. Twelve steps later, here we are."
+  },
+  {
+   "q": "The last public execution in the United States was a hanging in 1936 in which state?",
+   "options": [
+    "Kentucky",
+    "Texas",
+    "Mississippi",
+    "Louisiana"
+   ],
+   "answer": 0,
+   "note": "Twenty thousand people showed up in Owensboro to watch."
+  },
+  {
+   "q": "Which of these is a Schedule II drug still prescribed in the US under the brand name Desoxyn?",
+   "options": [
+    "Methamphetamine",
+    "Heroin",
+    "LSD",
+    "MDMA"
+   ],
+   "answer": 0,
+   "note": "Approved for ADHD and obesity. Your doctor will not write it."
+  },
+  {
+   "q": "The first drunk-driving arrest, in London in 1897, involved a man driving what?",
+   "options": [
+    "A horse carriage",
+    "A steam tractor",
+    "An electric taxi",
+    "A bicycle"
+   ],
+   "answer": 2,
+   "note": "George Smith, 20 shillings. Electric cars were ruining lives before Tesla."
+  },
+  {
+   "q": "Julius Wagner-Jauregg won the 1927 Nobel Prize for treating syphilis by infecting patients with what?",
+   "options": [
+    "Smallpox",
+    "Tuberculosis",
+    "Malaria",
+    "Rabies"
+   ],
+   "answer": 2,
+   "note": "The fever burned out the syphilis. It also killed about 15 percent of them."
+  },
+  {
+   "q": "Albert Hofmann first synthesized LSD in what year, five years before he accidentally dosed himself?",
+   "options": [
+    "1943",
+    "1951",
+    "1967",
+    "1938"
+   ],
+   "answer": 3,
+   "note": "He biked home afterward. There's a holiday for it."
+  },
+  {
+   "q": "A UC San Diego study of US death certificates found more people die on which day than any other?",
+   "options": [
+    "Christmas Day",
+    "New Year's Eve",
+    "Super Bowl Sunday",
+    "Halloween"
+   ],
+   "answer": 0,
+   "note": "December 26 and January 1 come next. Happy holidays."
   }
  ]
 }

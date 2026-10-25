@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 
 import { getTransport } from './transport.js';
-import { PACKS, seedFromBundle, listPack, addItem, setEnabled, removeItem, packCounts } from './content.js';
+import { PACKS, seedFromBundle, reseedReplacing, listPack, addItem, setEnabled, removeItem, packCounts } from './content.js';
 import { esc } from './util.js';
 
 const LABELS = {
@@ -54,11 +54,19 @@ async function renderStatus() {
     const parts = PACKS.map(p => `${LABELS[p]} <b>${counts[p].enabled}</b>${counts[p].total !== counts[p].enabled ? ` <span class="muted">/ ${counts[p].total}</span>` : ''}`);
     el('status').innerHTML = `<p>${parts.join(' &nbsp;·&nbsp; ')}</p>
       <p class="meta">Disabled items stay here but never get dealt. Delete is permanent.
-         <button id="seed2" class="linkbtn">Re-seed missing items from bundle</button></p>`;
+         <button id="seed2" class="linkbtn">Add missing items from bundle</button> &nbsp;
+         <button id="seed3" class="linkbtn">Replace bundled deck</button></p>`;
     el('seed2').addEventListener('click', async () => {
       el('seed2').textContent = 'Seeding…';
       const r = await seedFromBundle();
       el('seed2').textContent = `Added ${r.added}, kept ${r.kept}`;
+      await renderStatus(); await renderEditor();
+    });
+    el('seed3').addEventListener('click', async () => {
+      if (!confirm('Replace every bundled card with the current deck files? Cards people added by hand are kept.')) return;
+      el('seed3').textContent = 'Replacing…';
+      const r = await reseedReplacing((p, a) => { el('seed3').textContent = `Replacing… ${p}`; });
+      el('seed3').textContent = `Removed ${r.removed}, kept ${r.keptCustom} custom, added ${r.added}`;
       await renderStatus(); await renderEditor();
     });
   }

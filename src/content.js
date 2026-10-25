@@ -94,6 +94,29 @@ export async function seedFromBundle(onProgress = () => {}) {
   return { added, kept };
 }
 
+/**
+ * Replace the bundled content: delete every row that came from a seed, keep
+ * anything people added by hand, then seed fresh. For swapping in a new deck.
+ */
+export async function reseedReplacing(onProgress = () => {}) {
+  const t = await getTransport();
+  if (t.mode !== 'firebase') throw new Error('Needs Firebase.');
+  let removed = 0, keptCustom = 0;
+  for (const pack of PACKS) {
+    const existing = (await t.get(`content/${pack}`)) || {};
+    const patch = {};
+    for (const [k, row] of Object.entries(existing)) {
+      if (row && row.source === 'custom') { keptCustom++; continue; }
+      patch[k] = null; removed++;
+    }
+    if (Object.keys(patch).length) await t.update(`content/${pack}`, patch);
+    onProgress(pack, removed, keptCustom);
+  }
+  clearContentCache();
+  const r = await seedFromBundle(onProgress);
+  return { removed, keptCustom, added: r.added };
+}
+
 export async function listPack(pack) {
   const t = await getTransport();
   const raw = (await t.get(`content/${pack}`)) || {};

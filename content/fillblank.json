@@ -2,126 +2,126 @@
  "pack": "Sample",
  "prompts": [
   {
-   "text": "My father never once hugged me, which explains ____.",
+   "text": "The reason we don't do open bar at family events anymore is ____.",
    "blanks": 1
   },
   {
-   "text": "I lost ____ in a bet about ____.",
+   "text": "The 5150 paperwork lists the reason for the hold as ____.",
+   "blanks": 1
+  },
+  {
+   "text": "The crematorium sent us a very apologetic letter about ____.",
+   "blanks": 1
+  },
+  {
+   "text": "The HOA fined us for ____ visible from the street.",
+   "blanks": 1
+  },
+  {
+   "text": "My grandfather survived the war, the Depression, and ____.",
+   "blanks": 1
+  },
+  {
+   "text": "The eulogy was going fine until Dad brought up ____.",
+   "blanks": 1
+  },
+  {
+   "text": "My sober coach's Venmo history is mostly ____.",
+   "blanks": 1
+  },
+  {
+   "text": "Grandma's hospice nurse said she was holding on for ____.",
+   "blanks": 1
+  },
+  {
+   "text": "My trauma response is ____, which my therapist calls 'creative.'",
+   "blanks": 1
+  },
+  {
+   "text": "I knew the retreat was a cult when they asked us to surrender ____.",
+   "blanks": 1
+  },
+  {
+   "text": "The hospice's Yelp page has one five-star review, and it just says ____.",
+   "blanks": 1
+  },
+  {
+   "text": "You know you're the family's cautionary tale when Thanksgiving grace includes ____.",
+   "blanks": 1
+  },
+  {
+   "text": "Nobody tells you that recovery means replacing ____ with ____.",
    "blanks": 2
   },
   {
-   "text": "I lost my job because of ____.",
+   "text": "I lost custody over ____, which honestly feels excessive.",
    "blanks": 1
   },
   {
-   "text": "I lost the apartment, the truck, and ____.",
+   "text": "My therapist's only note from our last session was ____.",
    "blanks": 1
-  },
-  {
-   "text": "The group project failed because of ____.",
-   "blanks": 1
-  },
-  {
-   "text": "I did not come here to make friends. I came here for ____.",
-   "blanks": 1
-  },
-  {
-   "text": "It started over ____ and it ended with ____.",
-   "blanks": 2
-  },
-  {
-   "text": "Every man has a limit. Mine is ____.",
-   "blanks": 1
-  },
-  {
-   "text": "I lost the bet, so now I have to live with ____.",
-   "blanks": 1
-  },
-  {
-   "text": "What finally ended my marriage? ____.",
-   "blanks": 1
-  },
-  {
-   "text": "My sleep paralysis demon showed up last night and wanted to talk about ____.",
-   "blanks": 1
-  },
-  {
-   "text": "The last thing I remember before the ambulance was ____.",
-   "blanks": 1
-  },
-  {
-   "text": "The thing nobody appreciates about me is ____.",
-   "blanks": 1
-  },
-  {
-   "text": "Nothing says romance like ____.",
-   "blanks": 1
-  },
-  {
-   "text": "Heaven is ____. Hell is ____.",
-   "blanks": 2
   }
  ],
  "answers": [
-  "a half-eaten gas station hot dog",
-  "a slow decline nobody mentions",
-  "a hamper I have declared a dresser",
-  "a pyramid scheme run by my aunt",
-  "the VFW hall bathroom",
-  "an aggressive public fart in a quiet elevator",
-  "a Bluetooth speaker at full volume",
-  "a man who corrects your grammar during an argument",
-  "an unsettling amount of body spray",
-  "a Zoom call where my camera was on",
-  "a payday loan",
-  "a shared bank account and a trust issue",
-  "a voice assistant that heard the whole thing",
-  "a dude who brings a guitar to every gathering",
-  "a slip-and-slide on gravel",
-  "a woman who says she is brutally honest",
-  "a sincere cry for help disguised as a joke",
-  "whatever is wrong with Greg",
-  "a storage unit I stopped paying for",
-  "free samples at the worst possible time",
-  "a fifty-five-gallon drum",
-  "a megaphone in a quiet library",
-  "a post I stand behind completely",
-  "the smell of a dive bar in daylight",
-  "a hospital bill with no itemization",
-  "a kiddie pool I filled with ice",
-  "a nickname I gave myself",
-  "my browser history on a shared laptop",
-  "a tooth I keep in a drawer",
-  "an alibi with holes in it",
-  "a lubricant that smells like birthday cake",
-  "an unpaid medical bill that outlives me",
-  "the worst idea in the room, voted unanimously",
-  "my supervisor's wife",
-  "a pit bull named Princess",
-  "nine pounds of discount ground beef",
-  "a man who claims he can go all night and means it as a threat",
-  "my own reflection in a dark TV",
-  "an inflatable sumo suit",
-  "a shirt with the sleeves cut off",
-  "an air mattress with a slow leak",
-  "six dollars and a dream",
-  "a cousin nobody in the family claims",
-  "a family secret revealed at a barbecue",
-  "the inside of an ambulance",
-  "a backyard tooth extraction",
-  "an anniversary nobody remembered",
-  "a refrigerator containing one condiment",
-  "a rib I cracked showing off",
-  "a man who has peaked and knows it",
-  "a eulogy delivered by someone who hated me",
-  "a CPAP machine with a loose hose",
-  "a karaoke machine and no shame",
-  "a stress fracture from nothing",
-  "a motel ice machine",
-  "my stepfather's firm handshake",
-  "a steak I cooked in a toaster oven",
-  "a sincere belief that I am owed something",
-  "a sibling who keeps score",
-  "an alpaca with anger issues"
+  "a block party that ended in the ER",
+  "a wheelchair at the strip club",
+  "a date who brought her kids and her dealer",
+  "a jail tattoo of my own name, misspelled",
+  "an against-medical-advice discharge",
+  "a mom who calls me her 'roommate'",
+  "a timeshare presentation hostage situation",
+  "a mother who faked cancer",
+  "a court-mandated apology",
+  "a bachelor party in a Dollar Tree",
+  "a Haldol shot in the butt",
+  "the kids choosing Dad, who's in jail",
+  "a cat that ate part of Grandpa",
+  "a detox bed that's 'full'",
+  "a bake sale with edibles",
+  "cotton fever",
+  "lice from the youth group",
+  "using in a church basement",
+  "a medical bill paid in Pokémon cards",
+  "a relationship built on shared warrants",
+  "the prenup my mom wrote",
+  "a DUI on a horse",
+  "detox bedbugs with seniority",
+  "a church bake sale fistfight",
+  "a payday loan for a tattoo",
+  "the belt",
+  "stealing from a Goodwill",
+  "a Craigslist roommate with a sex swing",
+  "the family secret that's also a TikTok",
+  "the cremation discount",
+  "feeding tube cuisine",
+  "a sugar daddy who's also my PO",
+  "a tooth in a Dixie cup",
+  "the medical examiner's 'undetermined'",
+  "a client who came back as staff",
+  "Mom's second husband's first husband",
+  "dentures in the group chat",
+  "a tooth pulled with pliers to save money",
+  "the methadone line at 6am in January",
+  "a yeast infection with a name",
+  "the squirrel I hit at the DUI checkpoint",
+  "a crime scene cleaner's Yelp page",
+  "Thanksgiving with the restraining order",
+  "a Catholic school paddle with my name on it",
+  "a relapse at the 11-month mark",
+  "SSRIs on a wedding night",
+  "a hip that clicks during sex",
+  "a nosebleed on the bride",
+  "a coroner with a side hustle",
+  "the pastor's third marriage",
+  "a funeral selfie",
+  "a lottery win spent in a week",
+  "gout at 29",
+  "an ambulance I asked them not to call",
+  "a breakup text with a reading list",
+  "getting kicked out of IOP",
+  "a Catholic guilt hangover",
+  "lawn care as a cry for help",
+  "the family group chat after Thanksgiving",
+  "an IV I started myself"
  ]
 }
