@@ -165,6 +165,7 @@ export function hashKey(str) {
 
 /** Round header with a final-round callout. */
 export function roundMeta(index, total, noun = 'Round') {
+  if (total === 1) return '';                       // a one-round minigame: the badge above already says what it is
   const last = total && index === total - 1;
   return `<div class="qmeta ${last ? 'final' : ''}">${last ? 'Final round' : `${noun} ${index + 1} of ${total}`}</div>`;
 }
