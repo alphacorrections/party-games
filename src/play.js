@@ -37,6 +37,20 @@ class PlayApp {
     el('joinform').addEventListener('submit', e => { e.preventDefault(); this.join(); });
     el('hostbtn').addEventListener('click', () => this.hostFromPhone());
     this.startTicking();
+
+    // A reload mid-game (iOS discards backgrounded tabs constantly) should
+    // drop you straight back in, not make you retype your name. Only when
+    // this device was already in that room.
+    if (code && recalledName()) {
+      try {
+        const room = await Room.open(code);
+        const me = await room.t.get(`${room.base}/players/${playerIdFor(recalledName())}`);
+        if (me && me.device === Room.deviceId() && await room.exists() && !(await room.isExpired())) {
+          await this.enter(room, recalledName());
+          this.toast('Back in');
+        }
+      } catch (e) { console.warn('auto-rejoin skipped', e); }
+    }
   }
 
   /* -------------------------------- join -------------------------------- */
