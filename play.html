@@ -12,18 +12,21 @@
 <body class="phone">
 
 <section id="joinscreen" class="joinwrap">
-  <h1>Get in</h1>
+  <h1>Party<br>Games</h1>
   <form id="joinform">
+    <div class="field">
+      <label for="name">Your name</label>
+      <input id="name" maxlength="16" autocomplete="nickname" placeholder="What they call you">
+    </div>
     <div class="field">
       <label for="roomcode">Room code</label>
       <input id="roomcode" maxlength="4" autocomplete="off" autocapitalize="characters"
              spellcheck="false" inputmode="text" placeholder="ABCD">
     </div>
-    <div class="field">
-      <label for="name">Your name</label>
-      <input id="name" maxlength="16" autocomplete="nickname" placeholder="What they call you">
-    </div>
-    <button id="join" type="submit" class="pbtn primary">Join</button>
+    <button id="join" type="submit" class="pbtn primary">Join a room</button>
+    <div class="orline"><span>or</span></div>
+    <button id="hostbtn" type="button" class="pbtn ghost">Start a party on this phone</button>
+    <p class="phint small center">No TV needed. Your phone runs it, everyone else joins with the code.</p>
     <p id="joinerr" class="err small" hidden></p>
   </form>
 </section>
@@ -31,6 +34,7 @@
 <div id="playscreen" hidden>
   <header class="pbar">
     <span id="whoami"></span>
+    <span id="roomtag" class="roomtag"></span>
     <span id="pbar-tools" class="tools"></span>
     <span class="score" id="myscore">0</span>
   </header>

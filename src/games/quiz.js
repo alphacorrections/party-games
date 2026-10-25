@@ -124,6 +124,19 @@ export class Host {
     await this.room.setPhase('scoreboard');
   }
 
+  /**
+   * Called when a new director takes over mid-game: re-arm the timer for the
+   * phase we're in, from the deadline already stored on the round.
+   */
+  async resume() {
+    const round = await this.room.t.get(`${this.room.base}/round`);
+    if (!round || !round.phase) return;
+    const left = Math.max(300, (round.deadline || Date.now()) - Date.now());
+    clearTimeout(this.timer);
+    if (round.phase === 'question') this.timer = setTimeout(() => this.reveal(), left);
+    else if (round.phase === 'reveal') this.timer = setTimeout(() => this.ask(round.index + 1), 2000);
+  }
+
   stop() { clearTimeout(this.timer); }
 }
 
@@ -159,13 +172,25 @@ export function hostView(round, players) {
   `;
 }
 
-export function playerView(round, me, submitted) {
+export function playerView(round, me, submitted, _voted, _players, extra = {}) {
+  const mirror = extra && extra.mirror;
   if (!round || round.phase === 'final') {
     return `<div class="pcard"><h2>Game over</h2><p>Check the big screen.</p></div>`;
   }
 
+  const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+
   if (round.phase === 'reveal') {
     const got = (round.gained || {})[me.id] || 0;
+    if (mirror) {
+      const opts = (round.options || []).map((o, i) =>
+        `<div class="pbtn static ${i === round.answer ? 'correct' : 'dim'}">
+           <span class="letter">${letters[i]}</span>${esc(o)}</div>`).join('');
+      return `<div class="pcard">
+        <h2 class="${got ? 'winc' : 'losec'}">${got ? `+${got}` : 'Nope'}</h2>
+        <p class="phint">${esc(round.q)}</p>${opts}
+        ${round.note ? `<p class="note">${esc(round.note)}</p>` : ''}</div>`;
+    }
     return `<div class="pcard ${got ? 'win' : 'lose'}">
       <h2>${got ? `+${got}` : 'Nope'}</h2>
       <p>${got ? 'Nice.' : 'Better luck next one.'}</p>
@@ -173,18 +198,25 @@ export function playerView(round, me, submitted) {
   }
 
   if (submitted) {
-    return `<div class="pcard"><h2>Locked in</h2><p>Eyes up.</p></div>`;
+    return `<div class="pcard"><h2>Locked in</h2><p>${mirror ? 'Waiting for the others.' : 'Eyes up.'}</p>
+      ${mirror ? timerHTML(round.deadline, ANSWER_MS) : ''}</div>`;
   }
 
-  const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
   const btns = (round.options || []).map((o, i) =>
     `<button class="pbtn" data-action="choose" data-choice="${i}">
        <span class="letter">${letters[i]}</span>${esc(o)}
      </button>`
   ).join('');
 
+  if (mirror) {
+    return `<div class="pcard">
+      <div class="qmeta">Question ${round.index + 1} of ${round.total}</div>
+      ${timerHTML(round.deadline, ANSWER_MS)}
+      <h2 class="small-h">${esc(round.q)}</h2>${btns}</div>`;
+  }
   return `<div class="pcard"><p class="phint">Pick one. Fast.</p>${btns}</div>`;
 }
+export const mirrorView = playerView;
 
 export function scoreboard(players, title = 'Scores') {
   return finalScoreboard(players, title);

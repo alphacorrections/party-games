@@ -14,10 +14,13 @@ state. No server to run.
 | Game | What happens | Players |
 |---|---|---|
 | **Degenerate Trivia** | Question on the TV, four buttons on every phone. Faster correct answers score more. | 1+ |
+| **Liar's Trivia** | A real question with the answer blanked. Everyone writes a convincing lie; lies and truth are shuffled; pick what's real. Points for spotting the truth and for fooling people. | 2+ |
 | **Fill In The Blank** | Prompt with a gap. Everyone plays a card from their hand. Everyone votes. | 3+ |
 | **Fill In The Blank — Judge** | Same, but one rotating judge picks the winner instead of a group vote. | 3+ |
 | **Write Your Own** | Open prompt, everyone types their own answer, funniest wins the votes. | 3+ |
-| **Shout It Out** | Heads Up. Pick a category — Act It Out, Impressions, Movies, TV, Famous People, Animals, Songs, Accents, Jobs, Drunk & Disorderly — the word shows huge on the TV, the active player faces away, everyone else gives clues. | 3+ |
+| **Would You Rather** | Two bad options, blind vote, the split reveals. The minority has to explain themselves. | 3+ |
+| **Most Likely To** | Vote for a player. Whoever gets the most votes earns the title. | 3+ |
+| **Shout It Out / Heads Up** | Pick a category — Act It Out, Impressions, Movies, TV, Famous People, Animals, Songs, Accents, Jobs, Drunk & Disorderly — the word shows huge on the TV, the active player faces away, everyone else gives clues. | 3+ |
 | **Spiral** | A 3D board of 16 tiles. Roll a real die on your phone, your token slides, and you deal with what you land on — payouts, setbacks, score swaps, or a one-round minigame pulled from the games above. Passing Start banks a lap bonus. | 2+ |
 
 All content is original and lives in `content/*.json`: 110 trivia questions, 159
@@ -81,6 +84,18 @@ instead of **local only**.
 3. Host picks a game. It runs itself from there.
 4. Scores land on the leaderboard when the game ends.
 
+### No TV? Host from a phone
+
+Open `play.html`, type your name, tap **Start a party on this phone**. You get a room
+code, your friends join with it, and your phone runs the game while you play. Every
+game except Spiral works this way — the phones show the question, the cards, the
+votes and the reveal themselves. Shout It Out becomes **Heads Up**: the word shows on
+the active player's phone held to their forehead, and they tilt down for got-it,
+up for skip (or tap the buttons). iPhones ask once for motion permission.
+
+If the hosting phone dies, the next phone by join order takes over within about
+fifteen seconds and the round continues from where it was.
+
 **End game** in the top corner drops everyone back to the menu without closing the
 room or kicking anyone out. An abandoned game isn't written to the leaderboard.
 
@@ -133,10 +148,23 @@ src/config.js       Firebase config + tunables
 src/transport.js    Firebase or localStorage, same interface
 src/room.js         rooms, players, presence
 src/scores.js       roster, leaderboard, history
-src/host.js         host controller
-src/play.js         phone controller
+src/director.js     runs a game: owns the engine, forwards room events, failover
+src/host.js         the TV screen (a Director + a renderer)
+src/play.js         the phone (a controller, or a Director + full renderer with no TV)
+src/viewport.js     TV fitting: --vh fallback, overscan inset, scale-to-fit
+src/tilt.js         forehead tilt gestures for Heads Up
 src/games/*.js      one module per game engine
 ```
+
+`director.js` is what separates "a screen" from "the thing running the game". Both
+the TV and a hosting phone own one; it claims `rooms/{code}/director` with a
+heartbeat, and a phone that sees the heartbeat go stale takes over, re-arming the
+current round's timer from its stored deadline.
+
+TV browsers are handled in `viewport.js`: `100dvh` is unsupported on most of them,
+so `--vh` is published from JS; TV user agents get a default 4% overscan inset that
+the remote's arrow keys adjust; and if a screen's content is still taller than the
+viewport it's scaled to fit rather than scrolled.
 
 `fx.js` is the sound, haptics and motion layer — synthesised audio so there are no
 files to load, DOM transitions keyed so a re-render of the same screen doesn't
@@ -156,8 +184,8 @@ it talks to one interface, which is why the whole app still runs with no account
 ### Worth knowing
 
 - **The database is readable by anyone playing.** A player who opens devtools can see
-  who wrote which answer before the vote, and can see the trivia answer before the
-  reveal. Fixing that properly needs server-side logic, which GitHub Pages can't host.
+  who wrote which answer before the vote, the trivia answer before the reveal, and the
+  true answer in Liar's Trivia during the writing phase. Fixing that properly needs server-side logic, which GitHub Pages can't host.
   For a group of friends in one room this is a social problem, not a technical one.
 - **Anonymous auth keeps strangers out**, not your own players.
 - The free Firebase plan allows 100 simultaneous connections — far more than this needs.

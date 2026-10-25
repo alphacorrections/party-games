@@ -259,6 +259,25 @@ export class Host {
     await this.room.setPhase('scoreboard');
   }
 
+  /**
+   * Called when a new director takes over mid-game: re-arm the timer for the
+   * phase we're in, from the deadline already stored on the round.
+   */
+  async resume() {
+    const round = await this.room.t.get(`${this.room.base}/round`);
+    if (!round || !round.phase) return;
+    const left = Math.max(300, (round.deadline || Date.now()) - Date.now());
+    clearTimeout(this.timer);
+    // Re-sample the deck position so later rounds have prompts to draw from.
+    if (round.index !== undefined && this.prompts.length <= round.index + 1) {
+      // not enough prompts loaded for the rest of the game; load() already
+      // sampled a fresh set, which is acceptable after a takeover.
+    }
+    if (round.phase === 'answer') this.timer = setTimeout(() => this.startVote(), left);
+    else if (round.phase === 'vote') this.timer = setTimeout(() => this.reveal(), left);
+    else if (round.phase === 'reveal') this.timer = setTimeout(() => this.ask(round.index + 1), 2500);
+  }
+
   stop() { clearTimeout(this.timer); }
 }
 
@@ -319,7 +338,9 @@ export function hostView(round, players) {
   return `${header}<h2 class="subq">${promptHTML(round, [])}</h2><div class="vgrid">${cards}</div>`;
 }
 
-export function playerView(round, me, hand, submitted, voted, draft) {
+export function playerView(round, me, hand, submitted, voted, draft, extra = {}) {
+  const mirror = extra && extra.mirror;
+  const players = (extra && extra.players) || {};
   if (!round || round.phase === 'final') {
     return `<div class="pcard"><h2>Game over</h2><p>Check the big screen.</p></div>`;
   }
@@ -328,6 +349,19 @@ export function playerView(round, me, hand, submitted, voted, draft) {
 
   if (round.phase === 'reveal') {
     const got = (round.gained || {})[me.id] || 0;
+    if (mirror) {
+      const byId = Object.fromEntries(playerList(players).map(p => [p.id, p]));
+      const cards = (round.slots || []).map(s => {
+        const n = (round.tally || {})[s.slot] || 0;
+        const pts = (round.gained || {})[s.pid] || 0;
+        const who = byId[s.pid] || {};
+        return `<div class="vcard small ${pts ? 'won' : ''}">
+          <div class="vtext">${round.mode === 'pick' ? fillBlanks(round.prompt, [s.text]) : esc(s.text)}</div>
+          <div class="vwho">${who.emoji || ''} ${esc(who.name || '')}${n ? ` &nbsp; ${n} vote${n === 1 ? '' : 's'}` : ''}${pts ? ` <b>+${pts}</b>` : ''}</div>
+        </div>`;
+      }).join('');
+      return `<div class="pcard"><h2 class="${got ? 'winc' : ''}">${got ? `+${got}` : 'Nothing'}</h2><div class="vstack">${cards}</div></div>`;
+    }
     return `<div class="pcard ${got ? 'win' : ''}">
       <h2>${got ? `+${got}` : 'Nothing'}</h2>
       <p>${got ? 'They liked it.' : 'Rough crowd.'}</p></div>`;
@@ -338,7 +372,8 @@ export function playerView(round, me, hand, submitted, voted, draft) {
       return `<div class="pcard"><h2>You're judging</h2><p>Sit this one out. Pick the best in a sec.</p></div>`;
     }
     if (submitted) {
-      return `<div class="pcard"><h2>Submitted</h2><p>Waiting on the slow ones.</p></div>`;
+      return `<div class="pcard"><h2>Submitted</h2><p>Waiting on the slow ones.</p>
+        ${mirror ? timerHTML(round.deadline, ANSWER_MS) : ''}</div>`;
     }
 
     if (round.mode === 'pick') {
@@ -354,7 +389,8 @@ export function playerView(round, me, hand, submitted, voted, draft) {
       const ready = picked.length === need;
       return `
         <div class="pcard">
-          <p class="phint">${esc(round.prompt)}</p>
+          ${mirror ? `<div class="qmeta">Round ${round.index + 1} of ${round.total}</div>${timerHTML(round.deadline, ANSWER_MS)}` : ''}
+          <p class="phint prompt">${fillBlanks(round.prompt, [])}</p>
           <p class="phint small">Pick ${need} card${need > 1 ? 's' : ''}</p>
           <div class="hand">${cards}</div>
           <button class="pbtn primary" data-action="confirmcards" ${ready ? '' : 'disabled'}>
@@ -365,7 +401,8 @@ export function playerView(round, me, hand, submitted, voted, draft) {
 
     return `
       <div class="pcard">
-        <p class="phint">${esc(round.prompt)}</p>
+        ${mirror ? `<div class="qmeta">Round ${round.index + 1} of ${round.total}</div>${timerHTML(round.deadline, ANSWER_MS)}` : ''}
+        <p class="phint prompt">${esc(round.prompt)}</p>
         <textarea class="ptext" data-role="answer" maxlength="140"
                   placeholder="Make it hurt"></textarea>
         <button class="pbtn primary" data-action="submittext">Send it</button>
@@ -381,20 +418,24 @@ export function playerView(round, me, hand, submitted, voted, draft) {
     return `<div class="pcard"><h2>Voted</h2><p>Eyes up.</p></div>`;
   }
 
-  const mine = round.slots.find(s => s.pid === me.id);
   const btns = round.slots.map(s => {
     const own = s.pid === me.id && round.judge !== 'czar';
+    const body = (mirror && round.mode === 'pick') ? fillBlanks(round.prompt, [s.text]) : esc(s.text);
     return `<button class="pbtn vote ${own ? 'own' : ''}" data-action="vote"
       data-slot="${s.slot}" ${own ? 'disabled' : ''}>
-      ${esc(s.text)}${own ? ' <i>(yours)</i>' : ''}</button>`;
+      ${body}${own ? ' <i>(yours)</i>' : ''}</button>`;
   }).join('');
 
-  return `<div class="pcard"><p class="phint">Pick the best one</p>${btns}</div>`;
+  return `<div class="pcard">
+    ${mirror ? timerHTML(round.deadline, VOTE_MS) : ''}
+    ${mirror && round.mode !== 'pick' ? `<p class="phint prompt">${esc(round.prompt)}</p>` : ''}
+    <p class="phint small">Pick the best one</p>${btns}</div>`;
 }
 
 export function scoreboard(players, title = 'Scores') {
   return finalScoreboard(players, title);
 }
+export const mirrorView = playerView;
 
 export async function handleAction(room, me, action, round, state) {
   if (!round) return;

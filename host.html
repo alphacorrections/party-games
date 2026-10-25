@@ -41,5 +41,17 @@
 </main>
 
 <script type="module" src="src/host.js"></script>
+<script>
+  // If the module above never runs (browser too old for ES modules / modern
+  // syntax), say so instead of showing a dead page. host.js sets this flag.
+  setTimeout(function () {
+    if (!window.__pgBooted) {
+      document.body.innerHTML =
+        '<div class="oldbrowser"><h1>This browser is too old for the game</h1>' +
+        '<p>Open the page from a laptop, a phone, a Fire Stick or a TV made after about 2020, ' +
+        'or cast a Chrome tab to this screen.</p></div>';
+    }
+  }, 6000);
+</script>
 </body>
 </html>
