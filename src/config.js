@@ -13,13 +13,13 @@
 // ---------------------------------------------------------------------------
 
 export const FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyDTT_Ny1BEGrvlvxbzKLdfP2LRVYGUCKLM",
+  authDomain: "k-games-111e9.firebaseapp.com",
+  databaseURL: "https://k-games-111e9-default-rtdb.firebaseio.com",
+  projectId: "k-games-111e9",
+  storageBucket: "k-games-111e9.firebasestorage.app",
+  messagingSenderId: "96723769942",
+  appId: "1:96723769942:web:21a4676b9b63e1403eb9f7"
 };
 
 export const FIREBASE_SDK = "https://www.gstatic.com/firebasejs/13.1.0";
