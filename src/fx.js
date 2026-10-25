@@ -94,7 +94,9 @@ export function swapIn(el, html, key) {
   if (key !== undefined) lastKeys.set(el, key);
 
   if (same || reducedMotion()) {
-    el.innerHTML = html;
+    // Same screen: don't touch the DOM unless something actually changed, or
+    // running animations and the timer ring restart on every event.
+    if (el.innerHTML !== html) el.innerHTML = html;
     return;
   }
   el.classList.remove('fx-in');

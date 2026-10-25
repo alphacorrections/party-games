@@ -245,8 +245,36 @@ class PlayApp {
     const screenKey = key.replace(/\|[^|]*$/, '');
     const isNew = screenKey !== this._screenKey;
     this._screenKey = screenKey;
+
+    // Anything the person is typing must survive a re-render. Live events
+    // (other players answering, presence pings) arrive constantly mid-typing.
+    const ta = stage.querySelector('.ptext');
+    const typing = ta && document.activeElement === ta;
+    const draftText = ta ? ta.value : null;
+    const sel = typing ? [ta.selectionStart, ta.selectionEnd] : null;
+
+    if (!isNew && draftText !== null && stage.innerHTML !== html) {
+      // Same screen, same textarea: only patch the parts that aren't the input.
+      const fresh = document.createElement('div'); fresh.innerHTML = html;
+      const freshTa = fresh.querySelector('.ptext');
+      if (freshTa) {
+        freshTa.replaceWith(ta);          // keep the live node, with its value and focus
+        stage.innerHTML = '';
+        while (fresh.firstChild) stage.appendChild(fresh.firstChild);
+        if (typing) { ta.focus(); try { ta.setSelectionRange(sel[0], sel[1]); } catch {} }
+        this.mountDieIfNeeded(stage); this.mountTiltIfNeeded(stage);
+        document.body.classList.toggle('headsup', Boolean(stage.querySelector('.hu')));
+        this.afterRender();
+        return;
+      }
+    }
+
     if (isNew) { swapIn(stage, html, key); stagger(stage, '.pbtn, .card, .hugebtn, .gamebtn, .opt, .vcard', 45); }
-    else stage.innerHTML = html;
+    else if (stage.innerHTML !== html) stage.innerHTML = html;
+
+    // New screen that also has a textarea (rare: same phase re-keyed): restore text.
+    const ta2 = stage.querySelector('.ptext');
+    if (ta2 && draftText && !ta2.value && !isNew) ta2.value = draftText;
 
     this.mountDieIfNeeded(stage);
     this.mountTiltIfNeeded(stage);
