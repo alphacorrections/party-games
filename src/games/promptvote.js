@@ -13,7 +13,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown,
-         fillBlanks, loadJSON, contentURL } from '../util.js';
+         fillBlanks, loadJSON, contentURL, timerHTML, finalScoreboard } from '../util.js';
 
 export const meta = {
   id: 'promptvote',
@@ -282,7 +282,7 @@ export function hostView(round, players) {
   if (round.phase === 'answer') {
     return `
       ${header}
-      <div class="timer" data-deadline="${round.deadline}">${countdown(round.deadline)}</div>
+      ${timerHTML(round.deadline, ANSWER_MS)}
       ${img}
       <h1 class="question">${promptHTML(round, [])}</h1>
       <p class="phint">Answer on your phone.</p>`;
@@ -295,7 +295,7 @@ export function hostView(round, players) {
       }</div></div>`).join('');
     return `
       ${header}
-      <div class="timer" data-deadline="${round.deadline}">${countdown(round.deadline)}</div>
+      ${timerHTML(round.deadline, VOTE_MS)}
       ${img}
       <h2 class="subq">${promptHTML(round, [])}</h2>
       <div class="vgrid">${cards}</div>
@@ -393,14 +393,7 @@ export function playerView(round, me, hand, submitted, voted, draft) {
 }
 
 export function scoreboard(players, title = 'Scores') {
-  const rows = sortedPlayers(players).map((p, i) => `
-    <div class="srow ${i === 0 ? 'lead' : ''}">
-      <span class="rank">${i + 1}</span>
-      <span class="emoji">${p.emoji || '🎲'}</span>
-      <span class="sname">${esc(p.name)}</span>
-      <span class="spts">${p.score || 0}</span>
-    </div>`).join('');
-  return `<h1 class="question">${esc(title)}</h1><div class="scores">${rows}</div>`;
+  return finalScoreboard(players, title);
 }
 
 export async function handleAction(room, me, action, round, state) {

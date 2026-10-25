@@ -3,7 +3,7 @@
 // Fastest correct answer scores most. Phases: question -> reveal -> ... -> final
 // ---------------------------------------------------------------------------
 
-import { shuffle, sample, esc, sortedPlayers, playerList, countdown, loadJSON, contentURL } from '../util.js';
+import { shuffle, sample, esc, sortedPlayers, playerList, countdown, loadJSON, contentURL, timerHTML, finalScoreboard } from '../util.js';
 
 export const meta = {
   id: 'quiz',
@@ -148,8 +148,7 @@ export function hostView(round, players) {
   const header = `<div class="qmeta">Question ${round.index + 1} of ${round.total}</div>`;
   const note = round.phase === 'reveal' && round.note
     ? `<div class="note">${esc(round.note)}</div>` : '';
-  const timer = round.phase === 'question'
-    ? `<div class="timer" data-deadline="${round.deadline}">${countdown(round.deadline)}</div>` : '';
+  const timer = round.phase === 'question' ? timerHTML(round.deadline, ANSWER_MS) : '';
 
   return `
     ${header}
@@ -188,14 +187,7 @@ export function playerView(round, me, submitted) {
 }
 
 export function scoreboard(players, title = 'Scores') {
-  const rows = sortedPlayers(players).map((p, i) => `
-    <div class="srow ${i === 0 ? 'lead' : ''}">
-      <span class="rank">${i + 1}</span>
-      <span class="emoji">${p.emoji || '🎲'}</span>
-      <span class="sname">${esc(p.name)}</span>
-      <span class="spts">${p.score || 0}</span>
-    </div>`).join('');
-  return `<h1 class="question">${esc(title)}</h1><div class="scores">${rows}</div>`;
+  return finalScoreboard(players, title);
 }
 
 /** Phone taps -> room writes. */

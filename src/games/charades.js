@@ -9,7 +9,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, esc, sortedPlayers, playerList, countdown,
-         loadJSON, contentURL } from '../util.js';
+         loadJSON, contentURL, timerHTML, finalScoreboard } from '../util.js';
 
 export const meta = {
   id: 'charades',
@@ -32,6 +32,9 @@ export class Host {
     // When the board game runs this as a one-tile minigame it names the single
     // player who has to do it, instead of queueing a turn for everybody.
     this.only      = opts.only || null;
+    // Points per word. The board passes a smaller value so one lucky tile
+    // can't out-earn the rest of the game.
+    this.pointsPer = opts.pointsPer || POINTS_GOT;
     this.timer     = null;
     this.words     = [];
     this.queue     = [];
@@ -44,8 +47,18 @@ export class Host {
       ? this.categories.find(c => c.name === this.categoryName)
       : this.categories[Math.floor(Math.random() * this.categories.length)];
     this.categoryName = chosen ? chosen.name : 'Mixed';
+    this.categoryEmoji = chosen ? (chosen.emoji || '') : '🎲';
+    this.categoryBlurb = chosen ? (chosen.blurb || '') : 'Anything goes.';
     this.words = shuffle(chosen ? chosen.words : this.categories.flatMap(c => c.words));
     return this;
+  }
+
+  /** For the host's category picker: name/emoji/blurb/count per category. */
+  static async listCategories() {
+    const data = await loadJSON(contentURL('charades.json'));
+    return (data.categories || []).map(c => ({
+      name: c.name, emoji: c.emoji || '', blurb: c.blurb || '', count: (c.words || []).length
+    }));
   }
 
   nextWord() {
@@ -83,6 +96,8 @@ export class Host {
     await this.room.setRound({
       phase: 'ready',
       category: this.categoryName,
+      categoryEmoji: this.categoryEmoji,
+      categoryBlurb: this.categoryBlurb,
       active: pid,
       turn: this.turnNo,
       totalTurns: this.turnNo + this.queue.length,
@@ -119,7 +134,7 @@ export class Host {
 
     if (result === 'got') {
       got.push(round.word);
-      await this.room.addScore(round.active, POINTS_GOT);
+      await this.room.addScore(round.active, this.pointsPer);
     } else {
       skipped.push(round.word);
       if (SKIP_COST) await this.room.addScore(round.active, -SKIP_COST);
@@ -159,21 +174,22 @@ export function hostView(round, players) {
 
   const byId = Object.fromEntries(playerList(players).map(p => [p.id, p]));
   const who  = byId[round.active] || {};
-  const header = `<div class="qmeta">${esc(round.category || '')} &nbsp;&nbsp; turn ${round.turn} of ${round.totalTurns}</div>`;
+  const header = `<div class="qmeta">${round.categoryEmoji || ''} ${esc(round.category || '')} &nbsp;&nbsp; turn ${round.turn} of ${round.totalTurns}</div>`;
 
   if (round.phase === 'ready') {
     return `
       ${header}
-      <h1 class="question">${who.emoji || '🎲'} ${esc(who.name || '')} — face away from the screen</h1>
-      <p class="phint big">Everyone else: shout clues. Don't say the word.</p>
-      <div class="timer" data-deadline="${round.deadline}">${countdown(round.deadline)}</div>`;
+      <div class="catbadge"><span class="catemoji">${round.categoryEmoji || ''}</span>${esc(round.category || '')}</div>
+      <h1 class="question">${who.emoji || '🎲'} ${esc(who.name || '')}, face away from the screen</h1>
+      <p class="phint big">${esc(round.categoryBlurb || 'Everyone else: give clues.')} Don't say the word.</p>
+      ${timerHTML(round.deadline, READY_MS)}`;
   }
 
   if (round.phase === 'playing') {
     const got = (round.got || []).length;
     return `
       ${header}
-      <div class="timer big" data-deadline="${round.deadline}">${countdown(round.deadline)}</div>
+      ${timerHTML(round.deadline, TURN_MS, true)}
       <div class="word ${round.flash === 'got' ? 'flash-got' : round.flash === 'skip' ? 'flash-skip' : ''}">${esc(round.word || '')}</div>
       <p class="phint">${who.emoji || '🎲'} ${esc(who.name || '')} is guessing &nbsp;&nbsp; ${got} so far</p>`;
   }
@@ -227,14 +243,7 @@ export function playerView(round, me) {
 }
 
 export function scoreboard(players, title = 'Scores') {
-  const rows = sortedPlayers(players).map((p, i) => `
-    <div class="srow ${i === 0 ? 'lead' : ''}">
-      <span class="rank">${i + 1}</span>
-      <span class="emoji">${p.emoji || '🎲'}</span>
-      <span class="sname">${esc(p.name)}</span>
-      <span class="spts">${p.score || 0}</span>
-    </div>`).join('');
-  return `<h1 class="question">${esc(title)}</h1><div class="scores">${rows}</div>`;
+  return finalScoreboard(players, title);
 }
 
 /** The active player's taps are written as an intent the host acts on. */

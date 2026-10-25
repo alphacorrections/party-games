@@ -13,7 +13,7 @@
 //   rooms/{code}/mini    id of the running minigame, or absent
 // ---------------------------------------------------------------------------
 
-import { shuffle, esc, sortedPlayers, playerList } from '../util.js';
+import { shuffle, esc, sortedPlayers, playerList, finalScoreboard } from '../util.js';
 
 export const meta = {
   id: 'board',
@@ -24,7 +24,8 @@ export const meta = {
 };
 
 const RESOLVE_MS = 4200;
-const ROLL_MS    = 900;
+const ROLL_MS    = 1100;   // matches the token slide duration in CSS
+const LAP_BONUS  = 500;
 
 /** Grid-perimeter positions for a 6x4 ring, clockwise from top-left. */
 const RING = [
@@ -38,7 +39,7 @@ const MINIS = [
   { id: 'quiz',       opts: { rounds: 1 },                            label: 'Trivia' },
   { id: 'promptvote', opts: { rounds: 1, mode: 'pick', judge: 'all' }, label: 'Fill In The Blank' },
   { id: 'promptvote', opts: { rounds: 1, mode: 'type', judge: 'all' }, label: 'Write Your Own' },
-  { id: 'charades',   opts: { rounds: 1 },                            label: 'Shout It Out', solo: true }
+  { id: 'charades',   opts: { rounds: 1, pointsPer: 60 },             label: 'Shout It Out', solo: true }
 ];
 
 const ENGINES = {
@@ -48,7 +49,8 @@ const ENGINES = {
 };
 
 function buildTiles() {
-  // A fixed mix, shuffled, so every board is different but fairly balanced.
+  // Index 0 is always Start; the rest is a fixed mix, shuffled, so every board
+  // is different but fairly balanced.
   const mix = [
     { t: 'mini',  label: 'Minigame' },
     { t: 'mini',  label: 'Minigame' },
@@ -64,10 +66,9 @@ function buildTiles() {
     { t: 'swap',  label: 'Swap' },
     { t: 'swap',  label: 'Swap' },
     { t: 'wild',  label: 'Wildcard' },
-    { t: 'wild',  label: 'Wildcard' },
-    { t: 'rest',  label: 'Nothing' }
+    { t: 'wild',  label: 'Wildcard' }
   ];
-  return shuffle(mix);
+  return [{ t: 'start', label: 'Start' }, ...shuffle(mix)];
 }
 
 export class Host {
@@ -154,24 +155,28 @@ export class Host {
     try {
       const roll = 1 + Math.floor(Math.random() * 6);
       const from = b.positions[b.active] || 0;
-      const to = (from + roll) % b.tiles.length;
+      const raw = from + roll;
+      const to = raw % b.tiles.length;
       const positions = { ...b.positions, [b.active]: to };
+      const passedStart = raw >= b.tiles.length;
 
       await this.room.t.update(`${this.base}/board`, {
         phase: 'moving', lastRoll: roll, positions, message: null
       });
+      if (passedStart) await this.room.addScore(b.active, LAP_BONUS);
       await new Promise(r => setTimeout(r, ROLL_MS));
-      await this.resolve(to);
+      await this.resolve(to, passedStart);
     } finally {
       this._busy = false;
     }
   }
 
-  async resolve(tileIndex) {
+  async resolve(tileIndex, passedStart = false) {
     const b = await this.read();
     if (!b) return;
     let tile = b.tiles[tileIndex];
     const who = (await this.room.players())[b.active] || { name: 'Someone' };
+    const lap = passedStart ? ` and banks ${LAP_BONUS} for the lap` : '';
 
     if (tile.t === 'wild') {
       const roll = Math.random();
@@ -185,12 +190,14 @@ export class Host {
     if (tile.t === 'mini') return this.startMini(who, b.active);
 
     let message;
-    if (tile.t === 'pay') {
+    if (tile.t === 'start') {
+      message = `${who.name} lands on Start${lap}`;
+    } else if (tile.t === 'pay') {
       await this.room.addScore(b.active, tile.amount);
-      message = `${who.name} collects ${tile.amount}`;
+      message = `${who.name} collects ${tile.amount}${lap}`;
     } else if (tile.t === 'loss') {
       await this.room.addScore(b.active, -tile.amount);
-      message = `${who.name} loses ${tile.amount}`;
+      message = `${who.name} loses ${tile.amount}${lap}`;
     } else if (tile.t === 'swap') {
       const others = (b.order || []).filter(id => id !== b.active);
       if (others.length) {
@@ -205,7 +212,7 @@ export class Host {
         message = `${who.name} has nobody to swap with`;
       }
     } else {
-      message = `${who.name} lands on nothing at all`;
+      message = `${who.name} lands on nothing at all${lap}`;
     }
 
     await this.room.t.update(`${this.base}/board`, { phase: 'resolve', message });
@@ -291,9 +298,18 @@ export class Host {
 /* -------------------------------- views -------------------------------- */
 
 const TILE_CLASS = {
-  mini: 'tmini', pay: 'tpay', loss: 'tloss', swap: 'tswap', wild: 'twild', rest: 'trest'
+  mini: 'tmini', pay: 'tpay', loss: 'tloss', swap: 'tswap', wild: 'twild', rest: 'trest', start: 'tstart'
+};
+const TILE_ICON = {
+  mini: '🎲', pay: '💸', loss: '💀', swap: '🔁', wild: '❓', rest: '·', start: '🏁'
 };
 
+/**
+ * The board is rendered ONCE per game into a persistent scene; later updates
+ * patch tokens, the centre panel and tile highlights in place. That is what
+ * lets tokens slide instead of teleport. host.js calls hostView on every
+ * change; it returns the same shell and the patcher does the real work.
+ */
 export function hostView(board, players, round, miniMod) {
   if (!board) return '<div class="big">Setting up the board…</div>';
 
@@ -306,40 +322,146 @@ export function hostView(board, players, round, miniMod) {
 
   if (board.phase === 'final') return scoreboard(players, 'Final scores');
 
-  const byId = Object.fromEntries(playerList(players).map(p => [p.id, p]));
-  const tokensAt = idx => (board.order || [])
-    .filter(pid => (board.positions || {})[pid] === idx)
-    .map(pid => `<span class="token ${pid === board.active ? 'up' : ''}">${byId[pid]?.emoji || '🎲'}</span>`)
-    .join('');
-
+  // Shell only; patchBoard() fills it.
   const tiles = (board.tiles || []).map((t, i) => {
     const [r, c] = RING[i] || [1, 1];
-    return `<div class="tile ${TILE_CLASS[t.t] || ''}" style="grid-row:${r};grid-column:${c}">
-      <span class="tlabel">${esc(t.label)}</span>
-      ${t.amount ? `<span class="tamt">${t.t === 'loss' ? '−' : '+'}${t.amount}</span>` : ''}
-      <span class="tokens">${tokensAt(i)}</span>
+    return `<div class="tile ${TILE_CLASS[t.t] || ''}" data-tile="${i}"
+                 style="grid-row:${r};grid-column:${c}">
+      <div class="tface">
+        <span class="ticon">${TILE_ICON[t.t] || ''}</span>
+        <span class="tlabel">${esc(t.label)}</span>
+        ${t.amount ? `<span class="tamt">${t.t === 'loss' ? '−' : '+'}${t.amount}</span>` : ''}
+      </div>
+      <div class="tside"></div>
     </div>`;
   }).join('');
 
-  const who = byId[board.active] || {};
-  const centre = board.phase === 'roll'
-    ? `<div class="bcentre">
-         <div class="bturn">Turn ${board.turnNo} of ${board.maxTurns}</div>
-         <div class="bname">${who.emoji || '🎲'} ${esc(who.name || '')}</div>
-         <div class="bhint">Roll on your phone</div>
-       </div>`
-    : `<div class="bcentre">
-         ${board.lastRoll ? `<div class="bdie">${board.lastRoll}</div>` : ''}
-         <div class="bmsg">${esc(board.message || '…')}</div>
-       </div>`;
-
-  return `<div class="boardgrid">${tiles}${centre}</div>${miniScores(players)}`;
+  return `
+    <div class="bscene">
+      <div class="btable">
+        <div class="boardgrid" data-board>
+          ${tiles}
+          <div class="bcentre" data-centre></div>
+          <div class="tokenlayer" data-tokens></div>
+        </div>
+      </div>
+    </div>
+    <div class="bscores" data-bscores></div>`;
 }
 
-function miniScores(players) {
-  return `<div class="bscores">${sortedPlayers(players).map(p =>
-    `<span class="bchip"><span>${p.emoji || '🎲'}</span>${esc(p.name)}<b>${p.score || 0}</b></span>`
-  ).join('')}</div>`;
+/**
+ * Patch the live board in place. Called by host.js after hostView has been
+ * mounted (and on every subsequent board change while the shell is present).
+ */
+export function patchBoard(stage, board, players, fx) {
+  const grid = stage.querySelector('[data-board]');
+  if (!grid || !board) return;
+
+  const byId = Object.fromEntries(playerList(players).map(p => [p.id, p]));
+  const order = board.order || [];
+  const positions = board.positions || {};
+
+  // ---- tokens: create once, then move by transform
+  const layer = grid.querySelector('[data-tokens]');
+  const gridRect = grid.getBoundingClientRect();
+
+  const tileCentre = idx => {
+    const t = grid.querySelector(`[data-tile="${idx}"]`);
+    if (!t) return { x: 0, y: 0 };
+    const r = t.getBoundingClientRect();
+    return { x: r.left - gridRect.left + r.width / 2, y: r.top - gridRect.top + r.height * 0.42 };
+  };
+
+  // Several tokens on one tile fan out a little so they don't stack exactly.
+  const onTile = {};
+  for (const pid of order) {
+    const idx = positions[pid] || 0;
+    (onTile[idx] = onTile[idx] || []).push(pid);
+  }
+
+  for (const pid of order) {
+    let tok = layer.querySelector(`[data-token="${pid}"]`);
+    if (!tok) {
+      tok = document.createElement('div');
+      tok.className = 'ptoken';
+      tok.dataset.token = pid;
+      tok.innerHTML = `<span class="pt-emoji">${byId[pid]?.emoji || '🎲'}</span><span class="pt-base"></span>`;
+      layer.appendChild(tok);
+    }
+    const idx = positions[pid] || 0;
+    const group = onTile[idx];
+    const k = group.indexOf(pid);
+    const spread = group.length > 1 ? (k - (group.length - 1) / 2) * 18 : 0;
+    const { x, y } = tileCentre(idx);
+    const prev = tok.dataset.at;
+    tok.style.transform = `translate(${x + spread}px, ${y}px)`;
+    tok.classList.toggle('active', pid === board.active);
+    if (prev !== undefined && prev !== String(idx)) {
+      tok.classList.remove('hop'); void tok.offsetWidth; tok.classList.add('hop');
+    }
+    tok.dataset.at = idx;
+  }
+  // Remove tokens for anyone who left.
+  layer.querySelectorAll('[data-token]').forEach(n => {
+    if (!order.includes(n.dataset.token)) n.remove();
+  });
+
+  // ---- tile highlight for the active player's square
+  grid.querySelectorAll('.tile.lit').forEach(n => n.classList.remove('lit'));
+  if (board.phase === 'resolve' || board.phase === 'moving') {
+    const idx = positions[board.active];
+    const t = grid.querySelector(`[data-tile="${idx}"]`);
+    if (t) t.classList.add('lit');
+  }
+
+  // ---- centre panel
+  const who = byId[board.active] || {};
+  const centre = grid.querySelector('[data-centre]');
+  let html;
+  if (board.phase === 'roll') {
+    html = `
+      <div class="bturn">Turn ${board.turnNo} of ${board.maxTurns}</div>
+      <div class="bname">${who.emoji || '🎲'} ${esc(who.name || '')}</div>
+      <div class="bhint">Roll on your phone</div>`;
+  } else if (board.phase === 'moving') {
+    html = `<div class="bdie">${board.lastRoll || ''}</div><div class="bhint">Moving…</div>`;
+  } else {
+    const kind = /collects|Wildcard.*collects/.test(board.message || '') ? 'good'
+               : /loses|swaps/.test(board.message || '') ? 'bad' : '';
+    html = `
+      ${board.lastRoll ? `<div class="bdie">${board.lastRoll}</div>` : ''}
+      <div class="bmsg ${kind}">${esc(board.message || '…')}</div>`;
+  }
+  const key = `${board.phase}|${board.turnNo}|${board.message || ''}`;
+  if (centre.dataset.key !== key) {
+    centre.dataset.key = key;
+    centre.classList.remove('pop'); centre.innerHTML = html; void centre.offsetWidth; centre.classList.add('pop');
+    if (fx && board.phase === 'resolve') {
+      if (/collects/.test(board.message || '')) fx.sound.coin();
+      else if (/loses/.test(board.message || '')) fx.sound.loss();
+      else if (/swaps/.test(board.message || '')) fx.sound.reveal();
+    }
+  }
+
+  // ---- running scores with count-up
+  const sc = stage.querySelector('[data-bscores]');
+  if (sc) {
+    const sorted = sortedPlayers(players);
+    for (const p of sorted) {
+      let chip = sc.querySelector(`[data-chip="${p.id}"]`);
+      if (!chip) {
+        chip = document.createElement('span');
+        chip.className = 'bchip'; chip.dataset.chip = p.id;
+        chip.innerHTML = `<span>${p.emoji || '🎲'}</span>${esc(p.name)}<b>0</b>`;
+        sc.appendChild(chip);
+      }
+      chip.classList.toggle('active', p.id === board.active);
+      const b = chip.querySelector('b');
+      if (fx) fx.countUp(b, p.score || 0); else b.textContent = p.score || 0;
+    }
+    // keep DOM order = score order
+    sorted.forEach(p => { const c = sc.querySelector(`[data-chip="${p.id}"]`); if (c) sc.appendChild(c); });
+  }
 }
 
 export function playerView(board, me, round, miniMod, hand, submitted, voted, draft) {
@@ -366,26 +488,23 @@ export function playerView(board, me, round, miniMod, hand, submitted, voted, dr
   }
 
   if (board.phase === 'roll') {
-    return `<div class="pcard tall">
+    return `<div class="pcard tall dicecard">
+      <div class="diehost" data-die></div>
       <button class="hugebtn roll" data-action="roll">ROLL</button>
+      <p class="phint small">Tap to roll</p>
     </div>`;
   }
 
-  return `<div class="pcard">
-    <h2>${board.lastRoll ? `You rolled ${board.lastRoll}` : 'Moving'}</h2>
-    <p>${esc(board.message || '')}</p>
+  // Keep the die on screen through the move so it can land, then show result.
+  return `<div class="pcard tall dicecard">
+    <div class="diehost" data-die data-result="${board.lastRoll || ''}"></div>
+    <h2 class="rolled">${board.lastRoll ? `You rolled ${board.lastRoll}` : 'Rolling'}</h2>
+    <p class="phint">${esc(board.message || '')}</p>
   </div>`;
 }
 
 export function scoreboard(players, title = 'Scores') {
-  const rows = sortedPlayers(players).map((p, i) => `
-    <div class="srow ${i === 0 ? 'lead' : ''}">
-      <span class="rank">${i + 1}</span>
-      <span class="emoji">${p.emoji || '🎲'}</span>
-      <span class="sname">${esc(p.name)}</span>
-      <span class="spts">${p.score || 0}</span>
-    </div>`).join('');
-  return `<h1 class="question">${esc(title)}</h1><div class="scores">${rows}</div>`;
+  return finalScoreboard(players, title);
 }
 
 /** Roll taps and minigame taps both arrive here. */

@@ -17,12 +17,12 @@ state. No server to run.
 | **Fill In The Blank** | Prompt with a gap. Everyone plays a card from their hand. Everyone votes. | 3+ |
 | **Fill In The Blank — Judge** | Same, but one rotating judge picks the winner instead of a group vote. | 3+ |
 | **Write Your Own** | Open prompt, everyone types their own answer, funniest wins the votes. | 3+ |
-| **Shout It Out** | Word shows huge on the TV. The active player faces away and taps GOT IT / SKIP while everyone screams clues. | 3+ |
-| **Spiral** | A board of 16 tiles. Roll on your phone, move, and deal with what you land on — payouts, setbacks, score swaps, or a one-round minigame pulled from the games above. | 2+ |
+| **Shout It Out** | Heads Up. Pick a category — Act It Out, Impressions, Movies, TV, Famous People, Animals, Songs, Accents, Jobs, Drunk & Disorderly — the word shows huge on the TV, the active player faces away, everyone else gives clues. | 3+ |
+| **Spiral** | A 3D board of 16 tiles. Roll a real die on your phone, your token slides, and you deal with what you land on — payouts, setbacks, score swaps, or a one-round minigame pulled from the games above. Passing Start banks a lap bonus. | 2+ |
 
 All content is original and lives in `content/*.json`: 110 trivia questions, 159
-fill-in-the-blank prompts with 499 answer cards, 150 open prompts, and 410
-charades words across 10 categories. Edit those files to make the games yours —
+fill-in-the-blank prompts with 499 answer cards, 150 open prompts, and 350
+charades entries across 10 categories. Edit those files to make the games yours —
 plain JSON, no build step, no code changes needed.
 
 **Spiral** reuses the other engines rather than reimplementing them. Landing on a
@@ -137,6 +137,18 @@ src/host.js         host controller
 src/play.js         phone controller
 src/games/*.js      one module per game engine
 ```
+
+`fx.js` is the sound, haptics and motion layer — synthesised audio so there are no
+files to load, DOM transitions keyed so a re-render of the same screen doesn't
+flicker, and everything degrades to nothing under `prefers-reduced-motion`.
+Sound is off until someone taps the speaker, because browsers won't start audio
+without a gesture anyway. `dice.js` is a six-faced CSS cube; the tumble is a real
+rotation that lands on the rolled value.
+
+The board is CSS 3D rather than WebGL on purpose: tiles stay HTML (crisp text at
+any size), nothing heavy loads, and it works on the kind of TV browser you
+actually cast to. If tokens ever need to be meshes that physically hop, that is
+the moment to reach for Three.js; the board data model won't need to change.
 
 `transport.js` is the only file that knows whether Firebase exists. Everything above
 it talks to one interface, which is why the whole app still runs with no account.
