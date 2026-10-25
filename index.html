@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Party Games</title>
+<meta name="theme-color" content="#140B1F">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="landing">
+  <h1>Party<br>Games</h1>
+  <p class="lead">Host on the TV. Everyone else plays on their phone. Scores stick around.</p>
+
+  <nav class="bigchoice">
+    <a href="host.html"><b>Host a game</b><span>Open this on the screen everyone can see</span></a>
+    <a href="play.html"><b>Join a game</b><span>You'll need the four-letter room code</span></a>
+    <a href="leaderboard.html"><b>Leaderboard</b><span>All-time standings and who's on the roster</span></a>
+  </nav>
+
+  <div id="setup" hidden class="setupnote">
+    <p><b>Running in local mode.</b> Phones can't join yet — everything stays on this
+       one device. Add your Firebase config in <code>src/config.js</code> to turn on
+       multiplayer. Steps are in the README.</p>
+  </div>
+</main>
+
+<script type="module">
+  import { FIREBASE_READY } from './src/config.js';
+  if (!FIREBASE_READY) document.getElementById('setup').hidden = false;
+</script>
+</body>
+</html>

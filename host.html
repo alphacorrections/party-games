@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Host — Party Games</title>
+<meta name="theme-color" content="#140B1F">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="host">
+
+<header class="topbar">
+  <span class="brand">Party Games</span>
+  <span class="codebox"><span class="lbl">Room</span><span id="code">····</span></span>
+  <span id="modebadge" class="badge">…</span>
+</header>
+
+<main id="stage" class="stage">
+  <div class="lobby">
+    <section class="joinpanel">
+      <h2>Join on your phone</h2>
+      <div id="qr"></div>
+      <p id="joinurl" class="small"></p>
+      <p class="muted small">Or go to the site and enter the room code above.</p>
+    </section>
+
+    <section>
+      <h2>Players (<span id="pcount">0</span>)</h2>
+      <div id="plist" class="plist"></div>
+      <h2>Pick a game</h2>
+      <div id="menu" class="menu"></div>
+      <button id="again" hidden>Play again</button>
+    </section>
+  </div>
+</main>
+
+<script type="module" src="src/host.js"></script>
+</body>
+</html>

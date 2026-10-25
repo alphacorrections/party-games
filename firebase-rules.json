@@ -1,0 +1,73 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "rooms": {
+      "$code": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+        ".validate": "$code.length == 4",
+
+        "meta": {
+          "createdAt":  { ".validate": "newData.isNumber()" },
+          "expiresAt":  { ".validate": "newData.isNumber()" },
+          "hostId":     { ".validate": "newData.isString() && newData.val().length <= 32" },
+          "$other":     { ".validate": false }
+        },
+
+        "phase": {
+          ".validate": "newData.isString() && newData.val().length <= 16"
+        },
+
+        "players": {
+          "$pid": {
+            "name":      { ".validate": "newData.isString() && newData.val().length <= 16" },
+            "emoji":     { ".validate": "newData.isString() && newData.val().length <= 8" },
+            "score":     { ".validate": "newData.isNumber()" },
+            "joinedAt":  { ".validate": "newData.isNumber()" },
+            "connected": { ".validate": "newData.isBoolean()" },
+            "$other":    { ".validate": false }
+          }
+        },
+
+        "submissions": {
+          "$pid": {
+            "text": { ".validate": "newData.isString() && newData.val().length <= 200" }
+          }
+        }
+      }
+    },
+
+    "roster": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$key": {
+        "name":      { ".validate": "newData.isString() && newData.val().length <= 16" },
+        "emoji":     { ".validate": "newData.isString() && newData.val().length <= 8" },
+        "active":    { ".validate": "newData.isBoolean()" },
+        "createdAt": { ".validate": "newData.isNumber()" },
+        "$other":    { ".validate": false }
+      }
+    },
+
+    "leaderboard": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$key": {
+        "name":        { ".validate": "newData.isString() && newData.val().length <= 16" },
+        "points":      { ".validate": "newData.isNumber()" },
+        "gamesPlayed": { ".validate": "newData.isNumber()" },
+        "wins":        { ".validate": "newData.isNumber()" },
+        "lastPlayed":  { ".validate": "newData.isNumber()" },
+        "byGame":      { "$game": { ".validate": "newData.isNumber()" } },
+        "$other":      { ".validate": false }
+      }
+    },
+
+    "history": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}
