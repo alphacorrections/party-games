@@ -36,6 +36,8 @@ const SWEEP_BONUS = 250;
 export class Host {
   constructor(room, opts = {}) {
     this.room   = room;
+    this.nested = Boolean(opts.nested);   // running inside the board: don't take over `game`
+    this.only   = opts.only || null;
     this.mode   = opts.mode  || 'pick';     // pick | type | meme
     this.judge  = opts.judge || 'all';      // all | czar
     this.rounds = opts.rounds || meta.defaultRounds;
@@ -91,8 +93,7 @@ export class Host {
   }
 
   async begin() {
-    await this.room.setGame('promptvote');
-    await this.room.setPhase('playing');
+    if (!this.nested) { await this.room.setGame('promptvote'); await this.room.setPhase('playing'); }
 
     await this.room.t.remove(`${this.room.base}/mulliganed`);
     if (this.mode === 'pick') {

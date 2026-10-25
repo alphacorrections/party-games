@@ -30,6 +30,9 @@ const LIKELY_PTS = 400;
 export class Host {
   constructor(room, opts = {}) {
     this.room = room;
+    this.nested = Boolean(opts.nested);   // running inside the board: don't take over `game`
+    // Duel mode: only these player ids take part; others just watch.
+    this.only = opts.only || null;
     this.mode = opts.mode || 'wyr';
     this.rounds = opts.rounds || meta.defaultRounds;
     this.timer = null;
@@ -47,8 +50,7 @@ export class Host {
   }
 
   async begin() {
-    await this.room.setGame('blindvote');
-    await this.room.setPhase('playing');
+    if (!this.nested) { await this.room.setGame('blindvote'); await this.room.setPhase('playing'); }
     await this.ask(0);
   }
 
@@ -58,7 +60,7 @@ export class Host {
     const item = this.deck[index];
     await this.room.clearRoundData();
     await this.room.setRound({
-      phase: 'vote', mode: this.mode,
+      phase: 'vote', mode: this.mode, only: this.only || null,
       index, total: this.deck.length,
       a: item.a || null, b: item.b || null, text: item.text || null,
       deadline: Date.now() + VOTE_MS
@@ -69,7 +71,7 @@ export class Host {
   async onVotes(votes, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'vote') return;
-    const live = playerList(players).filter(isPresent).length;
+    const live = this.parts(players).length;
     if (live && Object.keys(votes || {}).length >= live) {
       clearTimeout(this.timer);
       await this.reveal();
@@ -113,6 +115,11 @@ export class Host {
     if (!round) return;
     if (kind === 'next' && round.phase === 'reveal') { clearTimeout(this.timer); return this.ask(round.index + 1); }
     if (kind === 'skip' && pid && round.phase === 'vote') await this.room.vote(pid, '-');
+  }
+
+  /** Participants: present players, narrowed to `only` in a duel. */
+  parts(players) {
+    return playerList(players).filter(isPresent).filter(p => !this.only || this.only.includes(p.id));
   }
 
   async finish() {
@@ -173,6 +180,11 @@ function likelyReveal(round, players) {
     <p class="phint big">${w.length ? `${esc(w.join(' and '))}. Obviously.` : 'No votes?'}</p>`;
 }
 
+function spectators(round, players) {
+  if (!round || !round.only) return [];
+  return playerList(players).map(p => p.id).filter(id => !round.only.includes(id));
+}
+
 export function hostView(round, players) {
   if (!round) return '<div class="big">Loading…</div>';
   if (round.phase === 'final') return finalScoreboard(players, 'Final scores');
@@ -182,11 +194,11 @@ export function hostView(round, players) {
     if (round.mode === 'wyr') {
       return `${header}${timerHTML(round.deadline, VOTE_MS)}
         <div class="wyr"><div class="wopt a">${esc(round.a)}</div><div class="or">or</div><div class="wopt b">${esc(round.b)}</div></div>
-        ${waitingHTML(pendingPlayers(players, liveVotes), { skippable: true })}`;
+        ${waitingHTML(pendingPlayers(players, liveVotes, spectators(round, players)), { skippable: true })}`;
     }
     return `${header}${timerHTML(round.deadline, VOTE_MS)}
       <h1 class="question">…${esc(round.text)}?</h1>
-      ${waitingHTML(pendingPlayers(players, liveVotes), { skippable: true })}`;
+      ${waitingHTML(pendingPlayers(players, liveVotes, spectators(round, players)), { skippable: true })}`;
   }
   return `${header}${round.mode === 'wyr' ? wyrSplit(round, players) : `<h2 class="subq">…${esc(round.text)}?</h2>${likelyReveal(round, players)}`}
     <button class="nextbtn" data-next="1">Next</button>`;
@@ -198,6 +210,9 @@ export function setSubmissions() {}
 
 export function playerView(round, me, submitted, voted, players, extra = {}) {
   if (!round || round.phase === 'final') return `<div class="pcard"><h2>Game over</h2></div>`;
+  if (round.only && !round.only.includes(me.id)) {
+    return `<div class="pcard"><h2>Duel</h2><p>Two of them, one round. You're watching.</p></div>`;
+  }
   const mirror = extra.mirror;
 
   if (round.phase === 'vote') {

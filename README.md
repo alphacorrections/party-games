@@ -21,7 +21,7 @@ state. No server to run.
 | **Would You Rather** | Two bad options, blind vote, the split reveals. The minority has to explain themselves. | 3+ |
 | **Most Likely To** | Vote for a player. Whoever gets the most votes earns the title. | 3+ |
 | **Shout It Out / Heads Up** | Pick a category — Act It Out, Impressions, Movies, TV, Famous People, Animals, Songs, Accents, Jobs, Drunk & Disorderly — the word shows huge on the TV, the active player faces away, everyone else gives clues. | 3+ |
-| **Spiral** | A 3D board of 16 tiles. Roll a real die on your phone, your token slides, and you deal with what you land on — payouts, setbacks, score swaps, or a one-round minigame pulled from the games above. Passing Start banks a lap bonus. | 2+ |
+| **Spiral** | A 3D board: 28 tiles winding into a centre Jackpot through four zones (the Bar, the Courthouse, the Clinic, the Afterparty). Items you hold and use — Steal, Shield, Double, Swap, Mug. Land on someone and it's a duel: a one-round head-to-head for a pot. Setbacks pay into the pot; Jackpot pays it out. Events hit the whole table. Six different minigames, biased by zone. | 2+ |
 
 All content is original and lives in `content/*.json`: 110 trivia questions, 159
 fill-in-the-blank prompts with 499 answer cards, 150 open prompts, and 350

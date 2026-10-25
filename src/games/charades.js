@@ -28,6 +28,7 @@ const SKIP_COST  = 0;
 export class Host {
   constructor(room, opts = {}) {
     this.room      = room;
+    this.nested = Boolean(opts.nested);   // running inside the board: don't take over `game`
     this.categoryName = opts.category || null;
     this.turnsEach = opts.rounds || meta.defaultRounds;
     // When the board game runs this as a one-tile minigame it names the single
@@ -78,8 +79,7 @@ export class Host {
   }
 
   async begin() {
-    await this.room.setGame('charades');
-    await this.room.setPhase('playing');
+    if (!this.nested) { await this.room.setGame('charades'); await this.room.setPhase('playing'); }
 
     const all = playerList(await this.room.players())
       .sort((a, b) => (a.joinedAt || 0) - (b.joinedAt || 0));

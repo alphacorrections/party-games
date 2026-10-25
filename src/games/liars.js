@@ -31,6 +31,9 @@ const FOOL_PTS  = 500;
 export class Host {
   constructor(room, opts = {}) {
     this.room = room;
+    this.nested = Boolean(opts.nested);   // running inside the board: don't take over `game`
+    // Duel mode: only these player ids take part; others just watch.
+    this.only = opts.only || null;
     this.rounds = opts.rounds || meta.defaultRounds;
     this.timer = null;
     this.deck = [];
@@ -43,8 +46,7 @@ export class Host {
   }
 
   async begin() {
-    await this.room.setGame('liars');
-    await this.room.setPhase('playing');
+    if (!this.nested) { await this.room.setGame('liars'); await this.room.setPhase('playing'); }
     await this.ask(0);
   }
 
@@ -54,7 +56,7 @@ export class Host {
     const q = this.deck[index];
     await this.room.clearRoundData();
     await this.room.setRound({
-      phase: 'write',
+      phase: 'write', only: this.only || null,
       index, total: this.deck.length,
       q: q.q,
       truth: q.answer,            // readable by a devtools cheater; see README
@@ -68,7 +70,7 @@ export class Host {
   async onSubmissions(subs, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'write') return;
-    const live = playerList(players).filter(isPresent).length;
+    const live = this.parts(players).length;
     if (live && Object.keys(subs || {}).length >= live) {
       clearTimeout(this.timer);
       await this.startPick();
@@ -78,7 +80,7 @@ export class Host {
   async onVotes(votes, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'pick') return;
-    const live = playerList(players).filter(isPresent).length;
+    const live = this.parts(players).length;
     if (live && Object.keys(votes || {}).length >= live) {
       clearTimeout(this.timer);
       await this.reveal();
@@ -147,6 +149,11 @@ export class Host {
     }
   }
 
+  /** Participants: present players, narrowed to `only` in a duel. */
+  parts(players) {
+    return playerList(players).filter(isPresent).filter(p => !this.only || this.only.includes(p.id));
+  }
+
   async finish() {
     clearTimeout(this.timer);
     if (this.onFinish) return this.onFinish();
@@ -176,6 +183,11 @@ export class Host {
 function blank(q) { return esc(q).replace(/_{2,}/g, '<b class="fill">______</b>'); }
 function filled(q, a) { return esc(q).replace(/_{2,}/g, `<b class="fill">${esc(a)}</b>`); }
 
+function spectators(round, players) {
+  if (!round || !round.only) return [];
+  return playerList(players).map(p => p.id).filter(id => !round.only.includes(id));
+}
+
 export function hostView(round, players) {
   if (!round) return '<div class="big">Loading…</div>';
   if (round.phase === 'final') return finalScoreboard(players, 'Final scores');
@@ -186,7 +198,7 @@ export function hostView(round, players) {
     return `${header}${timerHTML(round.deadline, WRITE_MS)}
       <h1 class="question">${blank(round.q)}</h1>
       <p class="phint big">Write a lie that sounds true.</p>
-      ${waitingHTML(pendingPlayers(players, liveSubs), { skippable: true })}`;
+      ${waitingHTML(pendingPlayers(players, liveSubs, spectators(round, players)), { skippable: true })}`;
   }
   if (round.phase === 'pick') {
     const opts = round.options.map((o, i) =>
@@ -194,7 +206,7 @@ export function hostView(round, players) {
     return `${header}${timerHTML(round.deadline, PICK_MS)}
       <h2 class="subq">${blank(round.q)}</h2>
       <div class="opts wide">${opts}</div>
-      ${waitingHTML(pendingPlayers(players, liveVotes), { skippable: true })}`;
+      ${waitingHTML(pendingPlayers(players, liveVotes, spectators(round, players)), { skippable: true })}`;
   }
   // reveal: truth last, lies first with who fell for them
   const lies = round.options.filter(o => !o.truth);
@@ -226,6 +238,9 @@ export function setVotes(v) { liveVotes = v || {}; }
 
 export function playerView(round, me, submitted, voted, players, extra = {}) {
   if (!round || round.phase === 'final') return `<div class="pcard"><h2>Game over</h2></div>`;
+  if (round.only && !round.only.includes(me.id)) {
+    return `<div class="pcard"><h2>Duel</h2><p>Two of them, one round. You're watching.</p></div>`;
+  }
   const mirror = extra.mirror;
 
   if (round.phase === 'write') {

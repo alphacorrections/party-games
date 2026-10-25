@@ -73,6 +73,10 @@ export function fitStage(stage) {
   if (!stage) return;
   stage.style.transform = '';
   stage.style.transformOrigin = '';
+  // Scale-to-fit is for wide screens (TVs, laptops) where scrolling is wrong.
+  // A portrait phone should just scroll.
+  if (window.innerHeight > window.innerWidth) { document.documentElement.classList.add('portrait'); return; }
+  document.documentElement.classList.remove('portrait');
   const avail = stage.parentElement ? stage.parentElement.clientHeight : window.innerHeight;
   const need = stage.scrollHeight;
   if (need > avail && avail > 0) {

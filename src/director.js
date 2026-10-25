@@ -102,7 +102,7 @@ export class Director {
     if (!intent || !this.engine) return;
     if (intent.at && intent.at === this._lastIntentAt) return;
     this._lastIntentAt = intent.at;
-    if (intent.action === 'roll') {
+    if (intent.action === 'roll' || intent.action === 'useitem') {
       await this.engine.onIntent?.(intent);
     } else if (intent.action === 'next' || intent.action === 'skip' || intent.action === 'mulligan') {
       await this.engine.nudge?.(intent.action, intent.pid || intent.by);

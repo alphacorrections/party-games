@@ -23,6 +23,9 @@ const SPEED_BONUS = 400;
 export class Host {
   constructor(room, opts = {}) {
     this.room = room;
+    this.nested = Boolean(opts.nested);   // running inside the board: don't take over `game`
+    // Duel mode: only these player ids take part; others just watch.
+    this.only = opts.only || null;
     this.rounds = opts.rounds || meta.defaultRounds;
     this.deck = null;
     this.timer = null;
@@ -35,8 +38,7 @@ export class Host {
   }
 
   async begin() {
-    await this.room.setGame('quiz');
-    await this.room.setPhase('playing');
+    if (!this.nested) { await this.room.setGame('quiz'); await this.room.setPhase('playing'); }
     await this.ask(0);
   }
 
@@ -61,7 +63,7 @@ export class Host {
 
     await this.room.clearRoundData();
     await this.room.setRound({
-      phase: 'question',
+      phase: 'question', only: this.only || null,
       index,
       total: this.deck.length,
       q: q.q,
@@ -79,7 +81,7 @@ export class Host {
   async onSubmissions(subs, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'question') return;
-    const live = playerList(players).filter(isPresent);
+    const live = this.parts(players);
     if (live.length && Object.keys(subs || {}).length >= live.length) {
       clearTimeout(this.timer);
       await this.reveal();
@@ -128,6 +130,11 @@ export class Host {
     }
   }
 
+  /** Participants: present players, narrowed to `only` in a duel. */
+  parts(players) {
+    return playerList(players).filter(isPresent).filter(p => !this.only || this.only.includes(p.id));
+  }
+
   async finish() {
     clearTimeout(this.timer);
     // When something else is driving (the board game), hand control back
@@ -155,6 +162,11 @@ export class Host {
 
 /* ------------------------------- views --------------------------------- */
 
+function spectators(round, players) {
+  if (!round || !round.only) return [];
+  return playerList(players).map(p => p.id).filter(id => !round.only.includes(id));
+}
+
 export function hostView(round, players) {
   if (!round) return '<div class="big">Loading…</div>';
 
@@ -177,7 +189,7 @@ export function hostView(round, players) {
   const timer = round.phase === 'question' ? timerHTML(round.deadline, ANSWER_MS) : '';
 
   const waiting = round.phase === 'question'
-    ? waitingHTML(pendingPlayers(players, subsCache, []), { skippable: true }) : '';
+    ? waitingHTML(pendingPlayers(players, subsCache, spectators(round, players)), { skippable: true }) : '';
   return `
     ${header}
     ${timer}
@@ -195,6 +207,9 @@ export function setSubmissions(s) { subsCache = s || {}; }
 
 export function playerView(round, me, submitted, _voted, _players, extra = {}) {
   const mirror = extra && extra.mirror;
+  if (round && round.only && !round.only.includes(me.id)) {
+    return `<div class="pcard"><h2>Duel</h2><p>Two of them, one round. You're watching.</p></div>`;
+  }
   if (!round || round.phase === 'final') {
     return `<div class="pcard"><h2>Game over</h2><p>Check the big screen.</p></div>`;
   }

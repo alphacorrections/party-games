@@ -211,6 +211,7 @@ class PlayApp {
   }
 
   async onMini(mini) {
+    this.miniInfo = mini || null;
     if (!mini || !mini.id) { this.miniMod = null; this.state.draft = []; return this.render(); }
     this.miniMod = await ENGINES[mini.id]();
     this.render();
@@ -242,9 +243,10 @@ class PlayApp {
       key = `lobby|${this.isDirector}|${Object.keys(this.players || {}).length}|${this.hasScreen}|${this.length}`;
     } else if (this.gameId === 'board') {
       html = this.mod.playerView(this.board, this.me, this.round, this.miniMod,
-                                 this.hand, this.submitted, this.voted, this.state.draft);
+                                 this.hand, this.submitted, this.voted, this.state.draft,
+                                 { mirror, players: this.players, mulliganed: this.mulliganed, duel: this.miniInfo?.duel || null });
       const b = this.board || {};
-      key = `board|${b.phase}|${b.active}|${b.turnNo}|${this.round?.phase}|${this.submitted}|${this.voted}|${(this.state.draft||[]).join(',')}`;
+      key = `board|${b.phase}|${b.active}|${b.turnNo}|${(b.items||{})[this.me.id]?.length}|${this.round?.phase}|${this.submitted}|${this.voted}|${(this.state.draft||[]).join(',')}`;
     } else {
       const extra = { mirror, players: this.players, mulliganed: this.mulliganed };
       // Each engine's playerView has its own positional signature; the trailing
@@ -356,9 +358,15 @@ class PlayApp {
       this.die = mountDie(slot); this._dieEl = slot.querySelector('.dscene'); this.die.idle();
     }
     const result = Number(slot.dataset.result);
-    if (result && result !== this._lastShownRoll) {
-      this._lastShownRoll = result; sound.dice(); haptic.dice();
-      this.die.roll(result).then(() => { sound.land(); haptic.land(); });
+    const result2 = Number(slot.dataset.result2) || 0;
+    const stamp = result ? `${result}:${result2}` : '';
+    if (result && stamp !== this._lastShownRoll) {
+      this._lastShownRoll = stamp; sound.dice(); haptic.dice();
+      // A doubled roll: tumble once, then again, so both numbers land.
+      this.die.roll(result).then(async () => {
+        sound.land(); haptic.land();
+        if (result2) { await new Promise(r => setTimeout(r, 250)); sound.dice(); await this.die.roll(result2); sound.land(); haptic.land(); }
+      });
     }
     if (!result) this._lastShownRoll = null;
   }
