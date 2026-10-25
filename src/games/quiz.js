@@ -4,7 +4,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown, timerHTML, finalScoreboard,
-         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta } from '../util.js';
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js';
 import { loadPack } from '../content.js';
 
 export const meta = {
@@ -61,9 +61,10 @@ export class Host {
     const tagged = q.options.map((text, i) => ({ text, correct: i === q.answer }));
     const mixed = shuffle(tagged);
 
+    const prevStreaks = ((await this.room.t.get(`${this.room.base}/round`)) || {}).streaks || {};
     await this.room.clearRoundData();
     await this.room.setRound({
-      phase: 'question', only: this.only || null,
+      phase: 'question', only: this.only || null, streaks: prevStreaks,
       index,
       total: this.deck.length,
       q: q.q,
@@ -115,7 +116,11 @@ export class Host {
       await this.room.addScore(pid, pts);
     }
 
-    await this.room.patchRound({ phase: 'reveal', gained });
+    // Streaks: track consecutive correct answers per player on the round.
+    const streaks = { ...(round.streaks || {}) };
+    for (const pid of Object.keys(subs)) streaks[pid] = gained[pid] ? (streaks[pid] || 0) + 1 : 0;
+    for (const [pid, n] of Object.entries(streaks)) if (n === 4) await highlight(this.room, pid, `got four trivia questions in a row`, 3);
+    await this.room.patchRound({ phase: 'reveal', gained, streaks });
     this.timer = setTimeout(() => this.ask(round.index + 1), revealMs(1, { base: 5500, per: 1500 }));
   }
 

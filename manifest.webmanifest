@@ -1,0 +1,12 @@
+{
+  "name": "Party Games",
+  "short_name": "Party",
+  "start_url": "./play.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#140B1F",
+  "theme_color": "#140B1F",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

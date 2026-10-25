@@ -18,7 +18,7 @@
 //   rooms/{code}/mini    { id, label, duel?: [pidA, pidB] } while one runs
 // ---------------------------------------------------------------------------
 
-import { shuffle, esc, sortedPlayers, playerList, finalScoreboard } from '../util.js';
+import { shuffle, esc, sortedPlayers, playerList, finalScoreboard, highlight } from '../util.js';
 
 export const meta = {
   id: 'board',
@@ -217,6 +217,7 @@ export class Host {
         for (const id of (b.order || [])) if (id !== pid) total += await this.charge(id, 250, b);
         if (total) await this.room.addScore(pid, total);
         message = `${who.name} mugs the table for ${total}`;
+        if (total >= 500) await highlight(this.room, pid, `mugged the whole table for ${total}`, 3);
       }
       if (message) patch.log = await this.log(b, message);
       patch.message = message; patch.itemFlash = Date.now();
@@ -298,7 +299,7 @@ export class Host {
       }
       case 'jackpot': {
         const pot = b.pot || 0;
-        if (pot) { await this.room.addScore(b.active, pot); patch.pot = 0; message = `${who.name} hits the Jackpot: ${pot}${lap}`; }
+        if (pot) { await this.room.addScore(b.active, pot); patch.pot = 0; message = `${who.name} hits the Jackpot: ${pot}${lap}`; if (pot >= 1500) await highlight(this.room, b.active, `hit a ${pot} Jackpot`, 4); }
         else message = `${who.name} hits an empty Jackpot${lap}`;
         break;
       }
@@ -390,7 +391,7 @@ export class Host {
       const players = await this.room.players();
       let msg;
       if (ga === gc) { await this.room.addScore(a, pot / 2); await this.room.addScore(c, pot / 2); msg = `Duel drawn. Pot split.`; }
-      else { const w = ga > gc ? a : c; await this.room.addScore(w, pot); msg = `${players[w]?.name || '?'} wins the duel and ${pot}`; }
+      else { const w = ga > gc ? a : c; const l = w === a ? c : a; await this.room.addScore(w, pot); msg = `${players[w]?.name || '?'} wins the duel and ${pot}`; await highlight(this.room, w, `beat ${players[l]?.name || '?'} in a duel`, 3); }
       await this.patch({ duelPot: 0, message: msg, log: await this.log(b, msg) });
     }
     await this.room.t.remove(`${this.base}/mini`);

@@ -12,6 +12,7 @@ import { swapIn, stagger, countUp, sound, haptic, mountSoundToggle, flash, confe
 import { mountDie } from './dice.js';
 import { installViewport } from './viewport.js';
 import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js';
+import { matchRosterName, getRoster } from './scores.js';
 import { startTilt } from './tilt.js';
 
 const el = id => document.getElementById(id);
@@ -37,6 +38,7 @@ class PlayApp {
     el('joinform').addEventListener('submit', e => { e.preventDefault(); this.join(); });
     el('hostbtn').addEventListener('click', () => this.hostFromPhone());
     this.startTicking();
+    this.renderNameChips();
 
     // A reload mid-game (iOS discards backgrounded tabs constantly) should
     // drop you straight back in, not make you retype your name. Only when
@@ -56,12 +58,51 @@ class PlayApp {
     }
   }
 
+  /** One-tap chips for names this phone has used, plus the roster's regulars. */
+  async renderNameChips() {
+    const box = el('namechips'); if (!box) return;
+    let mine = [];
+    try { mine = JSON.parse(localStorage.getItem('pg_names') || '[]'); } catch {}
+    let regulars = [];
+    try {
+      const roster = await getRoster();
+      regulars = Object.values(roster).filter(r => r.active !== false).map(r => r.name)
+        .filter(n => !mine.includes(n)).slice(0, 6);
+    } catch {}
+    const chip = (n, cls) => `<button type="button" class="namechip ${cls}" data-name="${esc(n)}">${esc(n)}</button>`;
+    const html = [...mine.map(n => chip(n, 'mine')), ...regulars.map(n => chip(n, ''))].join('');
+    box.innerHTML = html; box.hidden = !html;
+  }
+
+  rememberNameLocally(name) {
+    try {
+      const list = JSON.parse(localStorage.getItem('pg_names') || '[]').filter(n => n !== name);
+      list.unshift(name);
+      localStorage.setItem('pg_names', JSON.stringify(list.slice(0, 3)));
+    } catch {}
+  }
+
+  /**
+   * Before joining with a name, check it against the roster. A near-miss of
+   * an existing regular ("kev" for "Kevin") is almost always the same person
+   * and would split their leaderboard record; ask once.
+   */
+  async resolveName(name) {
+    try {
+      const { exact, suggestion } = await matchRosterName(name);
+      if (exact) return exact.name;                    // canonical spelling
+      if (suggestion && confirm(`Did you mean ${suggestion.name}? Tap OK to play as ${suggestion.name} so your points keep adding up, or Cancel to make a new name.`)) return suggestion.name;
+    } catch {}
+    return name;
+  }
+
   /* -------------------------------- join -------------------------------- */
 
   async join(codeOverride) {
     const code = (codeOverride || el('roomcode').value).trim().toUpperCase();
-    const name = el('name').value.trim();
+    let name = el('name').value.trim();
     if (!code || !name) return this.err('Need a room code and a name.');
+    name = await this.resolveName(name);
 
     const room = await Room.open(code);
     if (!(await room.exists())) return this.err(`No room called ${code}.`);
@@ -74,8 +115,9 @@ class PlayApp {
 
   /** "Start a party": create a room, be its director, and join it as a player. */
   async hostFromPhone() {
-    const name = el('name').value.trim();
+    let name = el('name').value.trim();
     if (!name) return this.err('Put your name in first.');
+    name = await this.resolveName(name);
     const room = await Room.create(localPlayerId());
     await room.t.set(`${room.base}/hasScreen`, false);
     await this.enter(room, name);
@@ -87,6 +129,7 @@ class PlayApp {
     this.me.id = playerIdFor(name);
     this.me.name = name;
     rememberName(name);
+    this.rememberNameLocally(name);
     this.me.emoji = await room.addPlayer(this.me.id, name);
 
     el('joinscreen').hidden = true;
@@ -477,6 +520,8 @@ window.addEventListener('pagehide', () => {
 });
 
 document.addEventListener('click', e => {
+  const nc = e.target.closest('.namechip');
+  if (nc) { el('name').value = nc.dataset.name; sound.tap(); return; }
   const btn = e.target.closest('[data-action], [data-game]');
   if (!btn || btn.disabled) return;
   const action = { ...btn.dataset };

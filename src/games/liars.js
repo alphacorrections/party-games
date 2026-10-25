@@ -11,8 +11,26 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList,
-         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js';
 import { loadPack } from '../content.js';
+import { hashKey } from '../util.js';
+
+// The truth has to live on the round so a new director can resume, but it
+// shouldn't be readable at a glance in devtools during the writing phase.
+// Obfuscated against the room code; not cryptography, just not plain text.
+function veil(text, key) {
+  const k = String(key || 'x');
+  let out = '';
+  for (let i = 0; i < text.length; i++) out += String.fromCharCode(text.charCodeAt(i) ^ k.charCodeAt(i % k.length));
+  return btoa(unescape(encodeURIComponent(out)));
+}
+function unveil(b64, key) {
+  try {
+    const k = String(key || 'x'); const s = decodeURIComponent(escape(atob(b64)));
+    let out = ''; for (let i = 0; i < s.length; i++) out += String.fromCharCode(s.charCodeAt(i) ^ k.charCodeAt(i % k.length));
+    return out;
+  } catch { return ''; }
+}
 
 export const meta = {
   id: 'liars',
@@ -59,7 +77,7 @@ export class Host {
       phase: 'write', only: this.only || null,
       index, total: this.deck.length,
       q: q.q,
-      truth: q.answer,            // readable by a devtools cheater; see README
+      truthV: veil(q.answer, this.room.code),
       note: q.note || '',
       startedAt: Date.now(),
       deadline: Date.now() + WRITE_MS
@@ -94,7 +112,8 @@ export class Host {
 
     const subs = (await this.room.t.get(`${this.room.base}/submissions`)) || {};
     const norm = s => String(s || '').trim().toLowerCase().replace(/[^\w\s]/g, '');
-    const truthN = norm(round.truth);
+    const truth = unveil(round.truthV, this.room.code);
+    const truthN = norm(truth);
 
     // Dedupe lies; a lie identical to the truth is dropped (they just win the
     // pick by knowing it), and identical lies merge so both authors score.
@@ -108,7 +127,7 @@ export class Host {
       byText.get(k).authors.push(pid);
     }
     const options = shuffle([
-      { text: round.truth, truth: true, authors: [] },
+      { text: truth, truth: true, authors: [] },
       ...byText.values()
     ]).map((o, i) => ({ ...o, slot: i }));
 
@@ -134,6 +153,18 @@ export class Host {
       else for (const author of opt.authors) if (author !== pid) add(author, FOOL_PTS);
     }
     for (const [pid, n] of Object.entries(gained)) await this.room.addScore(pid, n);
+
+    // Memorable moments.
+    const voters = Object.keys(votes).length;
+    for (const o of round.options) {
+      if (o.truth) continue;
+      const fooled = (picks[o.slot] || []).length;
+      if (fooled >= 2 && fooled >= voters - o.authors.length) for (const a of o.authors) await highlight(this.room, a, `fooled the whole table with "${o.text}"`, 5);
+      else if (fooled >= 2) for (const a of o.authors) await highlight(this.room, a, `fooled ${fooled} people with "${o.text}"`, 3);
+    }
+    const truthSlot = round.options.find(o => o.truth).slot;
+    const right = picks[truthSlot] || [];
+    if (right.length === 1 && voters >= 3) await highlight(this.room, right[0], `was the only one who knew it was "${round.options.find(o => o.truth).text}"`, 4);
 
     await this.room.patchRound({ phase: 'reveal', gained, picks });
     this.timer = setTimeout(() => this.ask(round.index + 1), revealMs(round.options.length, { base: 6000, per: 1600 }));

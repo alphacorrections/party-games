@@ -4,11 +4,12 @@
 
 import { Room, localPlayerId } from './room.js';
 import { getTransport } from './transport.js';
-import { esc, playerList, countdown } from './util.js';
+import { esc, playerList, countdown, finalScoreboard } from './util.js';
 import * as fx from './fx.js';
 import { swapIn, stagger, countUp, confetti, mountSoundToggle, sound } from './fx.js';
 import { installViewport } from './viewport.js';
 import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js';
+import { getLeaderboard, keyFor } from './scores.js';
 
 const el = id => document.getElementById(id);
 
@@ -65,6 +66,8 @@ class HostApp {
     this.room.on('mini',    v => this.onMini(v));
     this.room.on('phase',   v => { this.phase = v; this.render(); });
     this.room.on('length',  v => this.renderLength(v || 'standard'));
+    this.room.on('highlights', v => { this.highlights = v || {}; if (this.round?.phase === 'final') this.render(); });
+    this.room.on('committed',  v => { if (v) this.loadAllTime(); else this.allTime = null; });
 
     this.renderMenu();
     this.startTicking();
@@ -192,12 +195,15 @@ class HostApp {
           stagger(stage, '.tile', 35);
         }
         requestAnimationFrame(() => this.mod.patchBoard(stage, this.board, this.players, fx));
+      } else if (this.board.phase === 'final') {
+        const key = `boardfinal|${Object.keys(this.highlights || {}).length}|${(this.allTime || []).length}`;
+        swapIn(stage, finalScoreboard(this.players, 'Final scores', this.highlights) + this.allTimeHTML(), key);
+        this.afterRender(key); this.onFinal();
       } else {
         const key = `${this.board.phase}|${this.round?.phase}|${this.round?.index}`;
         swapIn(stage, this.mod.hostView(this.board, this.players, this.round, this.miniMod), key);
         this.afterRender(key);
       }
-      if (this.board.phase === 'final') this.onFinal();
       return;
     }
 
@@ -216,7 +222,12 @@ class HostApp {
       return;
     }
     document.body.classList.add('playing');
-    const key = `${this.gameId}|${this.round.phase}|${this.round.index ?? this.round.turn ?? ''}`;
+    const key = `${this.gameId}|${this.round.phase}|${this.round.index ?? this.round.turn ?? ''}|${Object.keys(this.highlights || {}).length}`;
+    if (this.round.phase === 'final') {
+      const k2 = key + `|${(this.allTime || []).length}`;
+      swapIn(stage, finalScoreboard(this.players, 'Final scores', this.highlights) + this.allTimeHTML(), k2);
+      this.afterRender(key); this.onFinal(); return;
+    }
     if (this.round.phase === 'intro') {
       swapIn(stage, introHTML(this.round), key);
       this.afterRender(key);
@@ -272,6 +283,24 @@ class HostApp {
     this.setEndGameVisible(false);
     document.body.classList.remove('playing');
     const again = el('again'); if (again) again.hidden = false;
+  }
+
+  /** Once the commit lands, fetch all-time totals; render() draws them. */
+  async loadAllTime() {
+    try {
+      const board = await getLeaderboard();
+      const byKey = Object.fromEntries(board.map(r => [r.key, r]));
+      this.allTime = playerList(this.players).map(p => byKey[keyFor(p.name)]).filter(Boolean)
+        .sort((a, b) => (b.points || 0) - (a.points || 0));
+      this.render();
+    } catch {}
+  }
+
+  allTimeHTML() {
+    const rows = this.allTime || [];
+    if (!rows.length) return '';
+    return `<div class="alltime"><div class="atlabel">All-time</div>${rows.map((r, i) =>
+      `<span class="atchip ${i === 0 ? 'lead' : ''}">${esc(r.emoji || '')} ${esc(r.name)} <b>${r.points || 0}</b> <i>${r.wins || 0}W</i></span>`).join('')}</div>`;
   }
 
   afterRender(key) {

@@ -10,7 +10,7 @@
 // ---------------------------------------------------------------------------
 
 import { sample, esc, sortedPlayers, playerList,
-         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js';
 import { loadPack } from '../content.js';
 
 export const meta = {
@@ -94,6 +94,8 @@ export class Host {
       if (total) {
         if (A.length === B.length) { for (const p of [...A, ...B]) add(p, SPLIT_PTS); }
         else { const maj = A.length > B.length ? A : B; for (const p of maj) add(p, MAJ_PTS); }
+        const minor = A.length < B.length ? A : B.length < A.length ? B : [];
+        if (minor.length === 1 && total >= 4) await highlight(this.room, minor[0], `stood alone on "${A.length < B.length ? round.a : round.b}"`, 3);
       }
       for (const [pid, n] of Object.entries(gained)) await this.room.addScore(pid, n);
       await this.room.patchRound({ phase: 'reveal', a_ids: A, b_ids: B, gained });
@@ -103,6 +105,8 @@ export class Host {
       const top = Math.max(0, ...Object.values(tally));
       const winners = Object.keys(tally).filter(k => tally[k] === top && top > 0);
       for (const [pid, target] of Object.entries(votes)) if (winners.includes(target)) add(pid, LIKELY_PTS);
+      const nv = Object.values(votes).filter(v => v !== '-').length;
+      for (const w of winners) if (tally[w] >= 3 && tally[w] >= nv - 1) await highlight(this.room, w, `was unanimously most likely to ${round.text}`, 4);
       for (const [pid, n] of Object.entries(gained)) await this.room.addScore(pid, n);
       await this.room.patchRound({ phase: 'reveal', tally, winners, gained, votes });
     }

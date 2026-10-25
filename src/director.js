@@ -151,7 +151,9 @@ export class Director {
     if (this._committed || !this.gameId) return;
     this._committed = true;
     const results = sortedPlayers(this.players).map(p => ({ name: p.name, score: p.score || 0 }));
-    commitGame(this.gameId, this.room.code, results).catch(console.error);
+    try { await commitGame(this.gameId, this.room.code, results); } catch (e) { console.error(e); }
+    // Tell screens the all-time board has the new totals.
+    await this.room.t.set(`${this.base}/committed`, Date.now());
   }
 
   /** Back to the lobby. Keeps players; does not record the abandoned game. */
@@ -162,7 +164,7 @@ export class Director {
     await this.room.setGame(null);
     await this.room.setRound(null);
     await this.room.clearRoundData();
-    for (const k of ['hands', 'board', 'mini', 'intent', 'menuIndex', 'mulliganed', 'skipped']) {
+    for (const k of ['hands', 'board', 'mini', 'intent', 'menuIndex', 'mulliganed', 'skipped', 'highlights', 'committed']) {
       await this.room.t.remove(`${this.base}/${k}`);
     }
     await this.room.setPhase('lobby');

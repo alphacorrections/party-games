@@ -14,7 +14,7 @@
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown,
          fillBlanks, timerHTML, finalScoreboard,
-         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta } from '../util.js';
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js';
 import { loadPack } from '../content.js';
 
 export const meta = {
@@ -256,7 +256,8 @@ export class Host {
       for (const slot of round.slots) {
         const n = tally[slot.slot] || 0;
         let pts = n * PER_VOTE;
-        if (n > 0 && voters > 2 && n === voters) pts += SWEEP_BONUS;
+        if (n > 0 && voters > 2 && n === voters) { pts += SWEEP_BONUS; await highlight(this.room, slot.pid, `swept the vote with "${slot.text}"`, 5); }
+        else if (n >= 3) await highlight(this.room, slot.pid, `took ${n} votes with "${slot.text}"`, 2);
         if (pts) {
           gained[slot.pid] = pts;
           await this.room.addScore(slot.pid, pts);

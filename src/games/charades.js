@@ -9,7 +9,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, esc, sortedPlayers, playerList, countdown,
-         timerHTML, finalScoreboard, hashKey } from '../util.js';
+         timerHTML, finalScoreboard, hashKey, highlight } from '../util.js';
 import { loadPack } from '../content.js';
 
 export const meta = {
@@ -162,6 +162,9 @@ export class Host {
     clearTimeout(this.timer);
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round) return;
+    const n = (round.got || []).length;
+    if (n >= 8) await highlight(this.room, round.active, `got ${n} in one Shout It Out turn`, 3);
+    if (n === 0 && (round.skipped || []).length >= 3) await highlight(this.room, round.active, `got zero and skipped ${(round.skipped || []).length}`, 2);
     await this.room.patchRound({ phase: 'roundEnd', word: null });
     this.timer = setTimeout(() => this.ready(), 6000);
   }

@@ -125,3 +125,37 @@ export async function resetAllScores() {
   await t.remove('leaderboard');
   await t.remove('history');
 }
+
+
+/* ------------------------------ name matching --------------------------- */
+
+function lev(a, b) {
+  const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
+  const d = Array.from({ length: m + 1 }, (_, i) => [i, ...Array(n).fill(0)]);
+  for (let j = 1; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
+    d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+  return d[m][n];
+}
+
+/**
+ * Given a typed name, return the roster entry it probably means, or null.
+ * Exact key match -> that entry. Otherwise a close one (1 edit, or a prefix
+ * like "Kev" for "Kevin") -> suggest it; the caller asks the person.
+ */
+export async function matchRosterName(typed) {
+  const key = keyFor(typed);
+  const roster = await getRoster();
+  const entries = Object.entries(roster).map(([k, v]) => ({ key: k, ...v })).filter(e => e.active !== false);
+  const exact = entries.find(e => e.key === key);
+  if (exact) return { exact, suggestion: null };
+  const t = key.replace(/-/g, '');
+  let best = null, bestScore = 99;
+  for (const e of entries) {
+    const k = e.key.replace(/-/g, '');
+    let score = lev(t, k);
+    if (k.startsWith(t) && t.length >= 3) score = Math.min(score, 1);     // "kev" -> "kevin"
+    if (score < bestScore) { bestScore = score; best = e; }
+  }
+  return { exact: null, suggestion: bestScore <= 1 && best && best.name.toLowerCase() !== typed.toLowerCase() ? best : null };
+}

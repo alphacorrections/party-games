@@ -72,8 +72,11 @@ export function timerHTML(deadline, totalMs, big = false) {
 }
 
 /** Final-scores screen. First place is the hero; the rest are the list. */
-export function finalScoreboard(players, title = 'Final scores') {
+export function finalScoreboard(players, title = 'Final scores', highlights = null) {
   const ranked = sortedPlayers(players);
+  const moments = highlights ? bestMoments(highlights, players) : [];
+  const momentsHTML = moments.length ? `<div class="moments">${moments.map(m =>
+    `<div class="moment"><span>${m.emoji || ''}</span><b>${esc(m.name)}</b> ${esc(m.text)}</div>`).join('')}</div>` : '';
   if (!ranked.length) return `<h1 class="question">${esc(title)}</h1>`;
   const [w, ...rest] = ranked;
   const tie = rest.length && (rest[0].score || 0) === (w.score || 0);
@@ -92,7 +95,8 @@ export function finalScoreboard(players, title = 'Final scores') {
       <div class="wpts"><span class="spts">${w.score || 0}</span></div>
       <div class="wsub">${tie ? 'Tied, but listed first. Settle it yourselves.' : 'Winner'}</div>
     </div>
-    <div class="scores rest">${rows}</div>`;
+    <div class="scores rest">${rows}</div>
+    ${momentsHTML}`;
 }
 
 /* ------------------------------ waiting on ------------------------------ */
@@ -163,4 +167,24 @@ export function hashKey(str) {
 export function roundMeta(index, total, noun = 'Round') {
   const last = total && index === total - 1;
   return `<div class="qmeta ${last ? 'final' : ''}">${last ? 'Final round' : `${noun} ${index + 1} of ${total}`}</div>`;
+}
+
+/* ------------------------------ highlights ------------------------------ */
+
+/**
+ * Engines call this at memorable moments. The final screen shows one per
+ * player, picked by `weight`. Stored at rooms/{code}/highlights/{id}.
+ */
+export async function highlight(room, pid, text, weight = 1) {
+  if (!room || !pid || !text) return;
+  try { await room.t.set(`${room.base}/highlights/${hashKey(pid + text + Date.now())}`, { pid, text, weight, at: Date.now() }); } catch {}
+}
+
+export function bestMoments(highlights, players) {
+  const by = {};
+  for (const h of Object.values(highlights || {})) {
+    if (!by[h.pid] || h.weight > by[h.pid].weight) by[h.pid] = h;
+  }
+  return Object.entries(by).map(([pid, h]) => ({ pid, name: players[pid]?.name, emoji: players[pid]?.emoji, text: h.text }))
+    .filter(x => x.name);
 }

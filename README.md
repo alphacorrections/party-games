@@ -96,6 +96,11 @@ up for skip (or tap the buttons). iPhones ask once for motion permission.
 If the hosting phone dies, the next phone by join order takes over within about
 fifteen seconds and the round continues from where it was.
 
+### Add to home screen
+
+The site ships a web manifest, so on a phone you can add it to the home screen and it
+opens full-screen like an app.
+
 ### Before a game
 
 - **Game length** — Quick / Standard / Long in the lobby scales every game's round
@@ -134,8 +139,12 @@ Rooms expire six hours after they're made and are deleted when the host closes t
   but keeps their history; *delete* wipes the record.
 - **Recent games** — the last 30 results.
 
-Players are matched by a normalised version of their name — both on the leaderboard
-and inside a room. That matters more than it sounds: phones get backgrounded, the OS
+**Your name is your identity.** Players are matched by a normalised version of their
+name, both on the leaderboard and inside a room, so the same name scores to the same
+all-time record every night, in every room. The join screen offers your recent names
+as one-tap chips, and a near-miss of a regular ("kev" for "Kevin") asks whether you
+meant them before it would split a record. The final screen shows all-time totals
+once tonight's points land. That matters more than it sounds: phones get backgrounded, the OS
 discards the tab, and the page silently reloads. Keying off the name means that phone
 rejoins as the same player with its hand and score intact instead of showing up as a
 stranger. Spell your name the same way each time.

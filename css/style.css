@@ -1596,3 +1596,21 @@ body.offline .pbtn, body.offline .card, body.offline .hugebtn { opacity: .6; poi
   .bstrip { grid-template-columns: 1fr; justify-items: center; }
   .blog { text-align: center; max-width: none; }
 }
+
+/* ============================== MOMENTS ================================== */
+.moments { display: grid; gap: .4rem; width: min(760px, 100%); margin-top: 1rem; animation: fxRise .5s both 1.4s; }
+.moment { display: flex; align-items: baseline; gap: .5rem; color: var(--chalk); font-size: clamp(.95rem, 2.2vh, 1.2rem); background: var(--ink-2); border-left: 4px solid var(--hot); padding: .5rem .8rem; border-radius: 0 6px 6px 0; text-align: left; }
+.moment b { color: var(--card); }
+
+/* ============================ NAME CHIPS ================================= */
+.namechips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
+.namechip { background: var(--ink-2); border: 2px solid var(--ink-3); color: var(--chalk); border-radius: 999px; padding: .3rem .8rem; font-family: inherit; font-weight: 700; font-size: .9rem; cursor: pointer; }
+.namechip.mine { border-color: var(--hot); }
+.namechip:active { transform: scale(.96); }
+
+.alltime { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem; margin-top: 1rem; animation: fxRise .5s both; }
+.atlabel { color: var(--mute); font-weight: 700; font-size: .85rem; letter-spacing: .06em; margin-right: .3rem; }
+.atchip { background: var(--ink-2); border: 2px solid var(--ink-3); border-radius: 999px; padding: .3rem .8rem; font-weight: 600; font-size: .95rem; }
+.atchip b { font-family: var(--display); letter-spacing: var(--track-md); color: var(--hot); margin-left: .2rem; }
+.atchip i { font-style: normal; color: var(--mute); font-size: .8em; margin-left: .3rem; }
+.atchip.lead { border-color: var(--hot); }
