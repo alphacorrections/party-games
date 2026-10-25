@@ -1,0 +1,757 @@
+{
+  "pack": "House Rules",
+  "prompts": [
+    {
+      "text": "I lost my job because of ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My therapist has stopped taking notes and now just stares at ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Nothing says romance like ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The group chat went dead silent after Dave sent ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I will not be returning to that Applebee's, and the reason is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My sleep paralysis demon showed up last night and wanted to talk about ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The last thing I remember before the ambulance was ____.",
+      "blanks": 1
+    },
+    {
+      "text": "What finally ended my marriage? ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My new kink is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Turns out you can be banned from a Denny's for ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I told my mother I was going to church. I was actually ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The real reason the wedding got called off was ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My Hinge profile proudly features ____.",
+      "blanks": 1
+    },
+    {
+      "text": "At the family reunion, Grandma brought up ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My body is a temple, and inside that temple is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The HR complaint specifically cited ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I have been clean for six days, apart from ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Behind every successful man is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The hotel found ____ in the bathtub and called the police.",
+      "blanks": 1
+    },
+    {
+      "text": "I knew it was love when she showed me ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The surgeon paused, looked at the X-ray, and said it was ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My final meal on death row would be ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I would describe my sexual performance as ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The Uber driver said nothing the entire ride. He just kept looking at ____.",
+      "blanks": 1
+    },
+    {
+      "text": "We are not inviting my brother to Thanksgiving because of ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My gym has a strict policy against ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Every man has a limit. Mine is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The dating app banned me for ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Do not Google ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The smell in my apartment is definitely ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I accidentally sent ____ to my entire department.",
+      "blanks": 1
+    },
+    {
+      "text": "The paramedics were impressed by ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The one thing I ask of a partner is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My sponsor says my real problem is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "On my deathbed I will finally admit to ____.",
+      "blanks": 1
+    },
+    {
+      "text": "What I lack in stamina, I make up for with ____.",
+      "blanks": 1
+    },
+    {
+      "text": "That stain on the ceiling is from ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The strip club's two-drink minimum could not prepare me for ____.",
+      "blanks": 1
+    },
+    {
+      "text": "At 3 a.m. the only thing that sounds good is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I would sell my soul for ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My tattoo artist refused to do ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I have never recovered from ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The bachelorette party ended with ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The security footage clearly shows ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I am aroused by ____ and I have made peace with it.",
+      "blanks": 1
+    },
+    {
+      "text": "The reason I no longer have a driver's license is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My funeral will feature ____ instead of a eulogy.",
+      "blanks": 1
+    },
+    {
+      "text": "The pharmacist gave me a long look when I asked about ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Nothing kills a boner faster than ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Our safe word is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The landlord's note just said ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My proudest achievement is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I have a doctor's note that just says ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The real currency of our generation is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The last text I sent before losing service was ____.",
+      "blanks": 1
+    },
+    {
+      "text": "What goes on in the back of the van stays in the back of the van, especially ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My entire personality is just ____ with a haircut.",
+      "blanks": 1
+    },
+    {
+      "text": "The reason I was escorted off the cruise ship was ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I did not come here to make friends. I came here for ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My DoorDash order history is mostly ____.",
+      "blanks": 1
+    },
+    {
+      "text": "They found ____ in my carry-on and now I am on a list.",
+      "blanks": 1
+    },
+    {
+      "text": "The only thing holding this friendship together is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Studies show that 90 percent of men are secretly ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I would rather die than explain ____ to my parents.",
+      "blanks": 1
+    },
+    {
+      "text": "Welcome to hell. Today's activity is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My credit score went up after I stopped ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The bartender cut me off right after ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I have begun to suspect that heaven is just ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The group project failed because of ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My Roman Empire is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The one thing I will not do for money is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The bathroom wall at that bar just said ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I sleep soundly knowing that somewhere out there is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My hobby, which I cannot explain to coworkers, is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The reason my ex has a restraining order is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Nothing prepared me for ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The real reason attendance is down at my local megachurch is ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My grandmother's dying words were ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I was not prepared to find ____ in my father's garage.",
+      "blanks": 1
+    },
+    {
+      "text": "The doctor told me to cut back on ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The worst part of jail was ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I lost the bet, so now I have to live with ____.",
+      "blanks": 1
+    },
+    {
+      "text": "My Spotify Wrapped was ninety percent ____.",
+      "blanks": 1
+    },
+    {
+      "text": "Everything I know about sex I learned from ____.",
+      "blanks": 1
+    },
+    {
+      "text": "The last straw was ____.",
+      "blanks": 1
+    },
+    {
+      "text": "I got kicked out of the bar for mixing ____ with ____.",
+      "blanks": 2
+    },
+    {
+      "text": "My autobiography will be called ____ and it opens with ____.",
+      "blanks": 2
+    },
+    {
+      "text": "The secret to a long marriage is ____ and a healthy amount of ____.",
+      "blanks": 2
+    },
+    {
+      "text": "After three days of ____, all I had left was ____.",
+      "blanks": 2
+    },
+    {
+      "text": "My new business combines ____ and ____, and the lawyers are already involved.",
+      "blanks": 2
+    },
+    {
+      "text": "Give me ____ and ____ and I will show you a good time.",
+      "blanks": 2
+    },
+    {
+      "text": "The night started with ____ and somehow ended with ____.",
+      "blanks": 2
+    },
+    {
+      "text": "A real man is defined by ____ and absolutely nothing else, except possibly ____.",
+      "blanks": 2
+    },
+    {
+      "text": "The hospital bill listed ____ and ____ as separate line items.",
+      "blanks": 2
+    },
+    {
+      "text": "I traded ____ for ____ and regret absolutely nothing.",
+      "blanks": 2
+    },
+    {
+      "text": "My life coach says I should replace ____ with ____.",
+      "blanks": 2
+    },
+    {
+      "text": "The cult recruited me with ____ and kept me with ____.",
+      "blanks": 2
+    },
+    {
+      "text": "Heaven is ____. Hell is ____.",
+      "blanks": 2
+    },
+    {
+      "text": "I would describe my twenties as ____ punctuated by ____.",
+      "blanks": 2
+    },
+    {
+      "text": "You cannot be arrested for ____, but you can definitely be arrested for ____.",
+      "blanks": 2
+    }
+  ],
+  "answers": [
+    "a dump truck full of dead raccoons",
+    "a bucket of warm tapioca",
+    "lukewarm hot tub water",
+    "the inside of a port-a-potty at hour nine",
+    "a sneeze that becomes something else entirely",
+    "an unflushable monument",
+    "a gas station hot dog that has been rotating since Tuesday",
+    "whatever is growing in the office fridge",
+    "a wet sock full of pennies",
+    "forty pounds of unrefrigerated shrimp",
+    "a hairball the size of a fist",
+    "the smell of a dive bar in daylight",
+    "a kiddie pool of expired mayonnaise",
+    "a blister with opinions",
+    "an aggressive public fart in a quiet elevator",
+    "diarrhea at the exact wrong altitude",
+    "a cough that produces something solid",
+    "a toenail found in a communal shower",
+    "a yeast infection with a personality",
+    "a bathtub drain clog shaped like a person",
+    "my own reflection at 4 in the morning",
+    "a vomit stain shaped like Florida",
+    "somebody else's retainer",
+    "a mouth full of pennies",
+    "an open wound at a pool party",
+    "the crust on a forgotten coffee mug",
+    "a skin tag with sentimental value",
+    "my colonoscopy footage",
+    "a public restroom with a motion sensor that hates me",
+    "the exact sound a body makes hitting a futon",
+    "a fart I have been holding since Tuesday",
+    "a sweat stain with its own weather system",
+    "three gallons of warm clam juice",
+    "a bedsheet that crunches",
+    "my unremarkable genitals",
+    "forty minutes of enthusiastic disappointment",
+    "a sex dungeon built entirely from IKEA parts",
+    "the world's least convincing dirty talk",
+    "an orgasm that arrives like an apology",
+    "a hand job administered under duress",
+    "performance anxiety in a trench coat",
+    "the horniest man in the DMV",
+    "a threesome where I was clearly the third wheel",
+    "premature everything",
+    "a vibrator with a dying battery",
+    "whispering the wrong name",
+    "nine minutes of silence followed by a thank-you",
+    "a sex tape nobody requested",
+    "an unsolicited photo of a landlord",
+    "my ex's new boyfriend's confidence",
+    "the kind of foreplay that feels like paperwork",
+    "a lubricant that smells like birthday cake",
+    "a condom from 2011",
+    "two people trying very hard and failing politely",
+    "edging through a wellness check",
+    "a marriage saved entirely by furniture",
+    "a sex position named after a public works project",
+    "a safe word nobody remembers",
+    "being really into feet and not being quiet about it",
+    "the sound my mattress makes",
+    "a shared fantasy involving paperwork",
+    "a man who claims he can go all night and means it as a threat",
+    "the quiet dignity of being bad at sex",
+    "mutual mediocrity",
+    "a handle of warm bottom-shelf vodka",
+    "a bump of something a guy named Smash gave me",
+    "four Red Bulls and a prayer",
+    "a joint rolled by someone with no fingers",
+    "an edible that kicks in at the worst possible moment",
+    "a bong made from a Big Gulp cup",
+    "the shakes",
+    "a handful of Adderall and unearned confidence",
+    "mushrooms at a child's birthday party",
+    "nitrous from a whipped cream canister",
+    "a blackout with witnesses",
+    "half a Xanax and a bus schedule",
+    "whatever was in the punch",
+    "a hangover with a heartbeat",
+    "grain alcohol in a thermos",
+    "a nine-day bender with a theme",
+    "an ayahuasca retreat I did not consent to",
+    "seventeen beers and a karaoke machine",
+    "a wine mom with a megaphone",
+    "tequila and an unresolved grudge",
+    "cocaine purchased at a wedding",
+    "a vape the size of a TV remote",
+    "an energy drink that is technically a controlled substance",
+    "methadone and small talk",
+    "a beer bong operated by an amateur",
+    "hard seltzer and generational trauma",
+    "the slow collapse of everything I built",
+    "a creeping awareness of my own insignificance",
+    "dying alone but with excellent credit",
+    "the heat death of the universe",
+    "knowing my parents were right",
+    "an unpaid medical bill that outlives me",
+    "the exact moment I peaked",
+    "a eulogy delivered by someone who hated me",
+    "my unused gym membership",
+    "the realization that this is it",
+    "an inheritance of debt and bad knees",
+    "being replaced by a cheaper version of myself",
+    "the sound of a ventilator",
+    "a funeral with a cash bar",
+    "the exact year it all went wrong",
+    "a 401k with nine dollars in it",
+    "my own obituary, written by a stranger",
+    "nothing, forever, and it is fine",
+    "outliving everyone who liked me",
+    "the silence after the last guest leaves",
+    "a slow decline nobody mentions",
+    "forty more years of this",
+    "whatever is wrong with Greg",
+    "a man who corrects your grammar during an argument",
+    "my uncle's political opinions",
+    "a guy who owns three swords",
+    "the loudest man at the gym",
+    "somebody's Soundcloud link",
+    "a woman who says she is brutally honest",
+    "a dude who brings a guitar to every gathering",
+    "my coworker's unsolicited screenplay",
+    "a guy who has never been wrong about anything, ever",
+    "the friend who keeps bringing up CrossFit",
+    "a man explaining crypto to a hostage audience",
+    "whoever decided to host this",
+    "a stepdad with a podcast",
+    "somebody's cousin who is also a life coach",
+    "a man who claims he is six feet tall",
+    "the guy who orders for the whole table",
+    "a vegan with a slideshow",
+    "somebody's extremely average band",
+    "an influencer at a funeral",
+    "a man whose entire personality is his truck",
+    "the one friend who still vapes indoors",
+    "a deeply haunted Roomba",
+    "an air fryer full of regret",
+    "a goose with a grudge",
+    "a mannequin wearing my clothes",
+    "an inflatable pool shaped like a swan and full of mistakes",
+    "a Craigslist futon with a history",
+    "a trampoline in a thunderstorm",
+    "a single sad balloon",
+    "a Furby that learned a new word",
+    "a hot tub full of strangers",
+    "an ambulance arriving too slowly",
+    "a karaoke machine and no shame",
+    "a storage unit I forgot I rented",
+    "a bouncy castle at a divorce party",
+    "a megaphone in a quiet library",
+    "a leaf blower used indoors",
+    "a Dodge Charger with a payment plan",
+    "nine pounds of discount ground beef",
+    "a chandelier that cannot hold weight",
+    "a shopping cart with one bad wheel",
+    "a motel vending machine at 2 in the morning",
+    "a CPAP machine with a loose hose",
+    "an above-ground pool full of Monster Energy",
+    "a vending machine that only accepts dignity",
+    "a bounce house full of lawyers",
+    "a laser pointer and poor judgment",
+    "an unpermitted deck",
+    "an above-ground hot tub in January",
+    "a drone with a camera and bad intentions",
+    "a used mattress on the side of Route 3",
+    "a lawn flamingo with a criminal record",
+    "a Costco-sized tub of unidentified cream",
+    "a ceiling fan running too fast",
+    "a bouncy ball in a glass room",
+    "a knife block with one knife missing",
+    "a space heater in a wet basement",
+    "an inflatable sumo suit",
+    "a wedding photographer who will not stop",
+    "a Sawzall and a security deposit",
+    "a bucket of golf balls and nowhere to hit them",
+    "a coin-operated massage chair at the mall",
+    "a kiddie pool full of ranch dressing",
+    "a slip-and-slide on gravel",
+    "a tandem bike and an argument",
+    "a stolen traffic cone",
+    "a trebuchet in a residential neighborhood",
+    "an ice luge made of actual ice",
+    "a hearse with a sound system",
+    "an entire goat, somehow",
+    "a raccoon that knows the layout",
+    "a swan with something to prove",
+    "a horse in a stairwell",
+    "a dog who has clearly seen things",
+    "nine cats and one litter box",
+    "a bat in a bedroom at three in the morning",
+    "a pigeon with a vendetta",
+    "a hamster and an unexplained vet bill",
+    "a ferret loose in a courtroom",
+    "a snapping turtle in a backpack",
+    "a chicken that will not be caught",
+    "an emotional support crocodile",
+    "a tarantula in the laundry",
+    "a seagull that has tasted blood",
+    "a parrot repeating the wrong thing",
+    "a possum that lives in the walls",
+    "a bull in a very small room",
+    "a fish tank nobody has cleaned since 2019",
+    "an alpaca with anger issues",
+    "a performance review delivered via text",
+    "my student loans",
+    "a severance package consisting of one handshake",
+    "an unpaid internship with a dress code",
+    "the DMV at closing time",
+    "a timeshare presentation",
+    "a landlord with a master key",
+    "a group project at 11:58 at night",
+    "a mandatory fun event",
+    "a mandatory drug test on a Monday",
+    "an HR training video from 1997",
+    "a hospital bill with no itemization",
+    "the IRS and a bad feeling",
+    "a business card with a hotmail address",
+    "a pyramid scheme run by my aunt",
+    "an insurance claim denied for no reason",
+    "a company retreat with trust falls",
+    "a nondisclosure agreement I did not read",
+    "a jury summons on my birthday",
+    "a payday loan with a friendly name",
+    "a security deposit I will never see again",
+    "a background check that went poorly",
+    "a Zoom call where my camera was on",
+    "overtime that was never approved",
+    "gas station sushi",
+    "a microwaved egg",
+    "nine-day-old pad thai",
+    "a tuna sandwich left in a hot car",
+    "a buffet with one sneeze guard",
+    "an entire sheet cake, eaten alone",
+    "a hot dog of unclear origin",
+    "a smoothie made of leftovers",
+    "a deep fryer in an apartment",
+    "free samples at the worst possible time",
+    "a casserole brought by a stranger",
+    "a cheese plate left out overnight",
+    "a bowl of cereal made with beer",
+    "a pizza with far too many toppings",
+    "a chicken that was not cooked all the way",
+    "a protein shake that smells like a barn",
+    "a jar of pickles and no bottle opener",
+    "an energy bar that tastes like a yoga mat",
+    "gravy where gravy should not be",
+    "a wedding buffet at hour six",
+    "a sandwich I found and ate anyway",
+    "my third divorce",
+    "a text from my ex at 2:14 in the morning",
+    "a custody arrangement nobody is happy with",
+    "my mother's opinion of my partner",
+    "a group chat with my in-laws",
+    "an engagement that lasted nine days",
+    "a shared bank account and a trust issue",
+    "couples therapy conducted in a car",
+    "my stepfather's firm handshake",
+    "a family secret revealed at a barbecue",
+    "a wedding toast that goes on too long",
+    "a sibling who keeps score",
+    "an anniversary nobody remembered",
+    "a baby shower with an open bar",
+    "my dad's second family",
+    "a breakup conducted entirely by voicemail",
+    "a honeymoon in a motel off the interstate",
+    "a prenup drafted on a napkin",
+    "a mother-in-law with a key",
+    "being the reason somebody's family stopped speaking",
+    "my search history",
+    "an AI that has read all my emails",
+    "a smart doorbell that caught everything",
+    "a Bluetooth speaker at full volume",
+    "an airdrop from a stranger",
+    "a group text I cannot leave",
+    "a dating app algorithm that gave up on me",
+    "my location shared with one too many people",
+    "a cloud backup I forgot about",
+    "a leaked screenshot",
+    "an autocorrect that changed everything",
+    "a Ring camera with a long memory",
+    "a two-star review with photos",
+    "a LinkedIn post about my personal journey",
+    "a Venmo description that explains too much",
+    "a FaceTime call answered by the wrong person",
+    "a voice assistant that heard the whole thing",
+    "my browser history on a shared laptop",
+    "a podcast nobody asked for",
+    "a livestream that kept rolling",
+    "my lower back",
+    "a knee that makes noise now",
+    "my blood pressure reading",
+    "a prostate exam and a firm handshake",
+    "a hernia from showing off",
+    "a mole that changed shape",
+    "my cholesterol",
+    "a hangover that lasts three days",
+    "an MRI I cannot afford",
+    "losing my hair in a very specific pattern",
+    "a chiropractor with no license",
+    "a rash in an unfortunate place",
+    "my own bad posture",
+    "a stress fracture from nothing",
+    "waking up injured for no reason",
+    "a tooth that should have come out years ago",
+    "a sleep study with cameras",
+    "my resting heart rate",
+    "a stubborn fungal situation",
+    "unearned confidence",
+    "an apology with conditions",
+    "a confession nobody wanted",
+    "a dare taken too seriously",
+    "a bad decision with good lighting",
+    "a plan that worked exactly once",
+    "one guy named Brandon",
+    "a lie that got away from me",
+    "a group decision nobody agrees with",
+    "the thing we agreed never to mention",
+    "an unsupervised bonfire",
+    "the full version of that story",
+    "a spectacularly bad idea",
+    "losing a fight to furniture",
+    "an argument about nothing at 1 in the morning",
+    "a bet I should not have accepted",
+    "the worst idea in the room, voted unanimously",
+    "a dance move that ended an evening",
+    "a sincere attempt that made things worse",
+    "a toast that went too far",
+    "the version of me that comes out after midnight",
+    "a decision made entirely by committee",
+    "an alibi with holes in it",
+    "doing the right thing far too late",
+    "a plan involving a ladder",
+    "a secret handshake with legal implications",
+    "being the one who ruins it",
+    "a solid forty percent effort",
+    "a group costume nobody else wore",
+    "an impression of someone in the room",
+    "the exact wrong thing to say",
+    "saying it louder instead of better",
+    "an unprompted monologue",
+    "a scheme with a whiteboard",
+    "a eulogy I wrote for myself",
+    "one extremely specific grudge",
+    "an unearned victory lap",
+    "a man who has peaked and knows it",
+    "nine missed calls from the same number",
+    "a hot tub with a questionable filter",
+    "a sincere cry for help disguised as a joke",
+    "the group's worst member, by consensus",
+    "a smoke detector with a dead battery",
+    "an entire bottle of fireball, no mixer"
+  ]
+}

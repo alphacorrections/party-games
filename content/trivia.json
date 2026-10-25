@@ -87,7 +87,7 @@
         "Seven"
       ],
       "answer": 2,
-      "note": "It uses two at a time and alternates. Australia again."
+      "note": "Four heads, but only two work at a time, and it alternates sides. Australia again."
     },
     {
       "q": "Why do vultures deliberately urinate on their own legs?",
@@ -475,7 +475,7 @@
       "note": "13.1 centimeters. Everyone in this room just did math."
     },
     {
-      "q": "What is the most common cause of penile fracture, or penile injury during sex?",
+      "q": "A study of penile fracture injuries found which sex position was involved most often?",
       "options": [
         "Woman-on-top positions",
         "Falling asleep",
@@ -483,7 +483,7 @@
         "Standing positions"
       ],
       "answer": 0,
-      "note": "The ER calls it the reverse cowgirl problem. There is a whole body of literature."
+      "note": "Woman-on-top came out on top, so to speak. There is a whole body of urology literature on this."
     },
     {
       "q": "Semen is made up of sperm plus fluid. Roughly what percentage is actual sperm?",
@@ -582,10 +582,10 @@
         "Been destroyed in a fire"
       ],
       "answer": 2,
-      "note": "Allegedly removed during the autopsy by a priest with sticky fingers. History is grubby."
+      "note": "Allegedly removed during the autopsy. The provenance is murky but the auction records are not."
     },
     {
-      "q": "Abraham Lincoln's body was exhumed roughly how many times after his burial?",
+      "q": "Abraham Lincoln's coffin was reportedly opened or moved roughly how many times after his funeral?",
       "options": [
         "Never",
         "Twice",
@@ -739,15 +739,15 @@
       "note": "He thought it was rubber. It was not rubber."
     },
     {
-      "q": "Honey recovered from sealed ancient Egyptian tombs is notable because it is what?",
+      "q": "Honey essentially does not spoil. Why?",
       "options": [
-        "Completely crystallized and inedible",
-        "Still essentially edible thousands of years later",
-        "Toxic from lead storage jars",
-        "Fermented into mead"
+        "It is sterile when sealed",
+        "Low water content, acidity and bee-made peroxide block microbes",
+        "Bees add a natural preservative salt",
+        "It is simply too sweet for bacteria to notice"
       ],
       "answer": 1,
-      "note": "Low water, high acidity, natural peroxide. Honey does not spoil, it just gets smug."
+      "note": "The famous edible-tomb-honey story is thinly sourced, but the chemistry is real. Honey does not spoil, it just gets smug."
     },
     {
       "q": "The record for longest documented time a person has gone without sleep, set in 1964, is about what?",
@@ -783,15 +783,15 @@
       "note": "Hydrogen sulfide does the smelling, hydrogen and methane do the burning. Different departments."
     },
     {
-      "q": "Not everybody produces methane in their gut. Roughly what share of people do?",
+      "q": "Not everybody's gut produces methane. Roughly what share of people are methane producers?",
       "options": [
         "All of them",
-        "About a third",
-        "About 95 percent",
-        "Fewer than 5 percent"
+        "Fewer than 5 percent",
+        "Somewhere between a third and half",
+        "About 95 percent"
       ],
-      "answer": 1,
-      "note": "So only some of you can actually be lit on fire. Know thyself."
+      "answer": 2,
+      "note": "Estimates vary by population, but plenty of people make none at all. So only some of you can be lit on fire."
     },
     {
       "q": "Which of these is actually in the top tier of strongest known natural poisons by weight?",

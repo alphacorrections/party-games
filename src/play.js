@@ -13,6 +13,7 @@ const ENGINES = {
 };
 
 const el = id => document.getElementById(id);
+const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
 
 class PlayApp {
   constructor() {
@@ -66,8 +67,9 @@ class PlayApp {
   }
 
   kicked() {
-    el('playscreen').innerHTML =
-      `<div class="pcard"><h2>You've been removed</h2><p>Ask the host nicely.</p></div>`;
+    this.room?.detach();
+    setHTML('playscreen',
+      `<div class="pcard"><h2>You've been removed</h2><p>Ask the host nicely.</p></div>`);
   }
 
   async onGame(id) {
@@ -89,18 +91,19 @@ class PlayApp {
   }
 
   render() {
+    if (!el('pstage')) return;
     if (!this.mod) {
-      el('pstage').innerHTML =
-        `<div class="pcard"><h2>You're in</h2><p>Waiting for the host to pick a game.</p></div>`;
+      setHTML('pstage',
+        `<div class="pcard"><h2>You're in</h2><p>Waiting for the host to pick a game.</p></div>`);
       return;
     }
     if (this.gameId === 'promptvote') {
-      el('pstage').innerHTML = this.mod.playerView(
-        this.round, this.me, this.hand, this.submitted, this.voted, this.state.draft);
+      setHTML('pstage', this.mod.playerView(
+        this.round, this.me, this.hand, this.submitted, this.voted, this.state.draft));
     } else if (this.gameId === 'charades') {
-      el('pstage').innerHTML = this.mod.playerView(this.round, this.me);
+      setHTML('pstage', this.mod.playerView(this.round, this.me));
     } else {
-      el('pstage').innerHTML = this.mod.playerView(this.round, this.me, this.submitted);
+      setHTML('pstage', this.mod.playerView(this.round, this.me, this.submitted));
     }
   }
 
@@ -118,6 +121,8 @@ class PlayApp {
 
 const app = new PlayApp();
 app.boot().catch(console.error);
+
+window.addEventListener('pagehide', () => app.room?.detach());
 
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-action]');

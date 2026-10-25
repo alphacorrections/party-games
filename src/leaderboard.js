@@ -14,6 +14,8 @@ const GAME_NAMES = {
   charades: 'Shout It Out'
 };
 
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
 const panel = document.getElementById('panel');
 let tab = 'all';
 
@@ -31,7 +33,7 @@ async function renderAll() {
         <span class="rank">${i + 1}</span>
         <span class="emoji">${r.emoji || '🎲'}</span>
         <span class="sname">${esc(r.name)}
-          <span class="meta">${r.gamesPlayed || 0} games, ${r.wins || 0} wins${
+          <span class="meta">${plural(r.gamesPlayed || 0, 'game')}, ${plural(r.wins || 0, 'win')}${
             best ? `, best at ${esc(GAME_NAMES[best[0]] || best[0])}` : ''}</span>
         </span>
         <span class="spts">${r.points || 0}</span>

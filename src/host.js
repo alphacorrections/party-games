@@ -23,6 +23,8 @@ const GAME_MENU = [
 ];
 
 const el = id => document.getElementById(id);
+const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
+const setText = (id, txt)  => { const n = el(id); if (n) n.textContent = txt; };
 
 class HostApp {
   constructor() {
@@ -58,7 +60,12 @@ class HostApp {
 
     this.renderMenu();
     this.startTicking();
-    window.addEventListener('beforeunload', () => this.room.destroy());
+    window.addEventListener('pagehide', () => {
+      this.engine?.stop();
+      this.room.detach();
+      clearInterval(this.tickTimer);
+      this.room.destroy();
+    });
   }
 
   async renderQR(url) {
@@ -69,31 +76,32 @@ class HostApp {
       qr.make();
       el('qr').innerHTML = qr.createSvgTag({ cellSize: 5, margin: 2, scalable: true });
     } catch (e) {
-      el('qr').innerHTML = '';   // URL text is already shown; QR is a bonus
+      // The QR library lives on a CDN. If it can't load, drop the whole panel
+      // rather than leaving an empty white square — the join URL is right below.
+      const box = el('qr');
+      if (box) box.remove();
       console.warn('QR unavailable', e);
     }
   }
 
   onPlayers() {
     const list = playerList(this.players);
-    el('plist').innerHTML = list.length
+    setHTML('plist', list.length
       ? list.map(p => `
           <div class="chip ${p.connected === false ? 'off' : ''}">
             <span>${p.emoji || '🎲'}</span>${esc(p.name)}
             <button class="kick" data-kick="${p.id}" title="Remove">×</button>
           </div>`).join('')
-      : '<p class="muted">Nobody yet. Scan the code.</p>';
-    el('pcount').textContent = list.length;
+      : '<p class="muted">Nobody yet. Scan the code.</p>');
+    setText('pcount', list.length);
     if (this.phase === 'lobby' || !this.phase) this.renderMenu();
   }
 
   renderMenu() {
     const n = playerList(this.players).length;
-    el('menu').innerHTML = GAME_MENU.map((g, i) => {
-      const mod = ENGINES[g.id];
-      return `<button class="gamebtn" data-game="${i}">
-        <b>${esc(g.label)}</b><span>${esc(g.sub)}</span></button>`;
-    }).join('');
+    setHTML('menu', GAME_MENU.map((g, i) =>
+      `<button class="gamebtn" data-game="${i}">
+        <b>${esc(g.label)}</b><span>${esc(g.sub)}</span></button>`).join(''));
   }
 
   async launch(i) {
@@ -115,18 +123,23 @@ class HostApp {
   }
 
   render() {
-    const stage = el('stage');
     if (!this.round || this.phase === 'lobby') {
       document.body.classList.remove('playing');
+      setHTML('stage', '');
       return;
     }
-    stage.innerHTML = this.mod ? this.mod.hostView(this.round, this.players) : '';
+    document.body.classList.add('playing');
+    setHTML('stage', this.mod ? this.mod.hostView(this.round, this.players) : '');
 
     if (this.round.phase === 'final' && !this._committed) {
       this._committed = true;
-      const results = sortedPlayers(this.players).map(p => ({ name: p.name, score: p.score || 0 }));
+      const results = sortedPlayers(this.players)
+        .map(p => ({ name: p.name, score: p.score || 0 }));
       commitGame(this.gameId, this.room.code, results).catch(console.error);
-      el('again').hidden = false;
+      // Bring the lobby back underneath the final scores so "play again" works.
+      document.body.classList.remove('playing');
+      const again = el('again');
+      if (again) again.hidden = false;
     }
   }
 
@@ -152,15 +165,19 @@ class HostApp {
     for (const pid of Object.keys(this.players)) {
       await this.room.t.set(`${this.room.base}/players/${pid}/score`, 0);
     }
-    el('again').hidden = true;
+    const again = el('again');
+    if (again) again.hidden = true;
     document.body.classList.remove('playing');
+    setHTML('stage', '');
+    this.renderMenu();
+    this.onPlayers();
   }
 }
 
 const app = new HostApp();
 app.start().catch(e => {
-  document.getElementById('stage').innerHTML =
-    `<div class="err"><h2>Couldn't start</h2><p>${esc(e.message)}</p></div>`;
+  const n = document.getElementById('stage');
+  if (n) n.innerHTML = `<div class="err"><h2>Couldn't start</h2><p>${esc(e.message)}</p></div>`;
   console.error(e);
 });
 

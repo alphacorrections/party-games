@@ -40,6 +40,16 @@ export class Host {
 
   async ask(index) {
     clearTimeout(this.timer);
+    if (this._busy) return;
+    this._busy = true;
+    try {
+      await this._ask(index);
+    } finally {
+      this._busy = false;
+    }
+  }
+
+  async _ask(index) {
     if (index >= this.deck.length) return this.finish();
 
     const q = this.deck[index];
@@ -76,6 +86,16 @@ export class Host {
 
   async reveal() {
     clearTimeout(this.timer);
+    if (this._revealing) return;
+    this._revealing = true;
+    try {
+      await this._reveal();
+    } finally {
+      this._revealing = false;
+    }
+  }
+
+  async _reveal() {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'question') return;
 
@@ -161,7 +181,7 @@ export function playerView(round, me, submitted) {
      </button>`
   ).join('');
 
-  return `<div class="pcard"><p class="phint">Pick one — fast</p>${btns}</div>`;
+  return `<div class="pcard"><p class="phint">Pick one. Fast.</p>${btns}</div>`;
 }
 
 export function scoreboard(players, title = 'Scores') {

@@ -279,8 +279,16 @@ a { color: var(--hot); }
   width: min(1200px, 100%);
   text-align: left;
 }
-body.playing .lobby { display: none; }
-body.playing .stage > .lobby { display: none; }
+#stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+#stage:empty { display: none; }
+body.playing #lobby { display: none; }
 
 .joinpanel { }
 .joinpanel h2 {

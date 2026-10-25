@@ -35,12 +35,17 @@ export function newId() {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
 }
 
-/** Stable per-browser identity so a refresh rejoins as the same player. */
+/**
+ * Per-TAB identity. Survives a refresh (sessionStorage), but two tabs are two
+ * different players — which is what you want, since local mode runs several
+ * players in one browser and two people on one laptop would otherwise collide
+ * into a single scoring record.
+ */
 export function localPlayerId() {
-  let id = localStorage.getItem('pg_player_id');
+  let id = sessionStorage.getItem('pg_player_id');
   if (!id) {
     id = newId();
-    localStorage.setItem('pg_player_id', id);
+    sessionStorage.setItem('pg_player_id', id);
   }
   return id;
 }
