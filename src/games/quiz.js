@@ -3,7 +3,8 @@
 // Fastest correct answer scores most. Phases: question -> reveal -> ... -> final
 // ---------------------------------------------------------------------------
 
-import { shuffle, sample, esc, sortedPlayers, playerList, countdown, loadJSON, contentURL, timerHTML, finalScoreboard } from '../util.js';
+import { shuffle, sample, esc, sortedPlayers, playerList, countdown, loadJSON, contentURL, timerHTML, finalScoreboard,
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen } from '../util.js';
 
 export const meta = {
   id: 'quiz',
@@ -28,7 +29,7 @@ export class Host {
 
   async load() {
     const data = await loadJSON(contentURL('trivia.json'));
-    this.deck = sample(data.questions, this.rounds);
+    this.deck = await sampleUnseen(this.room, 'trivia', data.questions, this.rounds, q => q.q);
     return this;
   }
 
@@ -112,7 +113,18 @@ export class Host {
     }
 
     await this.room.patchRound({ phase: 'reveal', gained });
-    this.timer = setTimeout(() => this.ask(round.index + 1), REVEAL_MS);
+    this.timer = setTimeout(() => this.ask(round.index + 1), revealMs(1, { base: 5500, per: 1500 }));
+  }
+
+  /** Host tapped Next on a reveal, or Skip on a straggler. */
+  async nudge(kind, pid) {
+    const round = await this.room.t.get(`${this.room.base}/round`);
+    if (!round) return;
+    if (kind === 'next' && round.phase === 'reveal') { clearTimeout(this.timer); return this.ask(round.index + 1); }
+    if (kind === 'skip' && round.phase === 'question' && pid) {
+      // Mark them as answered-with-nothing so the round can close.
+      await this.room.submit(pid, { choice: -1, at: Date.now(), skipped: true });
+    }
   }
 
   async finish() {
@@ -163,14 +175,22 @@ export function hostView(round, players) {
     ? `<div class="note">${esc(round.note)}</div>` : '';
   const timer = round.phase === 'question' ? timerHTML(round.deadline, ANSWER_MS) : '';
 
+  const waiting = round.phase === 'question'
+    ? waitingHTML(pendingPlayers(players, subsCache, []), { skippable: true }) : '';
   return `
     ${header}
     ${timer}
     <h1 class="question">${esc(round.q)}</h1>
     <div class="opts">${opts}</div>
     ${note}
+    ${waiting}
+    ${round.phase === 'reveal' ? '<button class="nextbtn" data-next="1">Next</button>' : ''}
   `;
 }
+
+// The host passes the live submissions map in so the waiting chips are live.
+let subsCache = {};
+export function setSubmissions(s) { subsCache = s || {}; }
 
 export function playerView(round, me, submitted, _voted, _players, extra = {}) {
   const mirror = extra && extra.mirror;

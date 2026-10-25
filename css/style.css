@@ -1359,3 +1359,63 @@ body.headsup .endbtn, body.headsup .soundbtn { border-color: rgba(0,0,0,.2); col
   .wyr { grid-template-columns: 1fr; }
   .split { grid-template-columns: 1fr; }
 }
+
+/* ============================ WAITING / NEXT ============================= */
+
+.waiting {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .4rem;
+  margin-top: .4rem; color: var(--mute); font-size: .95rem;
+}
+.waiting.done { color: var(--volt); font-weight: 700; }
+.wlabel { margin-right: .2rem; }
+.wchip {
+  display: inline-flex; align-items: center; gap: .35rem;
+  background: var(--ink-2); border: 2px solid var(--ink-3); border-radius: 999px;
+  padding: .25rem .7rem .25rem .5rem; font-weight: 700; color: var(--chalk);
+  animation: wpulse 1.6s ease-in-out infinite;
+}
+.wchip[data-skip] { cursor: pointer; }
+.wchip[data-skip]:hover { border-color: var(--hot); color: var(--hot); animation: none; }
+@keyframes wpulse { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+
+.nextbtn {
+  margin-top: .8rem;
+  background: var(--hot); color: var(--ink); border: 0;
+  font-family: var(--display); font-size: 1.25rem; letter-spacing: var(--track-lg);
+  padding: .55rem 1.4rem; cursor: pointer; border-radius: 6px;
+  box-shadow: 0 5px 0 var(--hot-deep);
+  animation: fxRise .4s cubic-bezier(.2,.8,.2,1) both 1.2s;
+}
+.nextbtn:active { box-shadow: 0 1px 0 var(--hot-deep); transform: translateY(4px); }
+.pcard .nexthost { margin-top: .6rem; }
+
+/* ============================== INTRO CARD =============================== */
+
+.intro {
+  display: grid; place-items: center; gap: .3rem; text-align: center;
+  animation: introIn .7s cubic-bezier(.2,.8,.2,1) both;
+}
+.intro-kicker { color: var(--mute); font-weight: 700; letter-spacing: .08em; font-size: clamp(.9rem, 2vh, 1.2rem); }
+.intro-title {
+  font-family: var(--display); letter-spacing: var(--track-xl);
+  font-size: clamp(2.6rem, 12vh, 7rem); line-height: 1; color: var(--card);
+  text-shadow: 0 0 40px rgba(255,45,122,.35);
+}
+.intro-hint { color: var(--chalk); font-size: clamp(1rem, 2.6vh, 1.5rem); max-width: 34ch; }
+@keyframes introIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+.pcard.intro-p { align-items: center; text-align: center; justify-content: center; min-height: 50vh; min-height: calc(var(--vh, 1vh) * 50); }
+.pcard.intro-p .intro-title { font-size: 2.8rem; }
+
+/* ============================== MULLIGAN ================================= */
+
+.linkbtn.mull { align-self: center; margin-top: .2rem; font-size: .9rem; }
+
+/* ============================== OFFLINE ================================== */
+
+body.offline::before {
+  content: 'Reconnecting…';
+  position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+  background: var(--hot); color: var(--ink); font-weight: 800; text-align: center;
+  padding: .35rem; font-size: .9rem;
+}
+body.offline .pbtn, body.offline .card, body.offline .hugebtn { opacity: .6; pointer-events: none; }

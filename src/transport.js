@@ -47,8 +47,17 @@ class FirebaseTransport {
     await authMod.signInAnonymously(auth);
     this.uid = auth.currentUser ? auth.currentUser.uid : null;
 
+    // Firebase's own connectivity flag; screens show a banner when it drops.
+    this.connected = true;
+    this._connCbs = [];
+    dbMod.onValue(dbMod.ref(this.db, '.info/connected'), snap => {
+      this.connected = Boolean(snap.val());
+      for (const cb of this._connCbs) { try { cb(this.connected); } catch {} }
+    });
     return this;
   }
+
+  onConnection(cb) { this._connCbs.push(cb); cb(this.connected); return () => { this._connCbs = this._connCbs.filter(f => f !== cb); }; }
 
   _ref(path) {
     return this.fb.ref(this.db, path);
@@ -212,6 +221,7 @@ class LocalTransport {
 
   async onDisconnectRemove() { /* no-op: single device */ }
   async onDisconnectSet()    { /* no-op: single device */ }
+  onConnection(cb) { cb(true); return () => {}; }
 }
 
 /* ------------------------------- Factory -------------------------------- */

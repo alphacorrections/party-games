@@ -13,7 +13,8 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown,
-         fillBlanks, loadJSON, contentURL, timerHTML, finalScoreboard } from '../util.js';
+         fillBlanks, loadJSON, contentURL, timerHTML, finalScoreboard,
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen } from '../util.js';
 
 export const meta = {
   id: 'promptvote',
@@ -46,13 +47,13 @@ export class Host {
   async load() {
     if (this.mode === 'pick') {
       const data = await loadJSON(contentURL('fillblank.json'));
-      this.prompts    = sample(data.prompts, this.rounds);
+      this.prompts    = await sampleUnseen(this.room, 'fillblank', data.prompts, this.rounds, p => p.text);
       this.answerDeck = shuffle(data.answers);
     } else {
       const file = this.mode === 'meme' ? 'memes.json' : 'quiplash.json';
       const data = await loadJSON(contentURL(file));
       const raw = data.prompts.map(p => (typeof p === 'string' ? { text: p } : p));
-      this.prompts = sample(raw, this.rounds);
+      this.prompts = await sampleUnseen(this.room, this.mode === 'meme' ? 'memes' : 'quiplash', raw, this.rounds, p => p.text);
     }
     return this;
   }
@@ -70,6 +71,17 @@ export class Host {
     return out;
   }
 
+  /** Swap the whole hand, once per game per player. */
+  async mulligan(pid) {
+    const used = (await this.room.t.get(`${this.room.base}/mulliganed/${pid}`));
+    if (used) return false;
+    const hand = (await this.room.t.get(`${this.room.base}/hands/${pid}`)) || [];
+    this.discard.push(...hand);
+    await this.room.t.set(`${this.room.base}/hands/${pid}`, this.draw(HAND_SIZE));
+    await this.room.t.set(`${this.room.base}/mulliganed/${pid}`, true);
+    return true;
+  }
+
   async dealTo(pid, hand) {
     const need = HAND_SIZE - (hand ? hand.length : 0);
     const next = (hand || []).concat(this.draw(Math.max(0, need)));
@@ -81,6 +93,7 @@ export class Host {
     await this.room.setGame('promptvote');
     await this.room.setPhase('playing');
 
+    await this.room.t.remove(`${this.room.base}/mulliganed`);
     if (this.mode === 'pick') {
       const players = await this.room.players();
       for (const pid of Object.keys(players)) await this.dealTo(pid, []);
@@ -103,6 +116,7 @@ export class Host {
       : null;
 
     await this.room.clearRoundData();
+    await this.room.t.remove(`${this.room.base}/skipped`);
     await this.room.setRound({
       phase: 'answer',
       mode: this.mode,
@@ -149,8 +163,9 @@ export class Host {
     const hands = this.mode === 'pick'
       ? ((await this.room.t.get(`${this.room.base}/hands`)) || {})
       : null;
+    const skipped = (await this.room.t.get(`${this.room.base}/skipped`)) || {};
     const expected = playerList(players)
-      .filter(p => p.connected !== false && p.id !== round.czar)
+      .filter(p => p.connected !== false && p.id !== round.czar && !skipped[p.id])
       .filter(p => !hands || (hands[p.id] || []).length > 0).length;
     if (expected && Object.keys(subs || {}).length >= expected) {
       clearTimeout(this.timer);
@@ -170,8 +185,9 @@ export class Host {
       }
       return;
     }
+    const skipped = (await this.room.t.get(`${this.room.base}/skipped`)) || {};
     const eligible = playerList(players)
-      .filter(p => p.connected !== false && subs[p.id]).length;
+      .filter(p => p.connected !== false && subs[p.id] && !skipped[p.id]).length;
     if (eligible && Object.keys(votes || {}).length >= eligible) {
       clearTimeout(this.timer);
       await this.reveal();
@@ -247,7 +263,24 @@ export class Host {
     }
 
     await this.room.patchRound({ phase: 'reveal', tally, gained });
-    this.timer = setTimeout(() => this.ask(round.index + 1), REVEAL_MS);
+    this.timer = setTimeout(() => this.ask(round.index + 1), revealMs(round.slots.length));
+  }
+
+  async nudge(kind, pid) {
+    const round = await this.room.t.get(`${this.room.base}/round`);
+    if (!round) return;
+    if (kind === 'mulligan' && pid && round.phase === 'answer' && this.mode === 'pick') return this.mulligan(pid);
+    if (kind === 'next' && round.phase === 'reveal') { clearTimeout(this.timer); return this.ask(round.index + 1); }
+    if (kind === 'skip' && pid) {
+      if (round.phase === 'answer') {
+        // Drop them from this round; onSubmissions will close it if they were last.
+        await this.room.t.set(`${this.room.base}/skipped/${pid}`, true);
+        await this.onSubmissions((await this.room.t.get(`${this.room.base}/submissions`)) || {}, await this.room.players());
+      } else if (round.phase === 'vote') {
+        await this.room.t.set(`${this.room.base}/skipped/${pid}`, true);
+        await this.onVotes((await this.room.t.get(`${this.room.base}/votes`)) || {}, await this.room.players());
+      }
+    }
   }
 
   async finish() {
@@ -299,12 +332,13 @@ export function hostView(round, players) {
     ? `<img class="memeimg" src="${esc(round.image)}" alt="">` : '';
 
   if (round.phase === 'answer') {
+    const exclude = round.czar ? [round.czar] : [];
     return `
       ${header}
       ${timerHTML(round.deadline, ANSWER_MS)}
       ${img}
       <h1 class="question">${promptHTML(round, [])}</h1>
-      <p class="phint">Answer on your phone.</p>`;
+      ${waitingHTML(pendingPlayers(players, liveSubs, exclude), { skippable: true })}`;
   }
 
   if (round.phase === 'vote') {
@@ -318,7 +352,9 @@ export function hostView(round, players) {
       ${img}
       <h2 class="subq">${promptHTML(round, [])}</h2>
       <div class="vgrid">${cards}</div>
-      <p class="phint">${round.judge === 'czar' ? 'Judge picks.' : 'Vote on your phone.'}</p>`;
+      ${round.judge === 'czar'
+        ? `<p class="phint">${esc((byId[round.czar] || {}).name || 'Judge')} picks.</p>`
+        : waitingHTML(pendingPlayers(players, liveVotes, round.slots.length < 2 ? [] : []), { skippable: true })}`;
   }
 
   // reveal
@@ -335,8 +371,13 @@ export function hostView(round, players) {
           ${pts ? `<b>+${pts}</b>` : ''}</div>
       </div>`;
   }).join('');
-  return `${header}<h2 class="subq">${promptHTML(round, [])}</h2><div class="vgrid">${cards}</div>`;
+  return `${header}<h2 class="subq">${promptHTML(round, [])}</h2><div class="vgrid">${cards}</div>
+    <button class="nextbtn" data-next="1">Next</button>`;
 }
+
+let liveSubs = {}, liveVotes = {};
+export function setSubmissions(s) { liveSubs = s || {}; }
+export function setVotes(v) { liveVotes = v || {}; }
 
 export function playerView(round, me, hand, submitted, voted, draft, extra = {}) {
   const mirror = extra && extra.mirror;
@@ -396,6 +437,7 @@ export function playerView(round, me, hand, submitted, voted, draft, extra = {})
           <button class="pbtn primary" data-action="confirmcards" ${ready ? '' : 'disabled'}>
             ${ready ? 'Play it' : `Pick ${need - picked.length} more`}
           </button>
+          ${extra.mulliganed ? '' : `<button class="linkbtn mull" data-action="mulligan">Hand's garbage. Swap it.</button>`}
         </div>`;
     }
 

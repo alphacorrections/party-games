@@ -96,6 +96,21 @@ up for skip (or tap the buttons). iPhones ask once for motion permission.
 If the hosting phone dies, the next phone by join order takes over within about
 fifteen seconds and the round continues from where it was.
 
+### During a game
+
+- **Waiting on…** shows who hasn't answered. The host can tap a name to skip them
+  so one person on the phone doesn't stall the room.
+- **Next** on every reveal (or Enter/OK on a TV remote) advances when everyone's
+  done laughing. Otherwise reveals auto-advance on a timer scaled to how much is
+  on screen.
+- **Hand's garbage? Swap it.** Once per game of Fill In The Blank you can replace
+  your whole hand.
+- Nothing repeats within a room. Questions, prompts and words a room has seen are
+  tracked; when a pack runs out it starts over.
+- If a phone drops, a **Reconnecting…** bar shows and inputs lock until it's back.
+- Joining with a name someone's actively using is refused; reloading your own
+  phone is recognised and lets you straight back in.
+
 **End game** in the top corner drops everyone back to the menu without closing the
 room or kicking anyone out. An abandoned game isn't written to the leaderboard.
 

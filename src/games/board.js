@@ -287,6 +287,7 @@ export class Host {
   onSubmissions(subs, players) { return this.mini?.engine?.onSubmissions?.(subs, players); }
   onVotes(votes, players)      { return this.mini?.engine?.onVotes?.(votes, players); }
   charadesResolve(result)      { return this.mini?.engine?.resolve?.(result); }
+  nudge(kind, pid)             { return this.mini?.engine?.nudge?.(kind, pid); }
 
   stop() {
     clearTimeout(this.timer);
@@ -353,6 +354,11 @@ export function hostView(board, players, round, miniMod) {
  * Patch the live board in place. Called by host.js after hostView has been
  * mounted (and on every subsequent board change while the shell is present).
  */
+export function setSubmissions(s) { miniMods.forEach(m => m.setSubmissions?.(s)); }
+export function setVotes(v) { miniMods.forEach(m => m.setVotes?.(v)); }
+const miniMods = new Set();
+export function registerMiniMod(m) { if (m) miniMods.add(m); }
+
 export function patchBoard(stage, board, players, fx) {
   const grid = stage.querySelector('[data-board]');
   if (!grid || !board) return;

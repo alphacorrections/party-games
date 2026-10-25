@@ -11,6 +11,14 @@ import { installViewport } from './viewport.js';
 import { Director, ENGINES, GAME_MENU } from './director.js';
 
 const el = id => document.getElementById(id);
+
+function introHTML(round) {
+  return `<div class="intro">
+    <div class="intro-kicker">Up next</div>
+    <div class="intro-title">${esc(round.title || '')}</div>
+    <div class="intro-hint">${esc(round.hint || '')}</div>
+  </div>`;
+}
 const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
 const setText = (id, txt)  => { const n = el(id); if (n) n.textContent = txt; };
 
@@ -41,7 +49,7 @@ class HostApp {
     el('joinurl').textContent = joinURL.href.replace(/^https?:\/\//, '');
     this.renderQR(joinURL.href);
 
-    this.director = new Director(this.room, { id: this.hostId, onState: () => this.onPlayers() });
+    this.director = new Director(this.room, { id: this.hostId, onState: () => { this.onPlayers(); this.render(); } });
     await this.director.claim();
     this.director.attach();
 
@@ -54,6 +62,7 @@ class HostApp {
 
     this.renderMenu();
     this.startTicking();
+    t.onConnection(ok => document.body.classList.toggle('offline', !ok));
     window.addEventListener('pagehide', () => {
       this.director.stop();
       this.room.detach();
@@ -161,6 +170,7 @@ class HostApp {
   render() {
     const stage = el('stage');
     if (!stage) return;
+    this._patchWaiting(stage);
 
     if (this.gameId === 'board' && this.board && this.phase !== 'lobby' && this.mod) {
       document.body.classList.add('playing');
@@ -196,9 +206,28 @@ class HostApp {
     }
     document.body.classList.add('playing');
     const key = `${this.gameId}|${this.round.phase}|${this.round.index ?? this.round.turn ?? ''}`;
+    if (this.round.phase === 'intro') {
+      swapIn(stage, introHTML(this.round), key);
+      this.afterRender(key);
+      return;
+    }
     swapIn(stage, this.mod.hostView(this.round, this.players), key);
     this.afterRender(key);
     if (this.round.phase === 'final') this.onFinal();
+  }
+
+  /** Update the waiting-on chips in place, no full re-render. */
+  _patchWaiting(stage) {
+    if (!this.mod || !this.round || this.round.phase === 'intro' || this.round.phase === 'final') return;
+    if (!stage.querySelector('.waiting')) return;     // nothing to patch on this screen
+    const fresh = document.createElement('div');
+    try {
+      fresh.innerHTML = this.gameId === 'board'
+        ? (this.miniMod ? this.miniMod.hostView(this.round, this.players) : '')
+        : this.mod.hostView(this.round, this.players);
+    } catch { return; }
+    const a = stage.querySelector('.waiting'), b = fresh.querySelector('.waiting');
+    if (a && b && a.outerHTML !== b.outerHTML) a.outerHTML = b.outerHTML;
   }
 
   onFinal() {
@@ -288,4 +317,15 @@ document.addEventListener('click', async e => {
   const k = e.target.closest('[data-kick]');
   if (k) return app.room.removePlayer(k.dataset.kick);
   if (e.target.closest('#again') || e.target.closest('#endgame')) return app.backToLobby();
+  const nx = e.target.closest('[data-next]');
+  if (nx) { sound.tap(); return app.director.nudge('next'); }
+  const sk = e.target.closest('[data-skip]');
+  if (sk) { sound.tap(); return app.director.nudge('skip', sk.dataset.skip); }
+});
+
+// TV remotes: Enter/OK advances a reveal, same as tapping Next.
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.querySelector('[data-next]')) {
+    e.preventDefault(); sound.tap(); app.director.nudge('next');
+  }
 });

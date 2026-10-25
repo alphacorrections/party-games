@@ -10,7 +10,7 @@
 // ---------------------------------------------------------------------------
 
 import { sample, esc, sortedPlayers, playerList, loadJSON, contentURL,
-         timerHTML, finalScoreboard } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen } from '../util.js';
 
 export const meta = {
   id: 'blindvote',
@@ -37,10 +37,10 @@ export class Host {
   async load() {
     if (this.mode === 'wyr') {
       const d = await loadJSON(contentURL('wyr.json'));
-      this.deck = sample(d.pairs, this.rounds);
+      this.deck = await sampleUnseen(this.room, 'wyr', d.pairs, this.rounds, p => p.a + '|' + p.b);
     } else {
       const d = await loadJSON(contentURL('likely.json'));
-      this.deck = sample(d.prompts, this.rounds).map(p => ({ text: p }));
+      this.deck = (await sampleUnseen(this.room, 'likely', d.prompts, this.rounds, p => p)).map(p => ({ text: p }));
     }
     return this;
   }
@@ -86,6 +86,7 @@ export class Host {
     if (round.mode === 'wyr') {
       const A = Object.entries(votes).filter(([, v]) => v === 'a').map(([p]) => p);
       const B = Object.entries(votes).filter(([, v]) => v === 'b').map(([p]) => p);
+      // '-' is a host skip; it counts as a vote cast for closing the round only.
       const total = A.length + B.length;
       if (total) {
         if (A.length === B.length) { for (const p of [...A, ...B]) add(p, SPLIT_PTS); }
@@ -95,14 +96,22 @@ export class Host {
       await this.room.patchRound({ phase: 'reveal', a_ids: A, b_ids: B, gained });
     } else {
       const tally = {};
-      for (const target of Object.values(votes)) tally[target] = (tally[target] || 0) + 1;
+      for (const target of Object.values(votes)) if (target !== '-') tally[target] = (tally[target] || 0) + 1;
       const top = Math.max(0, ...Object.values(tally));
       const winners = Object.keys(tally).filter(k => tally[k] === top && top > 0);
       for (const [pid, target] of Object.entries(votes)) if (winners.includes(target)) add(pid, LIKELY_PTS);
       for (const [pid, n] of Object.entries(gained)) await this.room.addScore(pid, n);
       await this.room.patchRound({ phase: 'reveal', tally, winners, gained, votes });
     }
-    this.timer = setTimeout(() => this.ask(round.index + 1), REVEAL_MS);
+    const n = round.mode === 'wyr' ? Object.keys(votes).length : Object.keys(round.tally || {}).length;
+    this.timer = setTimeout(() => this.ask(round.index + 1), revealMs(n, { base: 5000, per: 900 }));
+  }
+
+  async nudge(kind, pid) {
+    const round = await this.room.t.get(`${this.room.base}/round`);
+    if (!round) return;
+    if (kind === 'next' && round.phase === 'reveal') { clearTimeout(this.timer); return this.ask(round.index + 1); }
+    if (kind === 'skip' && pid && round.phase === 'vote') await this.room.vote(pid, '-');
   }
 
   async finish() {
@@ -172,13 +181,19 @@ export function hostView(round, players) {
     if (round.mode === 'wyr') {
       return `${header}${timerHTML(round.deadline, VOTE_MS)}
         <div class="wyr"><div class="wopt a">${esc(round.a)}</div><div class="or">or</div><div class="wopt b">${esc(round.b)}</div></div>
-        <p class="phint">Vote on your phone.</p>`;
+        ${waitingHTML(pendingPlayers(players, liveVotes), { skippable: true })}`;
     }
     return `${header}${timerHTML(round.deadline, VOTE_MS)}
-      <h1 class="question">…${esc(round.text)}?</h1><p class="phint">Vote on your phone.</p>`;
+      <h1 class="question">…${esc(round.text)}?</h1>
+      ${waitingHTML(pendingPlayers(players, liveVotes), { skippable: true })}`;
   }
-  return `${header}${round.mode === 'wyr' ? wyrSplit(round, players) : `<h2 class="subq">…${esc(round.text)}?</h2>${likelyReveal(round, players)}`}`;
+  return `${header}${round.mode === 'wyr' ? wyrSplit(round, players) : `<h2 class="subq">…${esc(round.text)}?</h2>${likelyReveal(round, players)}`}
+    <button class="nextbtn" data-next="1">Next</button>`;
 }
+
+let liveVotes = {};
+export function setVotes(v) { liveVotes = v || {}; }
+export function setSubmissions() {}
 
 export function playerView(round, me, submitted, voted, players, extra = {}) {
   if (!round || round.phase === 'final') return `<div class="pcard"><h2>Game over</h2></div>`;

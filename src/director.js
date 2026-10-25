@@ -40,6 +40,7 @@ export const GAME_MENU = [
 ];
 
 const HEARTBEAT_MS = 4000;
+const INTRO_MS     = 2600;
 const STALE_MS     = 12000;
 
 export class Director {
@@ -83,8 +84,8 @@ export class Director {
       this.engine?.onPlayers?.(this.players);
       this.onState();
     });
-    on('submissions', v => this.engine?.onSubmissions?.(v || {}, this.players));
-    on('votes',       v => this.engine?.onVotes?.(v || {}, this.players));
+    on('submissions', v => { this.subs = v || {}; this.mod?.setSubmissions?.(this.subs); this.engine?.onSubmissions?.(this.subs, this.players); this.onState(); });
+    on('votes',       v => { this.votes = v || {}; this.mod?.setVotes?.(this.votes); this.engine?.onVotes?.(this.votes, this.players); this.onState(); });
     on('intent',      v => this.onIntent(v));
     on('round',       v => { if (v && v.phase === 'final') this.commitIfNeeded(); });
     on('board',       v => { if (v && v.phase === 'final') this.commitIfNeeded(); });
@@ -97,6 +98,8 @@ export class Director {
     this._lastIntentAt = intent.at;
     if (intent.action === 'roll') {
       await this.engine.onIntent?.(intent);
+    } else if (intent.action === 'next' || intent.action === 'skip' || intent.action === 'mulligan') {
+      await this.engine.nudge?.(intent.action, intent.pid || intent.by);
     } else if (intent.result) {
       if (this.gameId === 'charades') await this.engine.resolve(intent.result);
       else await this.engine.charadesResolve?.(intent.result);
@@ -120,6 +123,14 @@ export class Director {
       this.engine = engine;
       this._committed = false;
       await this.room.t.set(`${this.base}/menuIndex`, menuIndex);
+      // Title card so everyone looks up before round one.
+      const title = (extraOpts.headsup ? 'Heads Up' : choice.label);
+      const hint  = mod.meta?.blurb || choice.sub || '';
+      await this.room.setGame(choice.id);
+      await this.room.setPhase('playing');
+      await this.room.setRound({ phase: 'intro', title, hint, until: Date.now() + INTRO_MS });
+      await new Promise(r => setTimeout(r, INTRO_MS));
+      if (this.engine !== engine) return;      // ended during the intro
       await engine.begin();
     } finally {
       this._launching = false;
@@ -141,13 +152,18 @@ export class Director {
     await this.room.setGame(null);
     await this.room.setRound(null);
     await this.room.clearRoundData();
-    for (const k of ['hands', 'board', 'mini', 'intent', 'menuIndex']) {
+    for (const k of ['hands', 'board', 'mini', 'intent', 'menuIndex', 'mulliganed', 'skipped']) {
       await this.room.t.remove(`${this.base}/${k}`);
     }
     await this.room.setPhase('lobby');
     for (const pid of Object.keys(this.players)) {
       await this.room.t.set(`${this.base}/players/${pid}/score`, 0);
     }
+  }
+
+  /** Host screen or hosting phone: advance a reveal, or skip a straggler. */
+  async nudge(kind, pid) {
+    if (this.engine) return this.engine.nudge?.(kind, pid);
   }
 
   /** After a finished game: same as endGame but the result was already recorded. */

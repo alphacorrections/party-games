@@ -94,3 +94,58 @@ export function finalScoreboard(players, title = 'Final scores') {
     </div>
     <div class="scores rest">${rows}</div>`;
 }
+
+/* ------------------------------ waiting on ------------------------------ */
+
+/**
+ * Who hasn't acted yet this phase. `done` is the submissions or votes map;
+ * `exclude` is anyone who isn't expected to act (a judge, a disconnected
+ * player, someone with no hand).
+ */
+export function pendingPlayers(players, done, exclude = []) {
+  const doneIds = new Set(Object.keys(done || {}));
+  return playerList(players)
+    .filter(p => p.connected !== false && !doneIds.has(p.id) && !exclude.includes(p.id));
+}
+
+/** Chips naming who we're waiting on; the host can tap one to skip them. */
+export function waitingHTML(pending, { skippable = false } = {}) {
+  if (!pending.length) return '<div class="waiting done">Everyone\'s in</div>';
+  const chips = pending.map(p =>
+    `<span class="wchip" ${skippable ? `data-skip="${p.id}" title="Skip ${esc(p.name)}"` : ''}>
+       <span>${p.emoji || '🎲'}</span>${esc(p.name)}</span>`).join('');
+  return `<div class="waiting"><span class="wlabel">Waiting on</span>${chips}</div>`;
+}
+
+/** Reveal pacing: a base plus a bit per thing people have to read. */
+export function revealMs(items, { base = 4500, per = 1400, max = 16000 } = {}) {
+  return Math.min(max, base + per * Math.max(0, items));
+}
+
+/* ------------------------------ no repeats ------------------------------ */
+
+/**
+ * Sample `n` items from `pool`, preferring ones this room hasn't seen. Seen
+ * keys live at rooms/{code}/seen/{bucket} and reset when the pool is used up,
+ * so a long night never runs dry — it just starts over.
+ */
+export async function sampleUnseen(room, bucket, pool, n, keyOf = x => JSON.stringify(x)) {
+  const path = `${room.base}/seen/${bucket}`;
+  let seen = (await room.t.get(path)) || {};
+  let fresh = pool.filter(x => !seen[hashKey(keyOf(x))]);
+  if (fresh.length < n) {              // exhausted: start the cycle again
+    seen = {};
+    fresh = pool.slice();
+  }
+  const picked = shuffle(fresh).slice(0, n);
+  for (const x of picked) seen[hashKey(keyOf(x))] = true;
+  await room.t.set(path, seen);
+  return picked;
+}
+
+/** Short stable key safe for a Firebase path segment. */
+export function hashKey(str) {
+  let h = 5381;
+  for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0;
+  return 'k' + (h >>> 0).toString(36);
+}

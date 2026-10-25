@@ -49,6 +49,9 @@ class PlayApp {
     const room = await Room.open(code);
     if (!(await room.exists())) return this.err(`No room called ${code}.`);
     if (await room.isExpired())  return this.err('That room has expired.');
+    if (await room.nameTakenLive(playerIdFor(name), Room.deviceId())) {
+      return this.err(`Someone's already in as ${name}. Add a last initial or pick another.`);
+    }
     await this.enter(room, name);
   }
 
@@ -77,6 +80,14 @@ class PlayApp {
     sound.lock(); haptic.lock();
     history.replaceState(null, '', `?room=${room.code}`);
 
+    // Presence heartbeat + offline banner.
+    this._presence = setInterval(() => room.touch(this.me.id).catch(() => {}), 8000);
+    const t = await getTransport();
+    t.onConnection(ok => {
+      document.body.classList.toggle('offline', !ok);
+      if (!ok) this.toast('Reconnecting…');
+    });
+
     room.on('hasScreen', v => { this.hasScreen = Boolean(v); this.render(); });
     room.on('director',  v => this.onDirector(v));
     // A dead director stops writing, so its staleness is the absence of an
@@ -89,6 +100,7 @@ class PlayApp {
     room.on('mini',      v => this.onMini(v));
     room.on('phase',     v => { this.phase = v; this.render(); });
     room.on(`hands/${this.me.id}`,       v => { this.hand = v || []; this.render(); });
+    room.on(`mulliganed/${this.me.id}`,  v => { this.mulliganed = Boolean(v); this.render(); });
     room.on(`submissions/${this.me.id}`, v => { this.submitted = Boolean(v); this.render(); });
     room.on(`votes/${this.me.id}`,       v => { this.voted = v !== null && v !== undefined; this.render(); });
     room.on(`players/${this.me.id}`,     v => {
@@ -201,7 +213,12 @@ class PlayApp {
     const mirror = !this.hasScreen;     // no TV -> phones show the whole game
     let html, key;
 
-    if (!this.mod || (this.gameId && this.mod.meta && this.mod.meta.id !== this.gameId)) {
+    if (this.round && this.round.phase === 'intro' && this.mod) {
+      html = `<div class="pcard intro-p"><div class="intro-kicker">Up next</div>
+        <div class="intro-title">${esc(this.round.title || '')}</div>
+        <div class="intro-hint">${esc(this.round.hint || '')}</div></div>`;
+      key = `intro|${this.round.title}`;
+    } else if (!this.mod || (this.gameId && this.mod.meta && this.mod.meta.id !== this.gameId)) {
       html = this.lobbyHTML();
       key = `lobby|${this.isDirector}|${Object.keys(this.players || {}).length}|${this.hasScreen}`;
     } else if (this.gameId === 'board') {
@@ -210,7 +227,7 @@ class PlayApp {
       const b = this.board || {};
       key = `board|${b.phase}|${b.active}|${b.turnNo}|${this.round?.phase}|${this.submitted}|${this.voted}|${(this.state.draft||[]).join(',')}`;
     } else {
-      const extra = { mirror, players: this.players };
+      const extra = { mirror, players: this.players, mulliganed: this.mulliganed };
       // Each engine's playerView has its own positional signature; the trailing
       // argument is always the extras bag.
       const args = this.gameId === 'promptvote'
@@ -222,6 +239,9 @@ class PlayApp {
       key = `${this.gameId}|${mirror}|${this.round?.phase}|${this.round?.index ?? this.round?.turn}|${this.round?.active}|${this.submitted}|${this.voted}|${(this.state.draft||[]).join(',')}|${this.hand.length}`;
     }
 
+    if (mirror && this.isDirector && this.round && /reveal|roundEnd/.test(this.round.phase) && !/data-action="next"/.test(html)) {
+      html += `<button class="pbtn primary nexthost" data-action="next">Next</button>`;
+    }
     const screenKey = key.replace(/\|[^|]*$/, '');
     const isNew = screenKey !== this._screenKey;
     this._screenKey = screenKey;
@@ -319,6 +339,16 @@ class PlayApp {
       if (!this.hasScreen && choice.phoneMode === 'headsup') opts.headsup = true;
       return this.director?.launch(i, opts);
     }
+    if (action.action === 'mulligan') {
+      this.state.draft = [];
+      if (this.director) return this.director.nudge('mulligan', this.me.id);
+      return this.room.t.set(`${this.room.base}/intent`, { by: this.me.id, action: 'mulligan', at: Date.now() });
+    }
+    if (action.action === 'next' || action.action === 'skip') {
+      if (this.director) return this.director.nudge(action.action, action.pid);
+      // Not the director: route through the room so the director picks it up.
+      return this.room.t.set(`${this.room.base}/intent`, { by: this.me.id, action: action.action, pid: action.pid || null, at: Date.now() });
+    }
     if (action.action === 'enabletilt') {
       const r = await startTilt.requestPermission();
       if (r !== 'granted') this.err('Motion permission was denied. Use the buttons.');
@@ -383,7 +413,7 @@ installViewport({ stageId: 'pstage', remoteKeys: false });
 const app = new PlayApp();
 app.boot().catch(console.error);
 window.addEventListener('pagehide', () => {
-  clearInterval(app._watchdog);
+  clearInterval(app._watchdog); clearInterval(app._presence);
   app.room?.detach(); app.director?.stop(); app.stopTilt();
 });
 

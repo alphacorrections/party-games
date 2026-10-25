@@ -9,7 +9,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, esc, sortedPlayers, playerList, countdown,
-         loadJSON, contentURL, timerHTML, finalScoreboard } from '../util.js';
+         loadJSON, contentURL, timerHTML, finalScoreboard, hashKey } from '../util.js';
 
 export const meta = {
   id: 'charades',
@@ -52,7 +52,12 @@ export class Host {
     this.categoryName = chosen ? chosen.name : 'Mixed';
     this.categoryEmoji = chosen ? (chosen.emoji || '') : '🎲';
     this.categoryBlurb = chosen ? (chosen.blurb || '') : 'Anything goes.';
-    this.words = shuffle(chosen ? chosen.words : this.categories.flatMap(c => c.words));
+    const pool = chosen ? chosen.words : this.categories.flatMap(c => c.words);
+    this.seenPath = `${this.room.base}/seen/charades-${hashKey(this.categoryName)}`;
+    let seen = (await this.room.t.get(this.seenPath)) || {};
+    let fresh = pool.filter(w => !seen[hashKey(w)]);
+    if (fresh.length < 15) { seen = {}; fresh = pool.slice(); await this.room.t.set(this.seenPath, {}); }
+    this.words = shuffle(fresh);
     return this;
   }
 
@@ -66,7 +71,10 @@ export class Host {
 
   nextWord() {
     if (!this.words.length) return null;
-    return this.words.pop();
+    const w = this.words.pop();
+    // Mark as seen only when actually shown.
+    this.room.t.set(`${this.seenPath}/${hashKey(w)}`, true).catch(() => {});
+    return w;
   }
 
   async begin() {
@@ -158,6 +166,13 @@ export class Host {
     this.timer = setTimeout(() => this.ready(), 6000);
   }
 
+  async nudge(kind) {
+    const round = await this.room.t.get(`${this.room.base}/round`);
+    if (!round) return;
+    if (kind === 'next' && round.phase === 'roundEnd') { clearTimeout(this.timer); return this.ready(); }
+    if (kind === 'next' && round.phase === 'ready')    { clearTimeout(this.timer); return this.play(); }
+  }
+
   async finish() {
     clearTimeout(this.timer);
     // When something else is driving (the board game), hand control back
@@ -226,6 +241,7 @@ export function hostView(round, players) {
   // roundEnd
   const got = round.got || [];
   const skipped = round.skipped || [];
+  const next = `<button class="nextbtn" data-next="1">Next player</button>`;
   const list = w => w.length
     ? w.map(x => `<li>${esc(x)}</li>`).join('')
     : '<li class="muted">none</li>';
@@ -235,8 +251,10 @@ export function hostView(round, players) {
     <div class="twocol">
       <div><h3>Got it</h3><ul class="wlist got">${list(got)}</ul></div>
       <div><h3>Skipped</h3><ul class="wlist skip">${list(skipped)}</ul></div>
-    </div>`;
+    </div>${next}`;
 }
+export function setSubmissions() {}
+export function setVotes() {}
 
 export function playerView(round, me, _a, _b, _c, extra = {}) {
   if (!round || round.phase === 'final') {

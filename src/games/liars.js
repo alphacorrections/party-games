@@ -11,7 +11,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList, loadJSON, contentURL,
-         timerHTML, finalScoreboard } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen } from '../util.js';
 
 export const meta = {
   id: 'liars',
@@ -37,7 +37,7 @@ export class Host {
 
   async load() {
     const data = await loadJSON(contentURL('liars.json'));
-    this.deck = sample(data.questions, this.rounds);
+    this.deck = await sampleUnseen(this.room, 'liars', data.questions, this.rounds, q => q.q);
     return this;
   }
 
@@ -133,7 +133,17 @@ export class Host {
     for (const [pid, n] of Object.entries(gained)) await this.room.addScore(pid, n);
 
     await this.room.patchRound({ phase: 'reveal', gained, picks });
-    this.timer = setTimeout(() => this.ask(round.index + 1), REVEAL_MS);
+    this.timer = setTimeout(() => this.ask(round.index + 1), revealMs(round.options.length, { base: 6000, per: 1600 }));
+  }
+
+  async nudge(kind, pid) {
+    const round = await this.room.t.get(`${this.room.base}/round`);
+    if (!round) return;
+    if (kind === 'next' && round.phase === 'reveal') { clearTimeout(this.timer); return this.ask(round.index + 1); }
+    if (kind === 'skip' && pid) {
+      if (round.phase === 'write') await this.room.submit(pid, { text: '', skipped: true });
+      else if (round.phase === 'pick') await this.room.vote(pid, -1);
+    }
   }
 
   async finish() {
@@ -174,7 +184,8 @@ export function hostView(round, players) {
   if (round.phase === 'write') {
     return `${header}${timerHTML(round.deadline, WRITE_MS)}
       <h1 class="question">${blank(round.q)}</h1>
-      <p class="phint big">Write a lie that sounds true.</p>`;
+      <p class="phint big">Write a lie that sounds true.</p>
+      ${waitingHTML(pendingPlayers(players, liveSubs), { skippable: true })}`;
   }
   if (round.phase === 'pick') {
     const opts = round.options.map((o, i) =>
@@ -182,7 +193,7 @@ export function hostView(round, players) {
     return `${header}${timerHTML(round.deadline, PICK_MS)}
       <h2 class="subq">${blank(round.q)}</h2>
       <div class="opts wide">${opts}</div>
-      <p class="phint">One of these is true.</p>`;
+      ${waitingHTML(pendingPlayers(players, liveVotes), { skippable: true })}`;
   }
   // reveal: truth last, lies first with who fell for them
   const lies = round.options.filter(o => !o.truth);
@@ -204,8 +215,13 @@ export function hostView(round, players) {
         <div class="rmeta">The truth. ${right.length ? `Got it: ${who(right)}` : 'Nobody got it.'}</div>
       </div>
     </div>
-    ${round.note ? `<div class="note">${esc(round.note)}</div>` : ''}`;
+    ${round.note ? `<div class="note">${esc(round.note)}</div>` : ''}
+    <button class="nextbtn" data-next="1">Next</button>`;
 }
+
+let liveSubs = {}, liveVotes = {};
+export function setSubmissions(s) { liveSubs = s || {}; }
+export function setVotes(v) { liveVotes = v || {}; }
 
 export function playerView(round, me, submitted, voted, players, extra = {}) {
   if (!round || round.phase === 'final') return `<div class="pcard"><h2>Game over</h2></div>`;

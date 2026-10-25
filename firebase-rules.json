@@ -27,6 +27,8 @@
             "score":     { ".validate": "newData.isNumber()" },
             "joinedAt":  { ".validate": "newData.isNumber()" },
             "connected": { ".validate": "newData.isBoolean()" },
+            "lastSeen":  { ".validate": "newData.isNumber()" },
+            "device":    { ".validate": "newData.isString() && newData.val().length <= 32" },
             "$other":    { ".validate": false }
           }
         },

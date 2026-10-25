@@ -119,6 +119,29 @@ export class Room {
 
   /* ------------------------------ players ------------------------------ */
 
+  /**
+   * True if that name is already in the room on a phone that's currently
+   * connected. A disconnected player with the same name is a rejoin, not a
+   * clash.
+   */
+  async nameTakenLive(playerId, deviceId) {
+    const p = await this.t.get(`${this.base}/players/${playerId}`);
+    if (!p) return false;
+    if (p.device && deviceId && p.device === deviceId) return false;   // it's this phone again
+    return Boolean(p.connected !== false && p.lastSeen && (Date.now() - p.lastSeen) < 20000);
+  }
+
+  /** Stable per-browser id so a reload is recognised as the same device. */
+  static deviceId() {
+    let id = null;
+    try { id = localStorage.getItem('pg_device'); } catch {}
+    if (!id) {
+      id = newId();
+      try { localStorage.setItem('pg_device', id); } catch {}
+    }
+    return id;
+  }
+
   async addPlayer(playerId, name, emoji) {
     const players = (await this.t.get(`${this.base}/players`)) || {};
     const taken = new Set(Object.values(players).map(p => p.emoji));
@@ -130,11 +153,18 @@ export class Room {
       emoji: pick,
       score: existing ? (existing.score || 0) : 0,
       joinedAt: existing ? existing.joinedAt : Date.now(),
-      connected: true
+      connected: true,
+      lastSeen: Date.now(),
+      device: Room.deviceId()
     });
 
     await this.t.onDisconnectSet(`${this.base}/players/${playerId}/connected`, false);
     return pick;
+  }
+
+  /** Presence heartbeat so a same-name join can tell live from dead. */
+  async touch(playerId) {
+    await this.t.update(`${this.base}/players/${playerId}`, { lastSeen: Date.now(), connected: true });
   }
 
   async removePlayer(playerId) {
