@@ -263,7 +263,11 @@ class HostApp {
 
   startTicking() {
     clearInterval(this.tickTimer);
+    let n = 0;
     this.tickTimer = setInterval(() => {
+      // Once a second, re-check who's still here: a vanished phone sends no
+      // event, so presence staleness has to be polled.
+      if (++n % 4 === 0) { const st = el('stage'); if (st) this._patchWaiting(st); }
       document.querySelectorAll('.timer[data-deadline]').forEach(n => {
         const left = countdown(Number(n.dataset.deadline));
         const total = Number(n.dataset.total) || 0;

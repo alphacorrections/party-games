@@ -4,7 +4,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown, loadJSON, contentURL, timerHTML, finalScoreboard,
-         pendingPlayers, waitingHTML, revealMs, sampleUnseen } from '../util.js';
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
 
 export const meta = {
   id: 'quiz',
@@ -78,7 +78,7 @@ export class Host {
   async onSubmissions(subs, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'question') return;
-    const live = playerList(players).filter(p => p.connected !== false);
+    const live = playerList(players).filter(isPresent);
     if (live.length && Object.keys(subs || {}).length >= live.length) {
       clearTimeout(this.timer);
       await this.reveal();

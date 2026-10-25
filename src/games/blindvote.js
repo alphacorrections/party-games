@@ -10,7 +10,7 @@
 // ---------------------------------------------------------------------------
 
 import { sample, esc, sortedPlayers, playerList, loadJSON, contentURL,
-         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
 
 export const meta = {
   id: 'blindvote',
@@ -68,7 +68,7 @@ export class Host {
   async onVotes(votes, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'vote') return;
-    const live = playerList(players).filter(p => p.connected !== false).length;
+    const live = playerList(players).filter(isPresent).length;
     if (live && Object.keys(votes || {}).length >= live) {
       clearTimeout(this.timer);
       await this.reveal();

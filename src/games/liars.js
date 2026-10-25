@@ -11,7 +11,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList, loadJSON, contentURL,
-         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
 
 export const meta = {
   id: 'liars',
@@ -67,7 +67,7 @@ export class Host {
   async onSubmissions(subs, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'write') return;
-    const live = playerList(players).filter(p => p.connected !== false).length;
+    const live = playerList(players).filter(isPresent).length;
     if (live && Object.keys(subs || {}).length >= live) {
       clearTimeout(this.timer);
       await this.startPick();
@@ -77,7 +77,7 @@ export class Host {
   async onVotes(votes, players) {
     const round = await this.room.t.get(`${this.room.base}/round`);
     if (!round || round.phase !== 'pick') return;
-    const live = playerList(players).filter(p => p.connected !== false).length;
+    const live = playerList(players).filter(isPresent).length;
     if (live && Object.keys(votes || {}).length >= live) {
       clearTimeout(this.timer);
       await this.reveal();

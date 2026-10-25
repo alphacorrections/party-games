@@ -102,10 +102,19 @@ export function finalScoreboard(players, title = 'Final scores') {
  * `exclude` is anyone who isn't expected to act (a judge, a disconnected
  * player, someone with no hand).
  */
+const PRESENCE_STALE_MS = 25000;   // heartbeat is 8s; 3 missed = gone
+
+/** True if this player looks present: flagged connected and recently seen. */
+export function isPresent(p) {
+  if (!p || p.connected === false) return false;
+  if (p.lastSeen && Date.now() - p.lastSeen > PRESENCE_STALE_MS) return false;
+  return true;
+}
+
 export function pendingPlayers(players, done, exclude = []) {
   const doneIds = new Set(Object.keys(done || {}));
   return playerList(players)
-    .filter(p => p.connected !== false && !doneIds.has(p.id) && !exclude.includes(p.id));
+    .filter(p => isPresent(p) && !doneIds.has(p.id) && !exclude.includes(p.id));
 }
 
 /** Chips naming who we're waiting on; the host can tap one to skip them. */

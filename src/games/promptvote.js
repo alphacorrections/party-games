@@ -14,7 +14,7 @@
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown,
          fillBlanks, loadJSON, contentURL, timerHTML, finalScoreboard,
-         pendingPlayers, waitingHTML, revealMs, sampleUnseen } from '../util.js';
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent } from '../util.js';
 
 export const meta = {
   id: 'promptvote',
@@ -165,7 +165,7 @@ export class Host {
       : null;
     const skipped = (await this.room.t.get(`${this.room.base}/skipped`)) || {};
     const expected = playerList(players)
-      .filter(p => p.connected !== false && p.id !== round.czar && !skipped[p.id])
+      .filter(p => isPresent(p) && p.id !== round.czar && !skipped[p.id])
       .filter(p => !hands || (hands[p.id] || []).length > 0).length;
     if (expected && Object.keys(subs || {}).length >= expected) {
       clearTimeout(this.timer);
@@ -187,7 +187,7 @@ export class Host {
     }
     const skipped = (await this.room.t.get(`${this.room.base}/skipped`)) || {};
     const eligible = playerList(players)
-      .filter(p => p.connected !== false && subs[p.id] && !skipped[p.id]).length;
+      .filter(p => isPresent(p) && subs[p.id] && !skipped[p.id]).length;
     if (eligible && Object.keys(votes || {}).length >= eligible) {
       clearTimeout(this.timer);
       await this.reveal();

@@ -41,12 +41,15 @@ class PlayApp {
     // A reload mid-game (iOS discards backgrounded tabs constantly) should
     // drop you straight back in, not make you retype your name. Only when
     // this device was already in that room.
-    if (code && recalledName()) {
+    // Only when THIS device's player record is in THAT room, and the record is
+    // recent: a stale name from last week must not hijack a new join.
+    const last = (() => { try { return JSON.parse(sessionStorage.getItem('pg_last') || 'null'); } catch { return null; } })();
+    if (code && last && last.room === code && last.name) {
       try {
         const room = await Room.open(code);
-        const me = await room.t.get(`${room.base}/players/${playerIdFor(recalledName())}`);
+        const me = await room.t.get(`${room.base}/players/${playerIdFor(last.name)}`);
         if (me && me.device === Room.deviceId() && await room.exists() && !(await room.isExpired())) {
-          await this.enter(room, recalledName());
+          await this.enter(room, last.name);
           this.toast('Back in');
         }
       } catch (e) { console.warn('auto-rejoin skipped', e); }
@@ -90,6 +93,7 @@ class PlayApp {
     el('playscreen').hidden = false;
     el('whoami').innerHTML = `${this.me.emoji} ${esc(name)}`;
     el('roomtag').textContent = room.code;
+    try { sessionStorage.setItem('pg_last', JSON.stringify({ room: room.code, name })); } catch {}
     mountSoundToggle(el('pbar-tools'));
     sound.lock(); haptic.lock();
     history.replaceState(null, '', `?room=${room.code}`);
