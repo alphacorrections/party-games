@@ -129,9 +129,10 @@ class HostApp {
 
   async launch(i, extraOpts = {}) {
     const choice = GAME_MENU[i];
-    if (choice.id === 'charades' && !extraOpts.category && !extraOpts.random) {
+    if ((choice.id === 'charades' || choice.id === 'quiz') && !extraOpts.category && !extraOpts.random) {
       return this.pickCategory(i);
     }
+    this._picking = false;
     document.body.classList.add('playing');
     this.setEndGameVisible(true);
     this._fxKey = null;
@@ -139,22 +140,26 @@ class HostApp {
   }
 
   async pickCategory(menuIndex) {
-    const mod = await ENGINES.charades();
+    const id = GAME_MENU[menuIndex].id;
+    const mod = await ENGINES[id]();
     const cats = await mod.Host.listCategories();
+    this._picking = true;
+    const title = GAME_MENU[menuIndex].label;
     const cards = cats.map(c => `
       <button class="catcard" data-cat="${esc(c.name)}" data-menu="${menuIndex}">
         <span class="catemoji">${c.emoji}</span><b>${esc(c.name)}</b>
-        <span class="catblurb">${esc(c.blurb)}</span><span class="catcount">${c.count}</span>
+        <span class="catblurb">${esc(c.blurb || '')}</span><span class="catcount">${c.count}</span>
       </button>`).join('');
     document.body.classList.add('playing');
+    const hasMixed = cats.some(c => c.name === 'Mixed');
     swapIn(el('stage'), `
-      <div class="qmeta">Shout It Out</div>
+      <div class="qmeta">${esc(title)}</div>
       <h1 class="question">Pick a category</h1>
       <div class="catgrid">${cards}
-        <button class="catcard random" data-cat="" data-menu="${menuIndex}">
+        ${hasMixed ? '' : `<button class="catcard random" data-cat="" data-menu="${menuIndex}">
           <span class="catemoji">🎲</span><b>Surprise me</b>
           <span class="catblurb">Mixed bag from everything</span>
-        </button>
+        </button>`}
       </div>
       <button class="linkbtn" id="catback">Back</button>`, 'catpick');
     stagger(el('stage'), '.catcard', 40);
@@ -213,6 +218,7 @@ class HostApp {
       // The director is the source of truth for "a game is running"; the
       // screen's own gameId lags behind it while a module loads.
       const running = Boolean(this.director && this.director.gameId);
+      if (this._picking && !running) return;   // category picker is up: leave it
       if (this.phase === 'lobby' || !running) {
         document.body.classList.remove('playing');
         setHTML('stage', '');
@@ -354,6 +360,7 @@ class HostApp {
     // Flip the screen first so the lobby is usable immediately; the room
     // writes catch up behind it.
     this._finalShown = false;
+    this._picking = false;
     this._fxKey = null;
     this.board = null; this.miniMod = null;
     this.gameId = null; this.mod = null; this.round = null;
@@ -380,7 +387,7 @@ app.start().catch(e => {
 document.addEventListener('click', async e => {
   const cat = e.target.closest('[data-cat]');
   if (cat) return app.launch(Number(cat.dataset.menu), cat.dataset.cat ? { category: cat.dataset.cat } : { random: true });
-  if (e.target.closest('#catback')) { document.body.classList.remove('playing'); setHTML('stage', ''); return; }
+  if (e.target.closest('#catback')) { app._picking = false; document.body.classList.remove('playing'); setHTML('stage', ''); return; }
   const g = e.target.closest('[data-game]');
   if (g) return app.launch(Number(g.dataset.game));
   const ln = e.target.closest('[data-len]');

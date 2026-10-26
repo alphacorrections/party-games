@@ -281,13 +281,23 @@ export function playerView(round, me, _a, _b, _c, extra = {}) {
   }
 
   if (round.phase === 'ready') {
+    if (headsup) {
+      // Countdown doubles as calibration: tilt tracking starts here and learns
+      // how this person holds it before any answer can fire.
+      return `<div class="pcard tall hu-ready" data-tilt="calibrate">
+        <div class="catbadge"><span class="catemoji">${round.categoryEmoji || ''}</span>${esc(round.category || '')}</div>
+        <div class="hu-phone" aria-hidden="true"><span>📱</span></div>
+        <h2>Sideways, on your forehead</h2>
+        <p>Screen facing out. Hold it still until the bar goes green.<br>Tip <b>down</b> = got it. Tip <b>up</b> = skip.</p>
+        <button class="pbtn primary" data-action="enabletilt">${needsMotionPrompt() ? 'Turn on tilt' : 'Lock it sideways'}</button>
+        <div class="hu-cal" data-cal><i></i><span data-tiltstate>hold it on your forehead</span></div>
+        ${timerHTML(round.deadline, READY_MS)}
+      </div>`;
+    }
     return `<div class="pcard tall">
       <div class="catbadge"><span class="catemoji">${round.categoryEmoji || ''}</span>${esc(round.category || '')}</div>
       <h2>You're up</h2>
-      <p>${headsup
-        ? 'Hold the phone to your forehead, screen facing them. Tilt <b>down</b> for got it, <b>up</b> to skip.'
-        : 'Face away from the TV. Starting in a second.'}</p>
-      ${headsup && needsMotionPrompt() ? `<button class="pbtn primary" data-action="enabletilt">Enable tilt</button>` : ''}
+      <p>Face away from the TV. Starting in a second.</p>
       ${timerHTML(round.deadline, READY_MS)}
     </div>`;
   }
@@ -297,19 +307,22 @@ export function playerView(round, me, _a, _b, _c, extra = {}) {
   }
 
   if (headsup) {
-    // The forehead screen. Big word, tilt zones, buttons as fallback.
+    // The forehead screen, laid out sideways. Big word, buttons as a fallback.
+    const w = String(round.word || '');
+    const longest = Math.max(...w.split(/\s+/).map(x => x.length), 1);
+    const fit = longest > 12 || w.length > 22 ? 'xl-long' : longest > 8 || w.length > 14 ? 'xl-mid' : '';
     return `
-      <div class="hu" data-tilt>
+      <div class="hu" data-tilt="play">
         <div class="hu-top">
           ${timerHTML(round.deadline, TURN_MS)}
+          <span class="hu-state" data-tiltstate>ready</span>
           <span class="hu-count">${(round.got || []).length}</span>
         </div>
-        <div class="hu-word ${round.flash === 'got' ? 'flash-got' : round.flash === 'skip' ? 'flash-skip' : ''}">${esc(round.word || '')}</div>
+        <div class="hu-word ${fit} ${round.flash === 'got' ? 'flash-got' : round.flash === 'skip' ? 'flash-skip' : ''}">${esc(w)}</div>
         <div class="hu-zones">
           <button class="hu-zone skip" data-action="skip">▲ Skip</button>
           <button class="hu-zone got" data-action="got">▼ Got it</button>
         </div>
-        <div class="hu-state" data-tiltstate>ready</div>
       </div>`;
   }
 

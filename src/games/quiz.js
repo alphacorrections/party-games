@@ -15,6 +15,10 @@ export const meta = {
   defaultRounds: 10
 };
 
+const CAT_EMOJI = {
+  'Drugs & Booze': '💊', 'Bodies & Medicine': '🩺', 'Crime & Law': '🚔', 'History': '🏛️',
+  'Animals': '🐀', 'Sex & Dating': '🍆', 'Pop Culture': '📺', 'Grab Bag': '🎒'
+};
 const ANSWER_MS = 20000;
 const REVEAL_MS = 6000;
 const BASE_POINTS = 600;
@@ -23,6 +27,7 @@ const SPEED_BONUS = 400;
 export class Host {
   constructor(room, opts = {}) {
     this.room = room;
+    this.category = opts.category || null;
     this.nested = Boolean(opts.nested);   // running inside the board: don't take over `game`
     // Duel mode: only these player ids take part; others just watch.
     this.only = opts.only || null;
@@ -32,9 +37,24 @@ export class Host {
   }
 
   async load() {
-    const questions = await loadPack('trivia');
-    this.deck = await sampleUnseen(this.room, 'trivia', questions, this.rounds, q => q.q);
+    const all = await loadPack('trivia');
+    const pool = this.category && this.category !== 'Mixed'
+      ? all.filter(q => (q.cat || 'Grab Bag') === this.category)
+      : all;
+    // Mixed shares the plain 'trivia' history so existing no-repeat tracking carries over.
+    const bucket = this.category && this.category !== 'Mixed' ? `trivia-${this.category.replace(/\W+/g, '-')}` : 'trivia';
+    this.deck = await sampleUnseen(this.room, bucket, pool.length ? pool : all, this.rounds, q => q.q);
     return this;
+  }
+
+  /** For the host's picker: name + count per category, plus Mixed. */
+  static async listCategories() {
+    const all = await loadPack('trivia');
+    const counts = {};
+    for (const q of all) { const c = q.cat || 'Grab Bag'; counts[c] = (counts[c] || 0) + 1; }
+    const order = ['Drugs & Booze', 'Bodies & Medicine', 'Crime & Law', 'History', 'Animals', 'Sex & Dating', 'Pop Culture', 'Grab Bag'];
+    const cats = order.filter(c => counts[c]).map(c => ({ name: c, count: counts[c], emoji: CAT_EMOJI[c] || '❓' }));
+    return [{ name: 'Mixed', count: all.length, emoji: '🎲', blurb: 'A bit of everything' }, ...cats];
   }
 
   async begin() {
@@ -68,6 +88,7 @@ export class Host {
       index,
       total: this.deck.length,
       q: q.q,
+      cat: q.cat || null,
       options: mixed.map(o => o.text),
       answer: mixed.findIndex(o => o.correct),
       note: q.note || '',
@@ -188,7 +209,8 @@ export function hostView(round, players) {
     return `<div class="${cls}"><span class="letter">${letters[i]}</span>${esc(o)}</div>`;
   }).join('');
 
-  const header = roundMeta(round.index, round.total, 'Question');
+  const header = roundMeta(round.index, round.total, 'Question') +
+    (round.cat ? `<div class="qmeta catline">${esc(CAT_EMOJI[round.cat] || '')} ${esc(round.cat)}</div>` : '');
   const note = round.phase === 'reveal' && round.note
     ? `<div class="note">${esc(round.note)}</div>` : '';
   const timer = round.phase === 'question' ? timerHTML(round.deadline, ANSWER_MS) : '';

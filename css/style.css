@@ -1328,37 +1328,79 @@ html.tv .soundbtn, html.tv #endgame { font-size: 1rem; padding: .5rem .9rem; }
    viewport fitter may put a transform on an ancestor, and a transformed
    ancestor turns fixed into absolute. */
 .hu {
-  display: grid; grid-template-rows: auto 1fr auto auto;
-  min-height: calc(var(--vh, 1vh) * 100 - 3.6rem);
-  margin: -1rem;                 /* cancel #pstage padding so the card bleeds to the edges */
+  /* Fixed full-screen. #pstage's entrance animation is switched off in
+     headsup mode so no transformed ancestor turns this into absolute. */
+  position: fixed; z-index: 60;
+  top: 0; left: 0; width: 100vw; height: calc(var(--vh, 1vh) * 100);
+  display: grid; grid-template-rows: auto 1fr auto;
   background: var(--card); color: var(--ink);
-  padding: .8rem 1rem 1.2rem;
-  text-align: center;
+  padding: max(.6rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(.7rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  text-align: center; overflow: hidden;
+  /* tilt feedback: the card leans a few degrees with the phone */
+  --tiltd: 0;
 }
-body.headsup .pbar { background: var(--card); color: var(--ink); border-color: rgba(0,0,0,.1); }
-body.headsup .pbar .score { color: var(--hot-deep); }
-body.headsup .pbar .roomtag { color: #7A6A8A; }
-body.headsup .endbtn, body.headsup .soundbtn { border-color: rgba(0,0,0,.2); color: var(--ink); }
-.hu-top { display: flex; align-items: center; justify-content: space-between; }
-.hu-top .timer { width: 3.4rem; height: 3.4rem; font-size: 1.3rem; color: var(--ink); }
+/* Browser stuck in portrait (iPhone, or rotation lock on): draw the screen
+   sideways ourselves. cw/ccw follows whichever edge is on top. */
+body[data-hurot="cw"]  .hu,
+body[data-hurot="ccw"] .hu {
+  top: 50%; left: 50%;
+  width: calc(var(--vh, 1vh) * 100); height: 100vw;
+  padding: .6rem max(1rem, env(safe-area-inset-top)) .7rem max(1rem, env(safe-area-inset-bottom));
+}
+body[data-hurot="cw"]  .hu { transform: translate(-50%, -50%) rotate(90deg); }
+body[data-hurot="ccw"] .hu { transform: translate(-50%, -50%) rotate(-90deg); }
+body.headsup #pstage { animation: none !important; transform: none !important; }
+body.headsup .pbar { visibility: hidden; }
+body.headsup { overflow: hidden; background: var(--card); }
+
+.hu-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.hu-top .timer { width: 3.2rem; height: 3.2rem; font-size: 1.2rem; color: var(--ink); }
 .hu-top .timer .tring .track { stroke: rgba(0,0,0,.12); }
-.hu-count { font-family: var(--display); font-size: 2rem; color: var(--hot-deep); }
+.hu-count { font-family: var(--display); font-size: 2.2rem; color: var(--hot-deep); min-width: 3.2rem; text-align: right; }
 .hu-word {
   display: grid; place-items: center;
-  font-family: var(--display); letter-spacing: var(--track-xl);
-  font-size: clamp(2.4rem, 13vw, 5rem); line-height: 1.05;
-  padding: 0 .4rem; word-break: break-word;
+  font-family: var(--display); letter-spacing: var(--track-lg);
+  font-size: clamp(2.6rem, 11vmax, 7.5rem); line-height: 1.02;
+  padding: 0 .4rem; word-break: break-word; hyphens: auto;
+  transform: perspective(900px) rotateX(calc(var(--tiltd) * -6deg));
+  transition: transform .12s linear;
 }
+.hu-word.xl-mid  { font-size: clamp(2.2rem, 8.2vmax, 5.6rem); }
+.hu-word.xl-long { font-size: clamp(1.8rem, 6vmax, 4.2rem); }
 .hu-word.flash-got  { color: #2E6B00; }
 .hu-word.flash-skip { color: var(--mute); }
-.hu-zones { display: grid; gap: .6rem; }
+.hu-zones { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
 .hu-zone {
-  border: 0; border-radius: 10px; min-height: 4.2rem;
-  font-family: var(--display); font-size: 1.6rem; letter-spacing: var(--track-lg); cursor: pointer;
+  border: 0; border-radius: 10px; min-height: 3rem;
+  font-family: var(--display); font-size: 1.3rem; letter-spacing: var(--track-lg); cursor: pointer;
 }
 .hu-zone.got  { background: var(--volt); color: var(--ink); }
 .hu-zone.skip { background: var(--ink-3); color: var(--chalk); }
-.hu-state { font-size: .8rem; color: #7A6A8A; font-weight: 700; letter-spacing: .06em; margin-top: .4rem; }
+.hu-state { font-size: .8rem; color: #7A6A8A; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+
+/* instant full-screen flash on a tilt, before the round data round-trips */
+.hu.hit-got  { animation: huGot .5s ease-out 1; }
+.hu.hit-skip { animation: huSkip .5s ease-out 1; }
+@keyframes huGot  { from { background: var(--volt); } to { background: var(--card); } }
+@keyframes huSkip { from { background: #FFB74D; } to { background: var(--card); } }
+
+/* countdown / calibration card */
+.hu-ready { text-align: center; }
+.hu-phone { font-size: 3rem; line-height: 1; margin: .2rem 0 .4rem; }
+.hu-phone span { display: inline-block; animation: huTurn 2.4s ease-in-out infinite; }
+@keyframes huTurn { 0%, 25% { transform: rotate(0); } 50%, 85% { transform: rotate(90deg); } 100% { transform: rotate(0); } }
+.hu-cal { margin: .8rem auto .4rem; max-width: 18rem; }
+.hu-cal i {
+  display: block; height: .55rem; border-radius: 99px; background: var(--ink-3); overflow: hidden; position: relative;
+}
+.hu-cal i::after {
+  content: ''; position: absolute; inset: 0; transform-origin: left;
+  transform: scaleX(var(--lvl, .1)); background: var(--hot); transition: transform .3s, background .3s;
+}
+.hu-cal.ok i::after { background: var(--volt); }
+.hu-cal span { display: block; margin-top: .35rem; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.hu-cal.ok span { color: var(--volt); }
+@media (prefers-reduced-motion: reduce) { .hu-phone span { animation: none; } .hu-word { transition: none; } }
 
 /* ============================ WOULD YOU RATHER =========================== */
 
@@ -1615,3 +1657,66 @@ body.offline .pbtn, body.offline .card, body.offline .hugebtn { opacity: .6; poi
 .atchip i { font-style: normal; color: var(--mute); font-size: .8em; margin-left: .3rem; }
 .atchip.lead { border-color: var(--hot); }
 .bturn.hot { color: var(--hot); font-weight: 800; animation: pulse .7s ease-in-out infinite alternate; }
+.pcard.final-p { align-items: center; text-align: center; }
+.pcard.final-p .podium { padding: .4rem 0 .8rem; }
+.pcard.final-p .wemoji { font-size: 4rem; }
+.pcard.final-p .wname { font-size: 2.4rem; }
+.pcard.final-p .wpts .spts { font-size: 2rem; }
+.pcard.final-p .scores.rest { width: 100%; }
+.pcard.final-p .moments { width: 100%; }
+.pcard.final-p .pbtn { margin-top: .8rem; }
+.qmeta.catline { color: var(--hot); font-weight: 700; margin-top: -.3rem; }
+
+/* ===== Spiral 3.0: branches, walking, forks ================================ */
+.road path.lane {
+  stroke: rgba(255,255,255,.05); stroke-width: 26px;
+  stroke-dasharray: 18 14;
+}
+.road path.lane-shortcut { stroke: rgba(255,45,122,.16); }
+.road path.lane-detour   { stroke: rgba(214,255,63,.14); }
+.road path.lane-bridge   { stroke: rgba(255,215,0,.18); }
+.boardgrid.spiral .tile.branch .tface { border-style: dashed; opacity: .9; }
+.boardgrid.spiral .tile.b-shortcut .tface { background: linear-gradient(170deg, rgba(255,255,255,.06), rgba(0,0,0,.2)), #2B1222; }
+.boardgrid.spiral .tile.b-detour   .tface { background: linear-gradient(170deg, rgba(255,255,255,.06), rgba(0,0,0,.2)), #1F2A12; }
+.boardgrid.spiral .tile.b-bridge   .tface { background: linear-gradient(170deg, rgba(255,215,0,.12), rgba(0,0,0,.2)), #2E2410; }
+.boardgrid.spiral .tile.offer .tface {
+  border-style: solid; opacity: 1;
+  box-shadow: 0 0 0 2px var(--volt), 0 0 28px 4px rgba(214,255,63,.45);
+  animation: offerPulse .9s ease-in-out infinite alternate;
+}
+@keyframes offerPulse { from { transform: translateZ(14px); } to { transform: translateZ(22px); } }
+.forkbadge {
+  position: absolute; right: -.45em; top: -.55em; z-index: 3;
+  font-size: clamp(.9rem, 1.5vw, 1.4rem); line-height: 1;
+  width: 1.5em; height: 1.5em; display: grid; place-items: center;
+  border-radius: 50%; background: var(--ink-1); border: 2px solid var(--volt);
+  transform: translateZ(26px);
+  box-shadow: 0 4px 10px rgba(0,0,0,.5);
+}
+.boardgrid.spiral .lanelabel {
+  position: absolute; left: var(--x); top: var(--y);
+  transform: translate(-50%, -50%) translateZ(3px);
+  font-size: clamp(.6rem, 1.05vw, .9rem); font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--mute); white-space: nowrap; opacity: .85; pointer-events: none;
+}
+.boardgrid.spiral .lanelabel.b-bridge { color: #FFE680; }
+.boardgrid.spiral .lanelabel.b-detour { color: var(--volt); }
+.boardgrid.spiral .lanelabel.b-shortcut { color: #FF9DBF; }
+
+/* while a token walks, hops are short and snappy so each step reads */
+.boardgrid.walking .ptoken { transition: left .42s cubic-bezier(.3,.9,.3,1), top .42s cubic-bezier(.3,.9,.3,1); }
+.boardgrid.walking .ptoken.hop .pt-emoji { animation: hop .42s cubic-bezier(.3,.9,.3,1) 1; }
+
+.boardgrid.spiral .bname.small { font-size: clamp(1rem, 2.2vh, 1.6rem); color: var(--mute); }
+.bsteps { font-family: var(--display); font-size: clamp(1.2rem, 3vh, 2.2rem); color: var(--card); letter-spacing: var(--track-lg); }
+.bsteps b { color: var(--volt); font-size: 1.35em; }
+.bfork { font-family: var(--display); font-size: clamp(1.1rem, 2.8vh, 2rem); color: var(--volt); letter-spacing: var(--track-lg); }
+
+/* phone */
+.psteps { font-family: var(--display); font-size: 1.6rem; letter-spacing: var(--track-lg); color: var(--card); margin: .2rem 0; }
+.psteps b { color: var(--volt); font-size: 1.3em; }
+.psteps.landed { color: var(--volt); }
+.forkcard { gap: .7rem; }
+.forkhead { display: flex; align-items: center; gap: .6rem; justify-content: center; }
+.forkhead .fbig { font-size: 2.4rem; line-height: 1; }
+.forkcard .pbtn.big { font-size: 1.15rem; padding: 1rem; }

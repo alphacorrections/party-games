@@ -68,6 +68,13 @@ export function mountDie(container) {
       scene.classList.remove('rolling', 'landed');
     },
 
+    /** Show a face instantly (used when the die is re-mounted mid-turn). */
+    show(value) {
+      const [rx, ry] = FACE_ROT[value] || FACE_ROT[1];
+      die.style.transition = 'none'; set(rx, ry, 0);
+      scene.classList.remove('idle', 'rolling'); scene.classList.add('landed');
+    },
+
     roll(value) {
       return new Promise(resolve => {
         const [rx, ry] = FACE_ROT[value] || FACE_ROT[1];

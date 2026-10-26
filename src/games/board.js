@@ -29,7 +29,9 @@ export const meta = {
 };
 
 const RESOLVE_MS = 4200;
-const ROLL_MS    = 1100;
+const STEP_MS = 560, DICE_MS = 1500;      // one tile per beat
+const LAND_MS    = 1300;     // sit on the tile before it resolves
+const FORK_MS    = 12000;    // time to pick at a fork
 const LAP_BONUS  = 500;
 const DUEL_POT   = 800;
 const MAX_ITEMS  = 2;
@@ -49,6 +51,62 @@ export const PATH = (() => {
   return out;
 })();
 
+// ---------------------------------------------------------------------------
+// The board is a GRAPH, not a line. The spiral is the main road (0..27 then
+// back to 0). Three branches hang off it; each is a choice made mid-move.
+//
+//   SHORTCUT  (from 6)  : 3 tiles cutting inward to 13. Fast, but tile S2 is Bail.
+//   DETOUR    (from 12) : 4 tiles looping outward back to 16. All payouts, but
+//                         the last one is Sent Back (to Start) unless shielded.
+//   BRIDGE    (from 20) : 2 tiles straight to the Jackpot ring at 26. Costs 300
+//                         to step onto.
+//
+// Branch tiles have ids >= 100 and their own positions in PATH_EXTRA.
+// ---------------------------------------------------------------------------
+export const BRANCHES = {
+  shortcut: { from: 6,  tiles: [100, 101, 102], to: 13, label: 'Shortcut', cost: 0,   icon: '↘️' },
+  detour:   { from: 12, tiles: [110, 111, 112, 113], to: 16, label: 'Detour', cost: 0, icon: '↗️' },
+  bridge:   { from: 20, tiles: [120, 121], to: 26, label: 'Bridge', cost: 300, icon: '🌉' }
+};
+const BRANCH_FROM = Object.fromEntries(Object.values(BRANCHES).map(b => [b.from, b]));
+const BRANCH_LAST = Object.fromEntries(Object.values(BRANCHES).map(b => [b.tiles[b.tiles.length - 1], b]));
+const TILE_BRANCH = {}; for (const [k, b] of Object.entries(BRANCHES)) for (const t of b.tiles) TILE_BRANCH[t] = k;
+
+/** Next tile along the main road or inside a branch. */
+function nextTile(idx) {
+  if (idx >= 100) {
+    const br = BRANCHES[TILE_BRANCH[idx]];
+    const i = br.tiles.indexOf(idx);
+    return i < br.tiles.length - 1 ? br.tiles[i + 1] : br.to;
+  }
+  return (idx + 1) % N_TILES;
+}
+
+// Positions for branch tiles: interpolated between their from/to on the
+// spiral, pushed inward (shortcut, bridge) or outward (detour).
+function lerpPath(fromIdx, toIdx, n, push) {
+  const a = PATH[fromIdx], b = PATH[toIdx], out = {};
+  const cx = 0.5, cy = 0.5;
+  for (let k = 1; k <= n; k++) {
+    const t = k / (n + 1);
+    let x = a.x + (b.x - a.x) * t, y = a.y + (b.y - a.y) * t;
+    // push along the vector from centre
+    const dx = x - cx, dy = y - cy, len = Math.hypot(dx / 1.28, dy) || 1;
+    x += (dx / len) * push * 1.28; y += (dy / len) * push;
+    out[k - 1] = { x, y };
+  }
+  return out;
+}
+export const PATH_EXTRA = (() => {
+  const m = {};
+  const put = (br, pts) => br.tiles.forEach((id, i) => { m[id] = pts[i]; });
+  put(BRANCHES.shortcut, lerpPath(6, 13, 3, -0.05));
+  put(BRANCHES.detour,   lerpPath(12, 16, 4, +0.11));
+  put(BRANCHES.bridge,   lerpPath(20, 26, 2, -0.04));
+  return m;
+})();
+export function posOf(idx) { return idx >= 100 ? PATH_EXTRA[idx] : PATH[idx]; }
+
 // Zones follow the coil: outer loop is loud and cheap, the centre is expensive.
 export const ZONES = [
   { name: 'The Bar',        from: 0,  to: 7,  cls: 'z-bar',    mini: ['blindvote-wyr', 'quiz'],                           payMult: 1.0 },
@@ -56,7 +114,10 @@ export const ZONES = [
   { name: 'The Clinic',     from: 15, to: 21, cls: 'z-clinic', mini: ['promptvote-pick', 'charades'],                      payMult: 1.2 },
   { name: 'The Afterparty', from: 22, to: 27, cls: 'z-after',  mini: ['promptvote-type', 'blindvote-likely', 'charades'],  payMult: 1.6 }
 ];
-export function zoneOf(i) { return ZONES.find(z => i >= z.from && i <= z.to) || ZONES[0]; }
+export function zoneOf(i) {
+  if (i >= 100) { const br = BRANCHES[TILE_BRANCH[i]]; i = br ? br.from : 0; }
+  return ZONES.find(z => i >= z.from && i <= z.to) || ZONES[0];
+}
 
 /* -------------------------------- items ---------------------------------- */
 export const ITEMS = {
@@ -91,7 +152,7 @@ const ENGINES = {
 
 /* --------------------------------- tiles --------------------------------- */
 function buildTiles() {
-  const t = new Array(N_TILES);
+  const t = {};
   t[0] = { t: 'start', label: 'Start' };
   t[N_TILES - 1] = { t: 'jackpot', label: 'Jackpot' };
   const fill = (zone, mix) => {
@@ -111,6 +172,16 @@ function buildTiles() {
                    { t:'event',label:'Urine Test',ev:'uatest' } ]);
   fill(ZONES[3], [ { t:'mini',label:'Minigame' }, { t:'event',label:'Flip',ev:'flip' }, { t:'item',label:'Item' },
                    { t:'pay',label:'Windfall',amount:900 }, { t:'event',label:'Blackout',ev:'blackout' }, { t:'loss',label:'Hangover',amount:500 } ]);
+  // Branch tiles live in the same map under their ids.
+  t[100] = { t: 'rest',  label: 'Cut Through' };
+  t[101] = { t: 'loss',  label: 'Bail', amount: 900 };
+  t[102] = { t: 'item',  label: 'Item' };
+  t[110] = { t: 'pay',   label: 'Found Cash', amount: 300 };
+  t[111] = { t: 'pay',   label: 'Scratch-Off', amount: 500 };
+  t[112] = { t: 'item',  label: 'Item' };
+  t[113] = { t: 'event', label: 'Sent Back', ev: 'sentback' };
+  t[120] = { t: 'event', label: 'Toll', ev: 'toll' };
+  t[121] = { t: 'mini',  label: 'Minigame' };
   return t;
 }
 
@@ -172,12 +243,6 @@ export class Host {
   }
 
   /* -------------------------------- turn --------------------------------- */
-
-  async onIntent(intent) {
-    if (!intent) return;
-    if (intent.action === 'roll')    return this.roll(intent.by);
-    if (intent.action === 'useitem') return this.useItem(intent.by, intent.item);
-  }
 
   async useItem(pid, key) {
     if (this._busy) return;
@@ -248,16 +313,71 @@ export class Host {
     try {
       const d1 = 1 + Math.floor(Math.random() * 6);
       const d2 = b.doubled ? 1 + Math.floor(Math.random() * 6) : 0;
-      const roll = d1 + d2;
-      const from = b.positions[pid] || 0;
-      const raw = from + roll, to = raw % b.tiles.length;
-      const passedStart = raw >= b.tiles.length;
       await this.patch({ phase: 'moving', lastRoll: d1, lastRoll2: d2 || null, doubled: false,
-                         positions: { ...b.positions, [pid]: to }, message: null });
-      if (passedStart) await this.room.addScore(pid, LAP_BONUS);
-      await new Promise(r => setTimeout(r, ROLL_MS + (d2 ? 300 : 0)));
-      await this.resolve(to, passedStart);
+                         stepsLeft: d1 + d2, message: null, forkChoice: null });
+      await new Promise(r => setTimeout(r, d2 ? DICE_MS + 900 : DICE_MS));   // let the dice land everywhere first
+      await this.walk(pid, d1 + d2);
     } finally { this._busy = false; }
+  }
+
+  /**
+   * Move one tile per beat so the table can watch. At a fork, stop and wait
+   * for the mover to choose on their phone. Lap bonus when crossing Start.
+   */
+  async walk(pid, steps) {
+    let passedStart = false;
+    for (let k = 0; k < steps; k++) {
+      const b = await this.read(); if (!b || b.phase !== 'moving') return;
+      const cur = b.positions[pid] || 0;
+
+      // Fork: standing on a branch mouth with at least one step still to go.
+      const br = BRANCH_FROM[cur];
+      if (br) {
+        if (br.cost && ((await this.room.t.get(`${this.base}/players/${pid}/score`)) || 0) < br.cost) {
+          // can't afford the bridge: no choice offered
+        } else {
+          await this.patch({ phase: 'fork', fork: { key: Object.keys(BRANCHES).find(x => BRANCHES[x] === br), label: br.label, cost: br.cost, icon: br.icon, stepsLeft: steps - k }, stepsLeft: steps - k });
+          const choice = await this.awaitFork(pid);
+          const b2 = await this.read(); if (!b2) return;
+          if (choice === 'branch') {
+            if (br.cost) { await this.charge(pid, br.cost, b2); await this.patch({ pot: (b2.pot || 0) + br.cost }); }
+            await this.patch({ phase: 'moving', fork: null, positions: { ...b2.positions, [pid]: br.tiles[0] }, stepsLeft: steps - k - 1 });
+            await new Promise(r => setTimeout(r, STEP_MS));
+            continue;
+          }
+          await this.patch({ phase: 'moving', fork: null });
+        }
+      }
+
+      const next = nextTile(cur);
+      if (next === 0 && cur !== 0) passedStart = true;
+      const b3 = await this.read(); if (!b3) return;
+      await this.patch({ positions: { ...b3.positions, [pid]: next }, stepsLeft: steps - k - 1 });
+      if (next === 0 && passedStart) { await this.room.addScore(pid, LAP_BONUS); }
+      await new Promise(r => setTimeout(r, STEP_MS));
+    }
+    // Landed. Let it sit so everyone sees where, then resolve.
+    await this.patch({ phase: 'landed' });
+    await new Promise(r => setTimeout(r, LAND_MS));
+    const bl = await this.read(); if (!bl) return;
+    await this.resolve(bl.positions[pid], passedStart);
+  }
+
+  /** Wait for the mover's fork pick (or time out to the main road). */
+  awaitFork(pid) {
+    return new Promise(resolve => {
+      let done = false;
+      const finish = v => { if (done) return; done = true; clearTimeout(t); unsub(); resolve(v); };
+      const unsub = this.room.on('forkChoice', v => { if (v && v.by === pid) finish(v.choice); });
+      const t = setTimeout(() => finish('main'), FORK_MS);
+    });
+  }
+
+  async onIntent(intent) {
+    if (!intent) return;
+    if (intent.action === 'roll')    return this.roll(intent.by);
+    if (intent.action === 'useitem') return this.useItem(intent.by, intent.item);
+    if (intent.action === 'fork')    return this.room.t.set(`${this.base}/forkChoice`, { by: intent.by, choice: intent.choice, at: Date.now() });
   }
 
   async resolve(idx, passedStart) {
@@ -355,9 +475,17 @@ export class Host {
     if (ev === 'blackout') {
       // Everyone's tokens scatter: each player moves back 1-4 tiles.
       const positions = { ...b.positions };
-      for (const id of (b.order || [])) positions[id] = ((positions[id] || 0) - (1 + Math.floor(Math.random() * 4)) + b.tiles.length) % b.tiles.length;
+      for (const id of (b.order || [])) { const p0 = positions[id] || 0; positions[id] = p0 >= 100 ? BRANCHES[TILE_BRANCH[p0]].from : ((p0 - (1 + Math.floor(Math.random() * 4)) + N_TILES) % N_TILES); }
       patch.positions = positions;
       return `Blackout: nobody remembers how they got here. Everyone stumbles back.`;
+    }
+    if (ev === 'sentback') {
+      if ((b.shields || {})[b.active]) { b._shieldPatch = { ...(b._shieldPatch || {}), [b.active]: false }; return `${who.name}'s Shield blocks Sent Back`; }
+      patch.positions = { ...b.positions, [b.active]: 0 };
+      return `${who.name} gets Sent Back to Start`;
+    }
+    if (ev === 'toll') {
+      return `${who.name} paid the toll and crosses the bridge`;
     }
     if (ev === 'flip') {
       // Reverse the standings. Brutal, rare.
@@ -439,7 +567,8 @@ export class Host {
     if (b.turnNo >= b.maxTurns) return this.finish();
     const order = b.order || []; if (!order.length) return this.finish();
     const turn = (b.turn + 1) % order.length;
-    await this.patch({ phase: 'turn', turn, turnNo: b.turnNo + 1, active: order[turn], message: null, lastRoll: null, lastRoll2: null, doubled: false });
+    await this.room.t.remove(`${this.base}/forkChoice`);
+    await this.patch({ phase: 'turn', turn, turnNo: b.turnNo + 1, active: order[turn], message: null, lastRoll: null, lastRoll2: null, doubled: false, fork: null, stepsLeft: null });
   }
 
   async finish() {
@@ -459,6 +588,12 @@ export class Host {
   async resume() {
     const b = await this.read(); if (!b) return;
     if (b.phase === 'resolve') this.timer = setTimeout(() => this.nextTurn(), 1500);
+    if (/^(moving|fork|landed)$/.test(b.phase) && b.active) {
+      // The previous director died mid-walk. Finish the move where the token stands.
+      await this.room.t.remove(`${this.base}/forkChoice`);
+      await this.patch({ phase: 'landed', fork: null, stepsLeft: 0 });
+      this.timer = setTimeout(() => this.resolve(b.positions?.[b.active] || 0, false), LAND_MS);
+    }
     const mini = await this.room.t.get(`${this.base}/mini`);
     if (mini && mini.id && !this.mini) {
       const key = Object.keys(MINIS).find(k => MINIS[k].id === mini.id) || mini.id;
@@ -494,24 +629,37 @@ export function hostView(board, players, round, miniMod) {
   }
   if (board.phase === 'final') return finalScoreboard(players, 'Final scores');
 
-  const tiles = (board.tiles || []).map((t, i) => {
-    const p = PATH[i] || { x: .5, y: .5, ang: 0 }; const z = zoneOf(i);
-    // Tiles rotate to follow the curve, so the path reads as a road.
-    const rot = 0;                                         // upright reads better on a tilted table
-    const size = (1 - p.t * 0.22).toFixed(3);             // slightly smaller toward the centre
+  const tiles = Object.entries(board.tiles || {}).map(([k, t]) => {
+    const i = Number(k);
+    const p = posOf(i) || { x: .5, y: .5, ang: 0 }; const z = zoneOf(i);
+    const isBranch = i >= 100, brKey = isBranch ? TILE_BRANCH[i] : null;
+    const baseT = isBranch ? (PATH[BRANCHES[brKey].from].t) : p.t;
+    const size = ((1 - baseT * 0.22) * (isBranch ? 0.82 : 1)).toFixed(3);   // smaller toward the centre; branches smaller still
     const isCentre = i === N_TILES - 1;
-    return `<div class="tile t-${t.t} ${z.cls} ${isCentre ? 'centre' : ''}" data-tile="${i}"
-                 style="--x:${(p.x * 100).toFixed(2)}%;--y:${(p.y * 100).toFixed(2)}%;--rot:${isCentre ? 0 : rot}deg;--sz:${isCentre ? 1.35 : size}">
+    const fork = BRANCH_FROM[i];
+    return `<div class="tile t-${t.t} ${z.cls} ${isCentre ? 'centre' : ''} ${isBranch ? `branch b-${brKey}` : ''} ${fork ? 'mouth' : ''}" data-tile="${i}"
+                 style="--x:${(p.x * 100).toFixed(2)}%;--y:${(p.y * 100).toFixed(2)}%;--rot:0deg;--sz:${isCentre ? 1.35 : size}">
       <div class="tface">
         <span class="ticon">${TILE_ICON[t.t] || ''}</span>
         <span class="tlabel">${esc(t.label)}</span>
         ${t.amount ? `<span class="tamt">${t.t === 'loss' ? '−' : '+'}${Math.round(t.amount * z.payMult)}</span>` : ''}
       </div><div class="tside"></div>
+      ${fork ? `<span class="forkbadge" title="${esc(fork.label)}">${fork.icon}</span>` : ''}
     </div>`;
   }).join('');
-  // The road: an SVG path through the tile centres, drawn under them.
-  const d = PATH.map((p, i) => `${i ? 'L' : 'M'}${(p.x * 1000).toFixed(1)},${(p.y * 1000).toFixed(1)}`).join(' ');
-  const road = `<svg class="road" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true"><path d="${d}"/></svg>`;
+  // The road: the spiral through the tile centres, plus a dashed lane per branch.
+  const pt = q => `${(q.x * 1000).toFixed(1)},${(q.y * 1000).toFixed(1)}`;
+  const d = PATH.map((q, i) => `${i ? 'L' : 'M'}${pt(q)}`).join(' ');
+  const lanes = Object.entries(BRANCHES).map(([k, b]) => {
+    const pts = [PATH[b.from], ...b.tiles.map(id => PATH_EXTRA[id]), PATH[b.to]];
+    return `<path class="lane lane-${k}" d="${pts.map((q, i) => `${i ? 'L' : 'M'}${pt(q)}`).join(' ')}"/>`;
+  }).join('');
+  const road = `<svg class="road" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true"><path d="${d}"/>${lanes}</svg>`;
+  const laneLabels = Object.entries(BRANCHES).map(([k, b]) => {
+    const mid = PATH_EXTRA[b.tiles[Math.floor((b.tiles.length - 1) / 2)]];
+    const off = k === 'detour' ? 0.055 : -0.05;
+    return `<div class="lanelabel b-${k}" style="--x:${(mid.x*100).toFixed(1)}%;--y:${((mid.y + off)*100).toFixed(1)}%">${b.icon} ${esc(b.label)}${b.cost ? ` · ${b.cost}` : ''}</div>`;
+  }).join('');
   const zoneLabels = ZONES.map(z => {
     const mid = PATH[Math.floor((z.from + z.to) / 2)];
     // Push the label outward from the spiral so it sits beside its arc.
@@ -523,7 +671,7 @@ export function hostView(board, players, round, miniMod) {
     <div class="bscene">
       <div class="btable" data-table>
         <div class="boardgrid spiral" data-board>
-          ${road}${tiles}${zoneLabels}
+          ${road}${tiles}${zoneLabels}${laneLabels}
           <div class="bcentre" data-centre></div>
           <div class="tokenlayer" data-tokens></div>
         </div>
@@ -544,7 +692,9 @@ export function patchBoard(stage, board, players, fx) {
   const gr = grid.getBoundingClientRect();
   // Tokens use the SAME fractional coordinates as the tiles, so they sit on
   // them exactly regardless of the table's 3D transform.
-  const centre = idx => { const p = PATH[idx] || { x: .5, y: .5 }; return { x: p.x * 100, y: p.y * 100 }; };
+  const centre = idx => { const p = posOf(idx) || { x: .5, y: .5 }; return { x: p.x * 100, y: p.y * 100 }; };
+  const walking = board.phase === 'moving' || board.phase === 'fork';
+  grid.classList.toggle('walking', walking);
 
   const onTile = {}; for (const pid of order) { const i = positions[pid] || 0; (onTile[i] = onTile[i] || []).push(pid); }
   for (const pid of order) {
@@ -560,7 +710,7 @@ export function patchBoard(stage, board, players, fx) {
     tok.classList.toggle('shielded', Boolean((board.shields || {})[pid]));
     const held = (board.items || {})[pid] || [];
     tok.querySelector('.pt-items').textContent = held.map(k2 => ITEMS[k2]?.emoji || '').join('');
-    if (prev !== undefined && prev !== String(i)) { tok.classList.remove('hop'); void tok.offsetWidth; tok.classList.add('hop'); }
+    if (prev !== undefined && prev !== String(i)) { tok.classList.remove('hop'); void tok.offsetWidth; tok.classList.add('hop'); if (fx && pid === board.active && walking) fx.sound.tick(); }
     tok.dataset.at = i;
   }
   layer.querySelectorAll('[data-token]').forEach(n => { if (!order.includes(n.dataset.token)) n.remove(); });
@@ -576,12 +726,15 @@ export function patchBoard(stage, board, players, fx) {
     table.style.setProperty('--pan', `${pan.toFixed(2)}deg`);
     table.style.setProperty('--tilt', `${tilt.toFixed(2)}deg`);
     // Zoom in a touch as the token nears the centre.
-    const zoom = 1 + (PATH[ai] ? PATH[ai].t : 0) * 0.08;
+    const tAi = ai >= 100 ? PATH[BRANCHES[TILE_BRANCH[ai]].from].t : (PATH[ai] ? PATH[ai].t : 0);
+    const zoom = 1 + tAi * 0.08;
     table.style.setProperty('--zoom', zoom.toFixed(3));
   }
 
   grid.querySelectorAll('.tile.lit').forEach(n => n.classList.remove('lit'));
-  if (board.phase === 'resolve' || board.phase === 'moving') { const t = grid.querySelector(`[data-tile="${positions[board.active]}"]`); if (t) t.classList.add('lit'); }
+  if (/^(resolve|moving|landed|fork)$/.test(board.phase)) { const t = grid.querySelector(`[data-tile="${positions[board.active] || 0}"]`); if (t) t.classList.add('lit'); }
+  grid.querySelectorAll('.tile.offer').forEach(n => n.classList.remove('offer'));
+  if (board.phase === 'fork' && board.fork) { const b = BRANCHES[board.fork.key]; if (b) b.tiles.forEach(id => grid.querySelector(`[data-tile="${id}"]`)?.classList.add('offer')); }
   grid.querySelectorAll('.zlabel').forEach(n => n.classList.toggle('on', n.dataset.zone === zoneOf(positions[board.active] || 0).cls));
 
   // Centre panel
@@ -595,14 +748,30 @@ export function patchBoard(stage, board, players, fx) {
       <div class="bname">${who.emoji || '🎲'} ${esc(who.name || '')}</div>
       <div class="bhint">${held.length ? `Holding ${held.map(k2 => ITEMS[k2]?.emoji || '').join(' ')} — use one or roll` : 'Roll on your phone'}</div>`;
   } else if (board.phase === 'moving') {
-    html = `<div class="bdie">${board.lastRoll || ''}${board.lastRoll2 ? ` + ${board.lastRoll2}` : ''}</div><div class="bhint">Moving…</div>`;
+    const left = board.stepsLeft ?? 0;
+    html = `<div class="bdie">${board.lastRoll || ''}${board.lastRoll2 ? ` + ${board.lastRoll2}` : ''}</div>
+      <div class="bname small">${who.emoji || '🎲'} ${esc(who.name || '')}</div>
+      <div class="bsteps">${left > 0 ? `<b>${left}</b> ${left === 1 ? 'step' : 'steps'} to go` : 'Landing…'}</div>`;
+  } else if (board.phase === 'fork') {
+    const f = board.fork || {};
+    html = `<div class="bdie">${board.lastRoll || ''}${board.lastRoll2 ? ` + ${board.lastRoll2}` : ''}</div>
+      <div class="bname small">${who.emoji || '🎲'} ${esc(who.name || '')}</div>
+      <div class="bfork">${f.icon || '↔️'} <b>${esc(f.label || 'Fork')}</b>${f.cost ? ` · costs ${f.cost}` : ''}</div>
+      <div class="bhint">Choosing a path on their phone…</div>`;
+  } else if (board.phase === 'landed') {
+    const t = (board.tiles || {})[positions[board.active] || 0] || {};
+    html = `<div class="bdie">${board.lastRoll || ''}${board.lastRoll2 ? ` + ${board.lastRoll2}` : ''}</div>
+      <div class="bmsg">${TILE_ICON[t.t] || ''} ${esc(t.label || '')}</div>
+      <div class="bhint">${esc(who.name || '')} lands here</div>`;
   } else {
     const kind = /collects|Jackpot|steals|wins the duel|split/.test(board.message || '') ? 'good' : /loses|pays|Audit|mugs|Flip/.test(board.message || '') ? 'bad' : '';
     html = `${board.lastRoll ? `<div class="bdie">${board.lastRoll}${board.lastRoll2 ? ` + ${board.lastRoll2}` : ''}</div>` : ''}<div class="bmsg ${kind}">${esc(board.message || '…')}</div>`;
   }
-  const key = `${board.phase}|${board.turnNo}|${board.message || ''}|${board.itemFlash || ''}`;
+  const key = `${board.phase}|${board.turnNo}|${board.message || ''}|${board.itemFlash || ''}|${board.phase === 'moving' ? board.stepsLeft : ''}`;
   if (c.dataset.key !== key) {
     c.dataset.key = key; c.classList.remove('pop'); c.innerHTML = html; void c.offsetWidth; c.classList.add('pop');
+    if (fx && board.phase === 'landed') fx.sound.land();
+    if (fx && board.phase === 'fork') fx.sound.reveal();
     if (fx && (board.phase === 'resolve' || board.itemFlash)) {
       const m = board.message || '';
       if (/collects|Jackpot|wins the duel/.test(m)) fx.sound.coin();
@@ -652,10 +821,15 @@ export function playerView(board, me, round, miniMod, hand, submitted, voted, dr
         <span class="iemoji">${ITEMS[k].emoji}</span><b>${ITEMS[k].name}</b><span class="iblurb">${ITEMS[k].blurb}</span>
       </button>`).join('')}</div>` : '';
 
+  const whoName = (extra.players || {})[board.active]?.name || 'They';
   if (!isMe) {
+    let line = board.message || 'Somebody else is busy ruining their run.';
+    if (board.phase === 'moving') line = `${whoName} rolled ${board.lastRoll || ''}${board.lastRoll2 ? ` + ${board.lastRoll2}` : ''} and is on the move.`;
+    else if (board.phase === 'fork') line = `${whoName} is choosing a path: ${board.fork?.icon || ''} ${board.fork?.label || ''} or the main road.`;
+    else if (board.phase === 'landed') { const t = (board.tiles || {})[(board.positions || {})[board.active] || 0] || {}; line = `${whoName} landed on ${t.label || '…'}.`; }
     return `<div class="pcard">
-      <h2>Not your turn</h2>
-      <p>${esc(board.message || 'Somebody else is busy ruining their run.')}</p>
+      <h2>${board.phase === 'turn' ? 'Not your turn' : esc(whoName) + (board.phase === 'fork' ? ' is choosing' : ' is moving')}</h2>
+      <p>${esc(line)}</p>
       ${held.length ? `<p class="phint small">You're holding:</p>${itemsHTML}` : ''}
       ${board.pot ? `<p class="phint">Pot: <b>${board.pot}</b></p>` : ''}
     </div>`;
@@ -667,11 +841,34 @@ export function playerView(board, me, round, miniMod, hand, submitted, voted, dr
       <button class="hugebtn roll" data-action="roll">ROLL${board.doubled ? ' ×2' : ''}</button>
     </div>`;
   }
+  if (board.phase === 'fork' && board.fork) {
+    const f = board.fork, b = BRANCHES[f.key] || {};
+    const blurb = f.key === 'shortcut' ? `Cut inward: ${b.tiles?.length} tiles straight to the Courthouse. One of them is Bail.`
+      : f.key === 'detour' ? `Loop the long way: ${b.tiles?.length} tiles of cash and an item. The last one sends you back to Start unless you're shielded.`
+      : `Pay ${f.cost} into the pot to cross straight to the Jackpot ring.`;
+    return `<div class="pcard tall forkcard">
+      <div class="forkhead"><span class="fbig">${f.icon || '↔️'}</span><h2>Fork in the road</h2></div>
+      <p class="phint">${f.stepsLeft} ${f.stepsLeft === 1 ? 'step' : 'steps'} left to spend. ${esc(blurb)}</p>
+      <button class="pbtn primary big" data-action="fork" data-choice="branch">${f.icon || ''} Take the ${esc(f.label)}${f.cost ? ` (−${f.cost})` : ''}</button>
+      <button class="pbtn big" data-action="fork" data-choice="main">Stay on the road</button>
+      <p class="phint small center">Decide in time or the road decides for you.</p>
+    </div>`;
+  }
+  const landedTile = board.phase === 'landed' ? ((board.tiles || {})[(board.positions || {})[me.id] || 0] || null) : null;
   return `<div class="pcard tall dicecard">
     <div class="diehost" data-die data-result="${board.lastRoll || ''}" data-result2="${board.lastRoll2 || ''}"></div>
     <h2 class="rolled">${board.lastRoll ? `You rolled ${board.lastRoll}${board.lastRoll2 ? ` + ${board.lastRoll2}` : ''}` : 'Rolling'}</h2>
+    ${board.phase === 'moving' ? `<p class="psteps" data-live="steps"></p>` : ''}
+    ${landedTile ? `<p class="psteps landed">${TILE_ICON[landedTile.t] || ''} ${esc(landedTile.label)}</p>` : ''}
     <p class="phint">${esc(board.message || '')}</p>
   </div>`;
+}
+
+/** In-place updates between full re-renders (the die must survive each step). */
+export function patchPlayer(stage, board) {
+  if (!board) return;
+  const st = stage.querySelector('[data-live="steps"]');
+  if (st && board.phase === 'moving') { const left = board.stepsLeft ?? 0; st.innerHTML = left > 0 ? `<b>${left}</b> to go` : 'Landing…'; }
 }
 
 export function scoreboard(players, title = 'Scores') { return finalScoreboard(players, title); }
@@ -680,6 +877,11 @@ export async function handleAction(room, me, action, board, state, round, miniMo
   if (action.action === 'roll' || action.action === 'useitem') {
     if (!board || board.phase !== 'turn' || board.active !== me.id) return;
     await room.t.set(`${room.base}/intent`, { by: me.id, action: action.action, item: action.item || null, at: Date.now() });
+    return { rerender: true };
+  }
+  if (action.action === 'fork') {
+    if (!board || board.phase !== 'fork' || board.active !== me.id) return;
+    await room.t.set(`${room.base}/intent`, { by: me.id, action: 'fork', choice: action.choice === 'branch' ? 'branch' : 'main', at: Date.now() });
     return { rerender: true };
   }
   if (miniMod && round) return miniMod.handleAction(room, me, action, round, state);

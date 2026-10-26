@@ -7,13 +7,13 @@
 
 import { Room, playerIdFor, rememberName, recalledName, localPlayerId } from './room.js';
 import { getTransport } from './transport.js';
-import { esc, playerList, countdown } from './util.js';
+import { esc, playerList, countdown, finalScoreboard } from './util.js';
 import { swapIn, stagger, countUp, sound, haptic, mountSoundToggle, flash, confetti } from './fx.js';
 import { mountDie } from './dice.js';
 import { installViewport } from './viewport.js';
 import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js';
 import { matchRosterName, getRoster } from './scores.js';
-import { startTilt } from './tilt.js';
+import { startTilt, goSideways, leaveSideways, keepAwake, browserLandscape } from './tilt.js';
 
 const el = id => document.getElementById(id);
 const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
@@ -151,6 +151,7 @@ class PlayApp {
 
     room.on('hasScreen', v => { this.hasScreen = Boolean(v); this.render(); });
     room.on('length',    v => { this.length = v || 'standard'; this.render(); });
+    room.on('highlights', v => { this.highlights = v || {}; this.render(); });
     room.on('director',  v => this.onDirector(v));
     // A dead director stops writing, so its staleness is the absence of an
     // event. Check on a timer as well as on change.
@@ -276,7 +277,15 @@ class PlayApp {
     const mirror = !this.hasScreen;     // no TV -> phones show the whole game
     let html, key;
 
-    if (this.round && this.round.phase === 'intro' && this.mod) {
+    const isFinal = this.round && this.round.phase === 'final' || (this.board && this.board.phase === 'final');
+    if (isFinal && this.mod) {
+      // With no TV the phone is the screen: show the podium, not "check the big screen".
+      // With a TV, a compact version so you can see where you landed without looking up.
+      html = `<div class="pcard final-p">${finalScoreboard(this.players || {}, mirror ? 'Final scores' : 'Final', mirror ? this.highlights : null)}
+        ${this.isDirector ? `<button class="pbtn primary" data-action="again">Back to the lobby</button>` : '<p class="phint center">Host picks the next one.</p>'}
+      </div>`;
+      key = `final|${Object.keys(this.players || {}).length}|${Object.keys(this.highlights || {}).length}`;
+    } else if (this.round && this.round.phase === 'intro' && this.mod) {
       html = `<div class="pcard intro-p"><div class="intro-kicker">Up next</div>
         <div class="intro-title">${esc(this.round.title || '')}</div>
         <div class="intro-hint">${esc(this.round.hint || '')}</div></div>`;
@@ -342,6 +351,7 @@ class PlayApp {
 
     this.mountDieIfNeeded(stage);
     this.mountTiltIfNeeded(stage);
+    if (this.gameId === 'board' && this.mod?.patchPlayer) this.mod.patchPlayer(stage, this.board, this.me);
     // Heads Up turns the whole phone light so the word reads from across the room.
     document.body.classList.toggle('headsup', Boolean(stage.querySelector('.hu')));
     this.afterRender();
@@ -397,12 +407,14 @@ class PlayApp {
   mountDieIfNeeded(stage) {
     const slot = stage.querySelector('[data-die]');
     if (!slot) { this.die = null; return; }
-    if (!this.die || !slot.contains(this._dieEl)) {
-      this.die = mountDie(slot); this._dieEl = slot.querySelector('.dscene'); this.die.idle();
-    }
     const result = Number(slot.dataset.result);
     const result2 = Number(slot.dataset.result2) || 0;
     const stamp = result ? `${result}:${result2}` : '';
+    if (!this.die || !slot.contains(this._dieEl)) {
+      this.die = mountDie(slot); this._dieEl = slot.querySelector('.dscene');
+      // Re-mounted after the roll already played (the board moved on a phase): keep the face.
+      if (result && stamp === this._lastShownRoll) this.die.show(result2 || result); else this.die.idle();
+    }
     if (result && stamp !== this._lastShownRoll) {
       this._lastShownRoll = stamp; sound.dice(); haptic.dice();
       // A doubled roll: tumble once, then again, so both numbers land.
@@ -419,14 +431,47 @@ class PlayApp {
   mountTiltIfNeeded(stage) {
     const zone = stage.querySelector('[data-tilt]');
     if (!zone) return this.stopTilt();
-    if (this._tilt) return;
-    this._tilt = startTilt({
-      onDown: () => this.act({ action: 'got' }),
-      onUp:   () => this.act({ action: 'skip' }),
-      onState: s => { const n = document.querySelector('[data-tiltstate]'); if (n) n.textContent = s; }
-    });
+    const mode = zone.dataset.tilt || 'play';
+    if (!this._tilt) {
+      keepAwake();
+      this._tilt = startTilt({
+        onDown: () => { this.tiltFlash('got'); this.act({ action: 'got' }); },
+        onUp:   () => { this.tiltFlash('skip'); this.act({ action: 'skip' }); },
+        onState: s => { this._tiltState = s; const n = document.querySelector('[data-tiltstate]'); if (n) n.textContent = s; },
+        onPose: pose => this.tiltPose(pose)
+      });
+    }
+    this._tilt.setMode(mode);
+    const n = stage.querySelector('[data-tiltstate]'); if (n && this._tiltState) n.textContent = this._tiltState;
+    this.applyRotation();
   }
-  stopTilt() { if (this._tilt) { this._tilt.stop(); this._tilt = null; } }
+  stopTilt() {
+    if (this._tilt) { this._tilt.stop(); this._tilt = null; this._tiltState = null; leaveSideways(); }
+    delete document.body.dataset.hurot;
+  }
+  /** Rotate the word screen when the browser is stuck in portrait. */
+  applyRotation() {
+    const want = browserLandscape() ? 'none' : (this._side < 0 ? 'ccw' : 'cw');
+    if (document.body.dataset.hurot !== want) document.body.dataset.hurot = want;
+  }
+  tiltPose({ side, delta, calibrated }) {
+    if (side) this._side = side;
+    this.applyRotation();
+    const cal = document.querySelector('[data-cal]');
+    if (cal) {
+      // Steadiness meter during the countdown: fills as they hold it still near vertical.
+      cal.classList.toggle('ok', calibrated);
+      const i = cal.querySelector('i'); if (i) i.style.setProperty('--lvl', calibrated ? 1 : 0.35);
+    }
+    const hu = document.querySelector('.hu');
+    if (hu) hu.style.setProperty('--tiltd', `${Math.max(-1, Math.min(1, delta / 38)).toFixed(2)}`);
+  }
+  tiltFlash(kind) {
+    const hu = document.querySelector('.hu'); if (!hu) return;
+    hu.classList.remove('hit-got', 'hit-skip'); void hu.offsetWidth; hu.classList.add(`hit-${kind}`);
+    haptic[kind === 'got' ? 'lock' : 'tap']?.();
+    if (kind === 'got') sound.correct?.(); else sound.wrong?.();
+  }
 
   /* ------------------------------- actions ------------------------------ */
 
@@ -435,18 +480,21 @@ class PlayApp {
     if (action.action === 'launch') {
       const i = Number(action.game);
       const choice = GAME_MENU[i];
-      if (choice.id === 'charades' && !action.cat && !action.random) return this.pickCategory(i);
+      if ((choice.id === 'charades' || choice.id === 'quiz') && !action.cat && !action.random) return this.pickCategory(i);
       const opts = action.cat ? { category: action.cat } : {};
       if (!this.hasScreen && choice.phoneMode === 'headsup') opts.headsup = true;
       return this.director?.launch(i, opts);
     }
     if (action.action === 'setlen') return this.director?.setLength(action.len);
+    if (action.action === 'again')  return this.director?.playAgain();
     if (action.action === 'mulligan') {
       this.state.draft = [];
       if (this.director) return this.director.nudge('mulligan', this.me.id);
       return this.room.t.set(`${this.room.base}/intent`, { by: this.me.id, action: 'mulligan', at: Date.now() });
     }
-    if (action.action === 'next' || action.action === 'skip') {
+    // 'skip' with a pid = skip a slow player (waiting chips). Without one it's
+    // the game's own skip (Heads Up word), handled by the engine below.
+    if (action.action === 'next' || (action.action === 'skip' && action.pid)) {
       if (this.director) return this.director.nudge(action.action, action.pid);
       // Not the director: route through the room so the director picks it up.
       return this.room.t.set(`${this.room.base}/intent`, { by: this.me.id, action: action.action, pid: action.pid || null, at: Date.now() });
@@ -454,6 +502,7 @@ class PlayApp {
     if (action.action === 'enabletilt') {
       const r = await startTilt.requestPermission();
       if (r !== 'granted') this.err('Motion permission was denied. Use the buttons.');
+      await goSideways();
       return this.render();
     }
     if (!this.mod || !this.mod.handleAction) return;
@@ -464,13 +513,14 @@ class PlayApp {
   }
 
   async pickCategory(i) {
-    const mod = await ENGINES.charades();
+    const mod = await ENGINES[GAME_MENU[i].id]();
     const cats = await mod.Host.listCategories();
     const cards = cats.map(c => `
       <button class="gamebtn" data-action="launch" data-game="${i}" data-cat="${esc(c.name)}">
-        <b>${c.emoji} ${esc(c.name)}</b><span>${esc(c.blurb)}</span></button>`).join('');
+        <b>${c.emoji} ${esc(c.name)}</b><span>${esc(c.blurb || `${c.count} questions`)}</span></button>`).join('');
+    const hasMixed = cats.some(c => c.name === 'Mixed');
     swapIn(el('pstage'), `<div class="pcard"><h2>Pick a category</h2><div class="menu">${cards}
-      <button class="gamebtn" data-action="launch" data-game="${i}" data-random="1"><b>🎲 Surprise me</b><span>Mixed bag</span></button>
+      ${hasMixed ? '' : `<button class="gamebtn" data-action="launch" data-game="${i}" data-random="1"><b>🎲 Surprise me</b><span>Mixed bag</span></button>`}
       </div><button class="linkbtn" data-action="back">Back</button></div>`, 'catpick');
     this._screenKey = 'catpick';
   }
@@ -530,11 +580,13 @@ document.addEventListener('click', e => {
   if (action.action === 'submittext') {
     const ta = document.querySelector('[data-role="answer"]'); action.text = ta ? ta.value : '';
   }
-  const locking = ['choose', 'confirmcards', 'submittext', 'vote', 'roll', 'got', 'skip', 'pickvote', 'launch'].includes(action.action);
+  const locking = ['choose', 'confirmcards', 'submittext', 'vote', 'roll', 'fork', 'got', 'skip', 'pickvote', 'launch'].includes(action.action);
   if (locking) { sound.lock(); haptic.lock(); } else { sound.tap(); haptic.tap(); }
   btn.classList.add('pressed'); setTimeout(() => btn.classList.remove('pressed'), 180);
   app.act(action);
 });
+
+window.addEventListener('resize', () => { if (app._tilt) app.applyRotation(); });
 
 document.addEventListener('focusin', e => {
   if (e.target.matches('.ptext')) setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }), 250);

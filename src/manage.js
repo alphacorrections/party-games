@@ -88,7 +88,8 @@ function formFor(p) {
       <div class="row2">
         <select name="answer"><option value="0">A is correct</option><option value="1">B is correct</option><option value="2">C is correct</option><option value="3">D is correct</option></select>
         <input name="note" placeholder="Reveal line (optional)">
-      </div>`,
+      </div>
+      <select name="cat">${['Drugs & Booze','Bodies & Medicine','Crime & Law','History','Animals','Sex & Dating','Pop Culture','Grab Bag'].map(c => `<option>${c}</option>`).join('')}</select>`,
     liars: `
       <input name="q" placeholder="Fact with ____ where the answer goes" required>
       <div class="row2"><input name="answer" placeholder="The true answer (lowercase phrase)" required><input name="note" placeholder="Reveal line (optional)"></div>`,
@@ -105,7 +106,7 @@ function formFor(p) {
 function dataFrom(p, fd) {
   const g = k => (fd.get(k) || '').toString().trim();
   switch (p) {
-    case 'trivia': return { q: g('q'), options: [g('o0'), g('o1'), g('o2'), g('o3')], answer: Number(g('answer')), note: g('note') };
+    case 'trivia': return { q: g('q'), options: [g('o0'), g('o1'), g('o2'), g('o3')], answer: Number(g('answer')), note: g('note'), cat: g('cat') || 'Grab Bag' };
     case 'liars':  return { q: g('q'), answer: g('answer').toLowerCase(), note: g('note') };
     case 'fillblank': { const t = g('text'); return { text: t, blanks: Math.max(1, (t.match(/_{2,}/g) || []).length) }; }
     case 'answers': case 'quiplash': case 'likely': return g('text');
@@ -116,7 +117,7 @@ function dataFrom(p, fd) {
 
 function describe(p, d) {
   switch (p) {
-    case 'trivia': return `${esc(d.q)} <span class="muted">→ ${esc(d.options[d.answer])}</span>`;
+    case 'trivia': return `<span class="muted">[${esc(d.cat || 'Grab Bag')}]</span> ${esc(d.q)} <span class="muted">→ ${esc(d.options[d.answer])}</span>`;
     case 'liars':  return `${esc(d.q)} <span class="muted">→ ${esc(d.answer)}</span>`;
     case 'fillblank': return esc(d.text);
     case 'wyr': return `${esc(d.a)} <span class="muted">/</span> ${esc(d.b)}`;
