@@ -362,10 +362,20 @@ class PlayApp {
     const tools = el('pbar-tools');
     if (!tools) return;
     let b = tools.querySelector('.endbtn');
-    const show = this.isDirector && (this.gameId || !this.hasScreen);
+    const show = this.isDirector ? Boolean(this.gameId || !this.hasScreen) : Boolean(this.gameId);
     if (show && !b) {
       b = document.createElement('button'); b.className = 'endbtn'; b.textContent = 'End';
-      b.addEventListener('click', () => this.director.endGame());
+      b.addEventListener('click', () => {
+        // Two taps: first arms it, second ends. Stops pocket-taps killing a game.
+        if (!b.classList.contains('armed')) {
+          b.classList.add('armed'); b.textContent = 'End game?';
+          clearTimeout(b._t); b._t = setTimeout(() => { b.classList.remove('armed'); b.textContent = 'End'; }, 3000);
+          return;
+        }
+        b.classList.remove('armed'); b.textContent = 'End';
+        if (this.director) return this.director.endGame();
+        this.room.t.set(`${this.room.base}/intent`, { by: this.me.id, action: 'endgame', at: Date.now() });
+      });
       tools.prepend(b);
     } else if (!show && b) b.remove();
   }

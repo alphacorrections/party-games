@@ -193,6 +193,7 @@ class HostApp {
 
     if (this.gameId === 'board' && this.board && this.phase !== 'lobby' && this.mod) {
       document.body.classList.add('playing');
+      this.setEndGameVisible(true);
       const onBoard = this.board.phase !== 'minigame' && this.board.phase !== 'final';
       if (onBoard) {
         if (!stage.querySelector('[data-board]')) {
@@ -228,6 +229,7 @@ class HostApp {
       return;
     }
     document.body.classList.add('playing');
+    this.setEndGameVisible(true);
     const key = `${this.gameId}|${this.round.phase}|${this.round.index ?? this.round.turn ?? ''}|${Object.keys(this.highlights || {}).length}`;
     if (this.round.phase === 'final') {
       const k2 = key + `|${(this.allTime || []).length}`;

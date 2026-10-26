@@ -102,6 +102,10 @@ export class Director {
     if (!intent || !this.engine) return;
     if (intent.at && intent.at === this._lastIntentAt) return;
     this._lastIntentAt = intent.at;
+    if (intent.action === 'endgame') {
+      await this.room.t.remove(`${this.base}/intent`);
+      return this.endGame();
+    }
     if (intent.action === 'roll' || intent.action === 'useitem' || intent.action === 'fork') {
       await this.engine.onIntent?.(intent);
     } else if (intent.action === 'next' || intent.action === 'skip' || intent.action === 'mulligan') {

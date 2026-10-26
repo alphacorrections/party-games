@@ -21,7 +21,7 @@ export const meta = {
 };
 
 const TURN_MS    = 60000;
-const READY_MS   = 5000;
+const READY_MS   = 15000;   // time to get in position; the guesser can start early
 const POINTS_GOT = 150;
 const SKIP_COST  = 0;
 
@@ -291,13 +291,15 @@ export function playerView(round, me, _a, _b, _c, extra = {}) {
         <p>Screen facing out. Hold it still until the bar goes green.<br>Tip <b>down</b> = got it. Tip <b>up</b> = skip.</p>
         <button class="pbtn primary" data-action="enabletilt">${needsMotionPrompt() ? 'Turn on tilt' : 'Lock it sideways'}</button>
         <div class="hu-cal" data-cal><i></i><span data-tiltstate>hold it on your forehead</span></div>
+        <button class="pbtn" data-action="next">I'm ready, start now</button>
         ${timerHTML(round.deadline, READY_MS)}
       </div>`;
     }
     return `<div class="pcard tall">
       <div class="catbadge"><span class="catemoji">${round.categoryEmoji || ''}</span>${esc(round.category || '')}</div>
       <h2>You're up</h2>
-      <p>Face away from the TV. Starting in a second.</p>
+      <p>Get in front of the TV and turn your back to it. Tap when you're set, or it starts when the timer runs out.</p>
+      <button class="hugebtn got" data-action="next">I'm ready</button>
       ${timerHTML(round.deadline, READY_MS)}
     </div>`;
   }
