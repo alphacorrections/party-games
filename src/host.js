@@ -146,7 +146,7 @@ class HostApp {
 
   async launch(i, extraOpts = {}) {
     const choice = GAME_MENU[i];
-    if ((choice.id === 'charades' || choice.id === 'quiz') && !extraOpts.category && !extraOpts.random) {
+    if ((choice.pick || choice.id === 'charades' || choice.id === 'quiz') && !extraOpts.category && !extraOpts.random) {
       return this.pickCategory(i);
     }
     this._picking = false;
@@ -168,10 +168,10 @@ class HostApp {
         <span class="catblurb">${esc(c.blurb || '')}</span><span class="catcount">${c.count}</span>
       </button>`).join('');
     document.body.classList.add('playing');
-    const hasMixed = cats.some(c => c.name === 'Mixed');
+    const hasMixed = cats.some(c => c.name === 'Mixed') || GAME_MENU[menuIndex].noRandom;
     swapIn(el('stage'), `
       <div class="qmeta">${esc(title)}</div>
-      <h1 class="question">Pick a category</h1>
+      <h1 class="question">${esc(GAME_MENU[menuIndex].pick || 'Pick a category')}</h1>
       <div class="catgrid">${cards}
         ${hasMixed ? '' : `<button class="catcard random" data-cat="" data-menu="${menuIndex}">
           <span class="catemoji">🎲</span><b>Surprise me</b>

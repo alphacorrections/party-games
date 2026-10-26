@@ -487,7 +487,7 @@ class PlayApp {
     if (action.action === 'launch') {
       const i = Number(action.game);
       const choice = GAME_MENU[i];
-      if ((choice.id === 'charades' || choice.id === 'quiz') && !action.cat && !action.random) return this.pickCategory(i);
+      if ((choice.pick || choice.id === 'charades' || choice.id === 'quiz') && !action.cat && !action.random) return this.pickCategory(i);
       const opts = action.cat ? { category: action.cat } : {};
       if (!this.hasScreen && choice.phoneMode === 'headsup') opts.headsup = true;
       return this.director?.launch(i, opts);
@@ -526,8 +526,8 @@ class PlayApp {
     const cards = cats.map(c => `
       <button class="gamebtn" data-action="launch" data-game="${i}" data-cat="${esc(c.name)}">
         <b>${c.emoji} ${esc(c.name)}</b><span>${esc(c.blurb || `${c.count} questions`)}</span></button>`).join('');
-    const hasMixed = cats.some(c => c.name === 'Mixed');
-    swapIn(el('pstage'), `<div class="pcard"><h2>Pick a category</h2><div class="menu">${cards}
+    const hasMixed = cats.some(c => c.name === 'Mixed') || GAME_MENU[i].noRandom;
+    swapIn(el('pstage'), `<div class="pcard"><h2>${esc(GAME_MENU[i].pick || 'Pick a category')}</h2><div class="menu">${cards}
       ${hasMixed ? '' : `<button class="gamebtn" data-action="launch" data-game="${i}" data-random="1"><b>🎲 Surprise me</b><span>Mixed bag</span></button>`}
       </div><button class="linkbtn" data-action="back">Back</button></div>`, 'catpick');
     this._screenKey = 'catpick';

@@ -1,0 +1,269 @@
+{
+ "pack": "Out of Context",
+ "prompts": [
+  {
+   "text": "What's in your fridge right now?",
+   "tag": "general"
+  },
+  {
+   "text": "Describe your last relationship in one sentence.",
+   "tag": "general"
+  },
+  {
+   "text": "What do you do when you can't sleep?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your honest opinion of your family?",
+   "tag": "general"
+  },
+  {
+   "text": "What would you do with $10,000 cash, no questions asked?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your morning routine?",
+   "tag": "general"
+  },
+  {
+   "text": "Describe your body in three words.",
+   "tag": "general"
+  },
+  {
+   "text": "What's your go-to excuse for getting out of plans?",
+   "tag": "general"
+  },
+  {
+   "text": "How do you feel about your neighbors?",
+   "tag": "general"
+  },
+  {
+   "text": "What did you do last weekend?",
+   "tag": "general"
+  },
+  {
+   "text": "What do you say to yourself in the mirror?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your secret talent?",
+   "tag": "general"
+  },
+  {
+   "text": "What's the grossest thing you've ever eaten?",
+   "tag": "general"
+  },
+  {
+   "text": "Describe your ideal Sunday.",
+   "tag": "general"
+  },
+  {
+   "text": "What would you never do for money?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your honest opinion on kids?",
+   "tag": "general"
+  },
+  {
+   "text": "What's the best advice you ever got?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your toxic trait?",
+   "tag": "general"
+  },
+  {
+   "text": "What do you think about in the shower?",
+   "tag": "general"
+  },
+  {
+   "text": "Describe the inside of your car.",
+   "tag": "general"
+  },
+  {
+   "text": "How would your ex describe you?",
+   "tag": "general"
+  },
+  {
+   "text": "What did you want to be when you grew up?",
+   "tag": "general"
+  },
+  {
+   "text": "What's something you're secretly proud of?",
+   "tag": "general"
+  },
+  {
+   "text": "What's the last lie you told?",
+   "tag": "general"
+  },
+  {
+   "text": "What are you bringing to the potluck?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your pre-date ritual?",
+   "tag": "general"
+  },
+  {
+   "text": "Describe your bedroom.",
+   "tag": "general"
+  },
+  {
+   "text": "What do you do with your hands when you're nervous?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your signature dance move?",
+   "tag": "general"
+  },
+  {
+   "text": "What's the best part of your day?",
+   "tag": "general"
+  },
+  {
+   "text": "What would you name a boat?",
+   "tag": "general"
+  },
+  {
+   "text": "Describe your dream house.",
+   "tag": "general"
+  },
+  {
+   "text": "What's your favorite thing to do alone?",
+   "tag": "general"
+  },
+  {
+   "text": "What's the worst gift you've ever gotten?",
+   "tag": "general"
+  },
+  {
+   "text": "What's the first thing you'd do as president?",
+   "tag": "general"
+  },
+  {
+   "text": "What gets you out of bed in the morning?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your comfort food?",
+   "tag": "general"
+  },
+  {
+   "text": "How can you tell someone is lying?",
+   "tag": "general"
+  },
+  {
+   "text": "What do you do at a party where you know nobody?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your workout routine?",
+   "tag": "general"
+  },
+  {
+   "text": "What do you think happens after we die?",
+   "tag": "general"
+  },
+  {
+   "text": "What's under your bed right now?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your love language?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your hot take on breakfast?",
+   "tag": "general"
+  },
+  {
+   "text": "How do you handle a hangover?",
+   "tag": "general"
+  },
+  {
+   "text": "What's the most expensive thing you own?",
+   "tag": "general"
+  },
+  {
+   "text": "Describe your last vacation.",
+   "tag": "general"
+  },
+  {
+   "text": "What's your karaoke song and why?",
+   "tag": "general"
+  },
+  {
+   "text": "What did you have for dinner last night?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your biggest pet peeve?",
+   "tag": "general"
+  },
+  {
+   "text": "What would your last meal be?",
+   "tag": "general"
+  },
+  {
+   "text": "How do you say goodbye at the end of a phone call?",
+   "tag": "general"
+  },
+  {
+   "text": "What's your strategy at a buffet?",
+   "tag": "general"
+  },
+  {
+   "text": "What's on your bucket list?",
+   "tag": "general"
+  },
+  {
+   "text": "What do you say to a client on their first day?",
+   "tag": "recovery"
+  },
+  {
+   "text": "Describe the last staff meeting.",
+   "tag": "recovery"
+  },
+  {
+   "text": "What's the best thing a client ever said to you?",
+   "tag": "recovery"
+  },
+  {
+   "text": "What's in the break room fridge?",
+   "tag": "recovery"
+  },
+  {
+   "text": "What's your favorite meeting slogan?",
+   "tag": "recovery"
+  },
+  {
+   "text": "What do you do on your lunch break?",
+   "tag": "recovery"
+  },
+  {
+   "text": "What would you change about your workplace?",
+   "tag": "recovery"
+  },
+  {
+   "text": "Describe your boss in five words.",
+   "tag": "recovery"
+  },
+  {
+   "text": "How do you unwind after a double?",
+   "tag": "recovery"
+  },
+  {
+   "text": "What's the first thing you do when you clock in?",
+   "tag": "recovery"
+  },
+  {
+   "text": "What's the worst part of documentation?",
+   "tag": "recovery"
+  },
+  {
+   "text": "What do you say when someone asks what you do for work?",
+   "tag": "recovery"
+  }
+ ]
+}

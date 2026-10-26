@@ -20,7 +20,9 @@ export const ENGINES = {
   board:      () => import('./games/board.js'),
   liars:      () => import('./games/liars.js'),
   blindvote:  () => import('./games/blindvote.js'),
-  bodycount:  () => import('./games/bodycount.js')
+  bodycount:  () => import('./games/bodycount.js'),
+  context:    () => import('./games/context.js'),
+  doubledown: () => import('./games/doubledown.js')
 };
 
 /**
@@ -31,10 +33,12 @@ export const ENGINES = {
 export const GAME_MENU = [
   { id: 'quiz',       opts: {},                                 label: 'Degenerate Trivia',        sub: 'Four options. Speed scores.',          mirror: true },
   { id: 'liars',      opts: {},                                 label: "Liar's Trivia",            sub: 'Write a fake. Spot the truth.',        mirror: true },
+  { id: 'doubledown', opts: {},                                 label: 'Double Down',              sub: 'Quiz-show board. Buzz in. Solo or teams.', mirror: true, pick: 'Pick a mode', noRandom: true },
   { id: 'bodycount',  opts: {},                                 label: 'Body Count',               sub: 'Horror trivia. Wrong answers die.',    mirror: true },
   { id: 'promptvote', opts: { mode: 'pick', judge: 'all' },      label: 'Fill In The Blank',        sub: 'Play a card. Everyone votes.',          mirror: true },
   { id: 'promptvote', opts: { mode: 'pick', judge: 'czar' },     label: 'Fill In The Blank, Judge', sub: 'One rotating judge picks.',             mirror: true },
   { id: 'promptvote', opts: { mode: 'type', judge: 'all' },      label: 'Write Your Own',           sub: 'Type an answer. Funniest wins.',        mirror: true },
+  { id: 'context',    opts: {},                                  label: 'Out of Context',           sub: 'Your answer. Their setting. 3+ players.', mirror: true },
   { id: 'blindvote',  opts: { mode: 'wyr' },                     label: 'Would You Rather',         sub: 'Two bad options. The room splits.',     mirror: true },
   { id: 'blindvote',  opts: { mode: 'likely' },                  label: 'Most Likely To',           sub: 'Vote for a person. Results reveal.',    mirror: true },
   { id: 'charades',   opts: {},                                  label: 'Shout It Out',             sub: 'Word on the TV, you face away.',        tv: true, phoneMode: 'headsup' },
@@ -129,6 +133,8 @@ export class Director {
       await this.engine.onIntent?.(intent);
     } else if (intent.action === 'next' || intent.action === 'skip' || intent.action === 'mulligan') {
       await this.engine.nudge?.(intent.action, intent.pid || intent.by);
+    } else if (intent.action && this.engine.onIntent && !intent.result) {
+      await this.engine.onIntent(intent);
     } else if (intent.result) {
       if (this.gameId === 'charades') await this.engine.resolve(intent.result);
       else await this.engine.charadesResolve?.(intent.result);
