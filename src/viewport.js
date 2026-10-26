@@ -83,11 +83,21 @@ export function fitStage(stage) {
     const cs = getComputedStyle(par);
     avail = par.clientHeight - parseFloat(cs.paddingTop || 0) - parseFloat(cs.paddingBottom || 0);
   }
-  const need = stage.scrollHeight;
+  const need = Math.max(stage.scrollHeight, stage.getBoundingClientRect().height);
   if (need > avail + 1 && avail > 0) {
-    const k = Math.max(0.45, (avail - 4) / need);
+    let k = Math.max(0.45, (avail - 4) / need);
     stage.style.transformOrigin = '50% 0';
     stage.style.transform = `scale(${k})`;
+    // Check the real result against the container's content box and correct.
+    if (par) {
+      const pr = par.getBoundingClientRect(), cs = getComputedStyle(par);
+      const limit = pr.bottom - parseFloat(cs.paddingBottom || 0) - 2;
+      const over = stage.getBoundingClientRect().bottom - limit;
+      if (over > 0) {
+        k = Math.max(0.45, k * (1 - over / stage.getBoundingClientRect().height));
+        stage.style.transform = `scale(${k})`;
+      }
+    }
   }
 }
 
