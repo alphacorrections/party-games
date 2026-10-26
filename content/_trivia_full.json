@@ -1,0 +1,2969 @@
+{
+ "pack": "Degenerate Trivia",
+ "questions": [
+  {
+   "q": "Which pharmaceutical company put heroin on the market in 1898 as a cough remedy and 'non-addictive' morphine substitute?",
+   "options": [
+    "Bayer",
+    "Pfizer",
+    "Merck",
+    "Johnson & Johnson"
+   ],
+   "answer": 0,
+   "note": "Same people who brought you aspirin. One of those worked out.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Coca-Cola stopped using fresh coca leaves, and with them most of the cocaine, in roughly what year?",
+   "options": [
+    "1929",
+    "1903",
+    "1886",
+    "1955"
+   ],
+   "answer": 1,
+   "note": "They used 'spent' leaves after that. Spent, like your uncle on Christmas Eve.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Pervitin, handed out to German soldiers by the millions in World War II, was which drug?",
+   "options": [
+    "Cocaine",
+    "Amphetamine sulfate",
+    "Methamphetamine",
+    "Morphine"
+   ],
+   "answer": 2,
+   "note": "Blitzkrieg had a secret ingredient, and it was tweaking.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Until 1948, 7 Up contained which mood stabilizer in its formula?",
+   "options": [
+    "Codeine",
+    "Cocaine",
+    "Ephedrine",
+    "Lithium citrate"
+   ],
+   "answer": 3,
+   "note": "The 'Up' was doing a lot of work.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Fentanyl was first synthesized around 1960 by which Belgian chemist?",
+   "options": [
+    "Paul Janssen",
+    "Albert Hofmann",
+    "Felix Hoffmann",
+    "Alexander Shulgin"
+   ],
+   "answer": 0,
+   "note": "His company still makes it. Legally, mostly.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "The FDA approved naloxone for opioid overdose in what year?",
+   "options": [
+    "1996",
+    "1971",
+    "1983",
+    "2008"
+   ],
+   "answer": 1,
+   "note": "It took another five decades to put it on a gas station shelf.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "'Krokodil,' the Russian street drug that rots skin into scales around the injection site, is which opioid?",
+   "options": [
+    "Oxymorphone",
+    "Carfentanil",
+    "Desomorphine",
+    "Nitazene"
+   ],
+   "answer": 2,
+   "note": "Homemade from codeine, gasoline, and whatever was under the sink.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Albert Hofmann first synthesized LSD in what year, five years before he accidentally dosed himself?",
+   "options": [
+    "1943",
+    "1951",
+    "1967",
+    "1938"
+   ],
+   "answer": 3,
+   "note": "He biked home afterward. There's a holiday for it.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "AA co-founder Bill Wilson personally experimented in the 1950s with which drug as a possible aid to recovery?",
+   "options": [
+    "LSD",
+    "Methadone",
+    "Nitrous oxide",
+    "Peyote"
+   ],
+   "answer": 0,
+   "note": "This does not come up at the Tuesday meeting.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Alcoholics Anonymous was founded in 1935 in which city?",
+   "options": [
+    "Minneapolis, Minnesota",
+    "Akron, Ohio",
+    "Hartford, Connecticut",
+    "New York, New York"
+   ],
+   "answer": 1,
+   "note": "Two drunks and a kitchen table in Ohio. Twelve steps later, here we are.",
+   "cat": "History"
+  },
+  {
+   "q": "Methadone was first developed in the late 1930s in which country?",
+   "options": [
+    "United States",
+    "Switzerland",
+    "Germany",
+    "United Kingdom"
+   ],
+   "answer": 2,
+   "note": "Not named after Hitler. That rumor is a lie your sponsor told you.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Kratom comes from a tree in the same botanical family as which everyday plant?",
+   "options": [
+    "Tobacco",
+    "Poppy",
+    "Cannabis",
+    "Coffee"
+   ],
+   "answer": 3,
+   "note": "Both sold at the gas station, both ruin your sleep, only one ruins your liver.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Which of these is a Schedule II drug still prescribed in the US under the brand name Desoxyn?",
+   "options": [
+    "Methamphetamine",
+    "Heroin",
+    "LSD",
+    "MDMA"
+   ],
+   "answer": 0,
+   "note": "Approved for ADHD and obesity. Your doctor will not write it.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Which drug is legally used by US surgeons as a topical anesthetic in nose and throat procedures?",
+   "options": [
+    "Heroin",
+    "Cocaine",
+    "Methamphetamine",
+    "PCP"
+   ],
+   "answer": 1,
+   "note": "Schedule II. The ENT has a locked box and a straight face.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "In the UK, heroin is legally prescribed for severe pain under what name?",
+   "options": [
+    "Dilaudid",
+    "Methadone",
+    "Diamorphine",
+    "Oxymorphone"
+   ],
+   "answer": 2,
+   "note": "The NHS will give you heroin. You just have to be dying correctly.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Withdrawal from which of these drugs can, by itself, kill you?",
+   "options": [
+    "Heroin",
+    "Cocaine",
+    "Methamphetamine",
+    "Alcohol"
+   ],
+   "answer": 3,
+   "note": "Heroin withdrawal makes you want to die. Alcohol withdrawal does it for you.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "'Wet brain,' or Wernicke-Korsakoff syndrome, is caused by a deficiency of which vitamin?",
+   "options": [
+    "Thiamine (B1)",
+    "Vitamin D",
+    "Niacin (B3)",
+    "Vitamin C"
+   ],
+   "answer": 0,
+   "note": "Hence the banana bag. Hence the yellow IV. Hence the guy who thinks it's 1994.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Carfentanil, found in street heroin, was developed as a tranquilizer for which animals?",
+   "options": [
+    "Horses",
+    "Elephants",
+    "Cattle",
+    "Bears"
+   ],
+   "answer": 1,
+   "note": "About 10,000 times the potency of morphine. You are not an elephant.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Xylazine, 'tranq,' is a sedative approved only for which use?",
+   "options": [
+    "Dental",
+    "Pediatric",
+    "Veterinary",
+    "Hospice"
+   ],
+   "answer": 2,
+   "note": "Narcan doesn't touch it. Neither should you.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Who won the 1949 Nobel Prize in Medicine for inventing the lobotomy?",
+   "options": [
+    "Walter Freeman",
+    "Sigmund Freud",
+    "Emil Kraepelin",
+    "Egas Moniz"
+   ],
+   "answer": 3,
+   "note": "The Nobel committee has never taken it back.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Walter Freeman's quick 'transorbital' lobotomy went in through the eye socket using what tool?",
+   "options": [
+    "An ice pick",
+    "A dental drill",
+    "A crochet hook",
+    "A bone saw"
+   ],
+   "answer": 0,
+   "note": "From his own kitchen, originally. Ten minutes a patient.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "The original 'Body Farm,' where donated corpses decompose for forensic research, is run by which university?",
+   "options": [
+    "Johns Hopkins",
+    "University of Tennessee",
+    "University of Florida",
+    "Texas State"
+   ],
+   "answer": 1,
+   "note": "Behind the hospital in Knoxville. Great place to get your steps in.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "In what year did the American Psychiatric Association remove homosexuality from the DSM?",
+   "options": [
+    "1952",
+    "1987",
+    "1973",
+    "1994"
+   ],
+   "answer": 2,
+   "note": "Caffeine withdrawal is still in there.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Which of these is an official DSM-5 diagnosis?",
+   "options": [
+    "Internet gaming disorder",
+    "Caffeine use disorder",
+    "Shopping addiction",
+    "Caffeine withdrawal"
+   ],
+   "answer": 3,
+   "note": "Yes. Your Monday headache is billable.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "What over-the-counter drug is the leading cause of acute liver failure in the US?",
+   "options": [
+    "Acetaminophen",
+    "Ibuprofen",
+    "Aspirin",
+    "Diphenhydramine"
+   ],
+   "answer": 0,
+   "note": "Tylenol. The one your detox roommate took twelve of for a hangover.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Viagra was originally developed to treat what?",
+   "options": [
+    "Hair loss",
+    "Angina",
+    "Glaucoma",
+    "Depression"
+   ],
+   "answer": 1,
+   "note": "Trial subjects reported a side effect. Pfizer pivoted.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Rogaine's active ingredient, minoxidil, was originally approved as a pill for what?",
+   "options": [
+    "Epilepsy",
+    "Ulcers",
+    "High blood pressure",
+    "Anxiety"
+   ],
+   "answer": 2,
+   "note": "Patients got hairy. Marketing got ideas.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "In the 1920s and 30s, Lysol was heavily marketed to American women as what?",
+   "options": [
+    "A mouthwash",
+    "A hangover cure",
+    "A baby wipe",
+    "A feminine hygiene douche"
+   ],
+   "answer": 3,
+   "note": "Ads winked that it prevented pregnancy. It prevented tissue.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Listerine's 1920s ads invented a medical-sounding condition to sell mouthwash. What was it?",
+   "options": [
+    "Halitosis",
+    "Gingivitis",
+    "Dyspepsia",
+    "Neurasthenia"
+   ],
+   "answer": 0,
+   "note": "The word for bad breath was a marketing campaign. So was your self-esteem.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Mrs. Winslow's Soothing Syrup, sold for teething babies in the 1800s, contained what?",
+   "options": [
+    "Cocaine",
+    "Morphine",
+    "Chloroform",
+    "Whiskey"
+   ],
+   "answer": 1,
+   "note": "The AMA filed it under 'Baby Killers.' It kept selling.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "JFK's 'Dr. Feelgood,' Max Jacobson, injected the president with what?",
+   "options": [
+    "Testosterone",
+    "Cocaine",
+    "Amphetamines",
+    "Morphine"
+   ],
+   "answer": 2,
+   "note": "Thirty-four White House visits by 1962. Camelot was speeding.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Where in Graceland was Elvis found dead in 1977?",
+   "options": [
+    "The pool",
+    "The kitchen",
+    "The recording studio",
+    "The bathroom"
+   ],
+   "answer": 3,
+   "note": "Face down on the floor. The King died a commoner's death.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Dancer Isadora Duncan died in 1927 when what got caught in a car's wheel?",
+   "options": [
+    "Her long scarf",
+    "Her hair",
+    "Her dress hem",
+    "Her dog's leash"
+   ],
+   "answer": 0,
+   "note": "Broke her neck instantly. Fashion kills, but usually slower.",
+   "cat": "History"
+  },
+  {
+   "q": "What actually killed 'Mama' Cass Elliot in 1974, despite the famous rumor?",
+   "options": [
+    "A ham sandwich",
+    "A heart attack",
+    "A heroin overdose",
+    "A fall"
+   ],
+   "answer": 1,
+   "note": "Her manager planted the sandwich story because it sounded better than drugs.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Commercial bail bondsmen exist almost exclusively in the US and which other country?",
+   "options": [
+    "Mexico",
+    "Brazil",
+    "The Philippines",
+    "Australia"
+   ],
+   "answer": 2,
+   "note": "Everywhere else looked at it and said no.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "The first US drug court opened in 1989 in which county?",
+   "options": [
+    "Cook County, Illinois",
+    "Los Angeles County, California",
+    "Harris County, Texas",
+    "Miami-Dade, Florida"
+   ],
+   "answer": 3,
+   "note": "Born of the crack era. Still handing out court cards.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Eating a bagel topped with which seed can trigger a positive opiate drug test?",
+   "options": [
+    "Poppy",
+    "Sesame",
+    "Chia",
+    "Sunflower"
+   ],
+   "answer": 0,
+   "note": "Your PO has heard this one. It happens to be true.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "A 2009 study found cocaine traces on roughly what share of US paper money?",
+   "options": [
+    "25 percent",
+    "90 percent",
+    "50 percent",
+    "10 percent"
+   ],
+   "answer": 1,
+   "note": "Your twenty has done more coke than you.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Which kitchen spice can cause hallucinations in large doses thanks to myristicin?",
+   "options": [
+    "Cinnamon",
+    "Paprika",
+    "Nutmeg",
+    "Cumin"
+   ],
+   "answer": 2,
+   "note": "Three tablespoons and a very bad two days. Ask any bored sober-house resident.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "'Bath salts' are synthetic versions of a stimulant found in which plant?",
+   "options": [
+    "Coca",
+    "Ephedra",
+    "Betel nut",
+    "Khat"
+   ],
+   "answer": 3,
+   "note": "Chewed in East Africa for centuries. Smoked in a Walmart parking lot for one decade.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "PCP was first marketed by Parke-Davis in the 1950s as what?",
+   "options": [
+    "A surgical anesthetic",
+    "A diet pill",
+    "An antidepressant",
+    "A cough suppressant"
+   ],
+   "answer": 0,
+   "note": "Patients woke up screaming. Ketamine replaced it.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Before it was a club drug, GHB was sold in the US in 1990 as what?",
+   "options": [
+    "A sleep aid for infants",
+    "A dietary supplement for bodybuilders",
+    "A hangover cure",
+    "A veterinary sedative"
+   ],
+   "answer": 1,
+   "note": "The FDA said stop in November. People did not stop.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Quaaludes were moved to Schedule I in what year?",
+   "options": [
+    "1971",
+    "1996",
+    "1984",
+    "1978"
+   ],
+   "answer": 2,
+   "note": "Disco biscuits, 714s, Lemmons. Your dad knows the lyrics.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Which scientist coined the term 'laughing gas' after inhaling nitrous oxide himself in 1799?",
+   "options": [
+    "Joseph Priestley",
+    "Isaac Newton",
+    "Michael Faraday",
+    "Humphry Davy"
+   ],
+   "answer": 3,
+   "note": "He threw parties around it. Nurses still do, allegedly.",
+   "cat": "History"
+  },
+  {
+   "q": "Absinthe was banned in the United States from 1912 until what year?",
+   "options": [
+    "2007",
+    "1933",
+    "1985",
+    "1999"
+   ],
+   "answer": 0,
+   "note": "Ninety-five years. The green fairy did more time than most dealers.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Four Loko removed which ingredient from its formula in late 2010?",
+   "options": [
+    "Alcohol",
+    "Caffeine",
+    "Taurine",
+    "Guarana"
+   ],
+   "answer": 1,
+   "note": "The FDA called it an unsafe food additive. Your freshman year called it dinner.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "The first drunk-driving arrest, in London in 1897, involved a man driving what?",
+   "options": [
+    "A horse carriage",
+    "A steam tractor",
+    "An electric taxi",
+    "A bicycle"
+   ],
+   "answer": 2,
+   "note": "George Smith, 20 shillings. Electric cars were ruining lives before Tesla.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "From 1952 to 1956, Kent cigarettes' 'Micronite' filter contained what?",
+   "options": [
+    "Fiberglass",
+    "Lead",
+    "Charcoal",
+    "Asbestos"
+   ],
+   "answer": 3,
+   "note": "The healthy cigarette. Crocidolite, the most carcinogenic kind.",
+   "cat": "History"
+  },
+  {
+   "q": "According to HRSA, one organ donor can save up to how many lives?",
+   "options": [
+    "8",
+    "3",
+    "15",
+    "25"
+   ],
+   "answer": 0,
+   "note": "Your liver may not be invited.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Which US state was the first to legalize human composting in 2019?",
+   "options": [
+    "Oregon",
+    "Washington",
+    "Vermont",
+    "California"
+   ],
+   "answer": 1,
+   "note": "Thirty days later you're topsoil. Finally useful.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Hunter S. Thompson's ashes were shot out of a cannon in 2005. Who paid for it?",
+   "options": [
+    "Bill Murray",
+    "Keith Richards",
+    "Johnny Depp",
+    "Jack Nicholson"
+   ],
+   "answer": 2,
+   "note": "About three million dollars. The fist-shaped tower was 153 feet.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Ozzy Osbourne bit the head off a bat onstage in 1982 in which city?",
+   "options": [
+    "Detroit, Michigan",
+    "Birmingham, England",
+    "Las Vegas, Nevada",
+    "Des Moines, Iowa"
+   ],
+   "answer": 3,
+   "note": "He thought it was rubber. The rabies shots were not.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "River Phoenix died in 1993 on the sidewalk outside which club?",
+   "options": [
+    "The Viper Room",
+    "Whisky a Go Go",
+    "The Roxy",
+    "Chateau Marmont"
+   ],
+   "answer": 0,
+   "note": "Halloween night. Johnny Depp co-owned the club.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "What drug did the coroner name as the cause of Michael Jackson's death?",
+   "options": [
+    "Demerol",
+    "Propofol",
+    "Fentanyl",
+    "Xanax"
+   ],
+   "answer": 1,
+   "note": "A surgical anesthetic, at home, for sleep. His cardiologist did two years.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Whitney Houston drowned in a bathtub in 2012 at which hotel?",
+   "options": [
+    "The Chateau Marmont",
+    "The Plaza",
+    "The Beverly Hilton",
+    "Caesars Palace"
+   ],
+   "answer": 2,
+   "note": "The night before Clive Davis's Grammy party, in the same building.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Which of these musicians did NOT die at 27?",
+   "options": [
+    "Amy Winehouse",
+    "Kurt Cobain",
+    "Jimi Hendrix",
+    "Elvis Presley"
+   ],
+   "answer": 3,
+   "note": "Elvis made it to 42. Then the bathroom.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "A '5150' is a 72-hour involuntary psychiatric hold under the law of which state?",
+   "options": [
+    "California",
+    "New York",
+    "Texas",
+    "Florida"
+   ],
+   "answer": 0,
+   "note": "Florida's version is the Baker Act. Same vibe, more humidity.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Florida's involuntary psychiatric hold law is known as what?",
+   "options": [
+    "The Sunshine Hold",
+    "The Baker Act",
+    "The Marchman Act",
+    "Section 12"
+   ],
+   "answer": 1,
+   "note": "Named for a state rep, not a pastry. Up to 72 hours.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "In 1887, which journalist faked insanity to get committed and expose a New York asylum?",
+   "options": [
+    "Ida Tarbell",
+    "Dorothea Dix",
+    "Nellie Bly",
+    "Margaret Fuller"
+   ],
+   "answer": 2,
+   "note": "'Ten Days in a Mad-House.' Got out faster than most of your clients.",
+   "cat": "History"
+  },
+  {
+   "q": "Prozac got its FDA approval in what year?",
+   "options": [
+    "1979",
+    "1994",
+    "2001",
+    "1987"
+   ],
+   "answer": 3,
+   "note": "Eli Lilly launched it a month later. The 90s were on their way.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Australian psychiatrist John Cade discovered lithium calms mania by first injecting it into what?",
+   "options": [
+    "Guinea pigs",
+    "Himself",
+    "Prisoners",
+    "Rats"
+   ],
+   "answer": 0,
+   "note": "He also injected the guinea pigs with patients' urine. Science was loose in 1948.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Valium was the top-selling drug in America for roughly which years?",
+   "options": [
+    "1955 to 1961",
+    "1969 to 1982",
+    "1985 to 1995",
+    "1999 to 2010"
+   ],
+   "answer": 1,
+   "note": "Two billion tablets in 1978 alone. Mother's little helper, indeed.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "The Rolling Stones' 'Mother's Little Helper' is about a housewife hooked on what?",
+   "options": [
+    "Gin",
+    "Cocaine",
+    "Valium",
+    "Dexedrine"
+   ],
+   "answer": 2,
+   "note": "1966. The pills are still little. The mothers are still tired.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Ketamine is in which DEA schedule?",
+   "options": [
+    "Schedule I",
+    "Schedule II",
+    "Schedule IV",
+    "Schedule III"
+   ],
+   "answer": 3,
+   "note": "Same tier as Tylenol with codeine. The clinic charges like it's gold.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "A UC San Diego study of US death certificates found more people die on which day than any other?",
+   "options": [
+    "Christmas Day",
+    "New Year's Eve",
+    "Super Bowl Sunday",
+    "Halloween"
+   ],
+   "answer": 0,
+   "note": "December 26 and January 1 come next. Happy holidays.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Ernesto Miranda, of Miranda rights fame, died in 1976 how?",
+   "options": [
+    "Hit by a bus",
+    "Stabbed in a bar fight",
+    "Executed by Arizona",
+    "Heart attack in prison"
+   ],
+   "answer": 1,
+   "note": "The suspect fled to Mexico and was never found. You have the right to remain missing.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "The 'Twinkie defense' was coined by reporters covering whose 1979 murder trial?",
+   "options": [
+    "Ted Bundy",
+    "Jim Jones",
+    "Dan White",
+    "Mark David Chapman"
+   ],
+   "answer": 2,
+   "note": "He killed Harvey Milk and the mayor. Lawyers argued depression. The snack cake got blamed.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "In 1987, Canadian Kenneth Parks drove 12 miles, killed his mother-in-law, and was acquitted. His defense?",
+   "options": [
+    "Insanity",
+    "Hypoglycemia",
+    "Demonic possession",
+    "Sleepwalking"
+   ],
+   "answer": 3,
+   "note": "Five neurologists backed him. Canada's Supreme Court agreed. Sleep well.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "The last public execution in the United States was a hanging in 1936 in which state?",
+   "options": [
+    "Kentucky",
+    "Texas",
+    "Mississippi",
+    "Louisiana"
+   ],
+   "answer": 0,
+   "note": "Twenty thousand people showed up in Owensboro to watch.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "The electric chair was invented by a man whose day job was what?",
+   "options": [
+    "Undertaker",
+    "Dentist",
+    "Electrician",
+    "Prison warden"
+   ],
+   "answer": 1,
+   "note": "Alfred Southwick. He saw a drunk die touching a generator and thought: humane.",
+   "cat": "History"
+  },
+  {
+   "q": "Alabama carried out the first-ever execution by nitrogen gas in which year?",
+   "options": [
+    "2015",
+    "2019",
+    "2024",
+    "2022"
+   ],
+   "answer": 2,
+   "note": "Kenneth Smith had already survived a botched lethal injection. Second time was the charm.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "1920s quack John Brinkley got rich transplanting what into men to cure impotence?",
+   "options": [
+    "Monkey glands",
+    "Bull semen",
+    "Radium pellets",
+    "Goat testicles"
+   ],
+   "answer": 3,
+   "note": "He ran for governor of Kansas twice. Nearly won.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Radithor, a 1920s radium-water tonic, famously made a steel magnate's what fall off?",
+   "options": [
+    "His jaw",
+    "His nose",
+    "His ear",
+    "His hand"
+   ],
+   "answer": 0,
+   "note": "The Wall Street Journal headline: 'The Radium Water Worked Fine Until His Jaw Came Off.'",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "The 'Radium Girls' were poisoned because their bosses told them to do what with their paintbrushes?",
+   "options": [
+    "Dip them in their coffee",
+    "Lick them to a point",
+    "Store them in their hair",
+    "Clean them with gasoline"
+   ],
+   "answer": 1,
+   "note": "Glowing dials, glowing jaws. The company said it was harmless.",
+   "cat": "History"
+  },
+  {
+   "q": "Julius Wagner-Jauregg won the 1927 Nobel Prize for treating syphilis by infecting patients with what?",
+   "options": [
+    "Smallpox",
+    "Tuberculosis",
+    "Malaria",
+    "Rabies"
+   ],
+   "answer": 2,
+   "note": "The fever burned out the syphilis. It also killed about 15 percent of them.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Castoreum, historically used in vanilla and raspberry flavoring, comes from which part of a beaver?",
+   "options": [
+    "The tail",
+    "The liver",
+    "The teeth",
+    "Castor sacs near the anus"
+   ],
+   "answer": 3,
+   "note": "FDA says it's generally recognized as safe. Your taste buds say nothing.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Which animal population in Australia is suffering a widespread chlamydia epidemic?",
+   "options": [
+    "Koalas",
+    "Kangaroos",
+    "Wombats",
+    "Dingoes"
+   ],
+   "answer": 0,
+   "note": "There is a vaccine program. For the koalas.",
+   "cat": "Animals"
+  },
+  {
+   "q": "The real 'Cocaine Bear' of 1985 is now taxidermied and on display where?",
+   "options": [
+    "The Smithsonian",
+    "A mall in Lexington, Kentucky",
+    "A bar in Knoxville, Tennessee",
+    "The DEA Museum"
+   ],
+   "answer": 1,
+   "note": "It absorbed three or four grams. The rest of the 75 pounds was just for show.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Pablo Escobar's escaped pet hippos now number roughly how many in Colombia?",
+   "options": [
+    "About 12",
+    "About 40",
+    "About 200",
+    "About 1,000"
+   ],
+   "answer": 2,
+   "note": "Four hippos, one zoo, forty years. Invasive, horny, and bulletproof to policy.",
+   "cat": "Animals"
+  },
+  {
+   "q": "The 1982 Chicago Tylenol murders used which poison?",
+   "options": [
+    "Arsenic",
+    "Strychnine",
+    "Ricin",
+    "Potassium cyanide"
+   ],
+   "answer": 3,
+   "note": "Nobody was ever convicted. Every pill bottle you've fought open since is because of this.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "The 1970s 'Rat Park' experiments found rats in an enriched colony did what with morphine water?",
+   "options": [
+    "Mostly ignored it",
+    "Drank it until they died",
+    "Fought over it",
+    "Shared it equally"
+   ],
+   "answer": 0,
+   "note": "Lonely caged rats got hooked. Rats with friends and toys didn't. Draw your own conclusions.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Jennifer Strange died in 2007 of water intoxication during a radio contest to win what?",
+   "options": [
+    "A PlayStation 3",
+    "A Nintendo Wii",
+    "Concert tickets",
+    "A truck"
+   ],
+   "answer": 1,
+   "note": "'Hold Your Wee for a Wii.' She was 28. The console retailed for $250.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Pitcher Dock Ellis threw a 1970 no-hitter while, by his own account, on what?",
+   "options": [
+    "Cocaine",
+    "Quaaludes",
+    "LSD",
+    "Mescaline"
+   ],
+   "answer": 2,
+   "note": "He said he couldn't see the batter. The ball, he said, was fine.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Len Bias died of a cocaine overdose two days after being drafted by which NBA team?",
+   "options": [
+    "Los Angeles Lakers",
+    "Chicago Bulls",
+    "Detroit Pistons",
+    "Boston Celtics"
+   ],
+   "answer": 3,
+   "note": "The 1986 drug law that followed carries his name. So does a lot of federal time.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "The 1986 crack-vs-powder cocaine sentencing ratio of 100-to-1 was reduced in 2010 to what?",
+   "options": [
+    "18-to-1",
+    "1-to-1",
+    "50-to-1",
+    "10-to-1"
+   ],
+   "answer": 0,
+   "note": "Progress, as defined by Congress.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Which country decriminalized personal possession of all drugs in 2001?",
+   "options": [
+    "Netherlands",
+    "Portugal",
+    "Switzerland",
+    "Uruguay"
+   ],
+   "answer": 1,
+   "note": "Overdoses dropped. America took notes and lost them.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "North America's first legal supervised injection site, Insite, opened in 2003 in which city?",
+   "options": [
+    "Toronto",
+    "San Francisco",
+    "Vancouver",
+    "Seattle"
+   ],
+   "answer": 2,
+   "note": "Downtown Eastside. Clean needles, trained staff, no funerals that day.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Antabuse's alcohol reaction was first noticed in workers in which industry?",
+   "options": [
+    "Coal mining",
+    "Textiles",
+    "Brewing",
+    "Rubber"
+   ],
+   "answer": 3,
+   "note": "Danish scientists then tested it on themselves. They called their group the Death Battalion.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Marilyn Monroe died in 1962 of an overdose of what class of drugs?",
+   "options": [
+    "Barbiturates",
+    "Opioids",
+    "Benzodiazepines",
+    "Amphetamines"
+   ],
+   "answer": 0,
+   "note": "Nembutal and chloral hydrate. The coroner wrote 'probable suicide.'",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Prince died in 2016 from fentanyl in counterfeit pills stamped to look like what?",
+   "options": [
+    "Xanax",
+    "Vicodin",
+    "Adderall",
+    "Percocet"
+   ],
+   "answer": 1,
+   "note": "Hydrocodone on the label, fentanyl inside. Same deal as the guy in bed 4.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Hydrocodone combination products like Vicodin were moved from Schedule III to Schedule II in what year?",
+   "options": [
+    "2001",
+    "2009",
+    "2014",
+    "2019"
+   ],
+   "answer": 2,
+   "note": "Eighteen years after OxyContin. Right on time.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Oxycodone was first synthesized in 1916 in which country?",
+   "options": [
+    "United States",
+    "Switzerland",
+    "France",
+    "Germany"
+   ],
+   "answer": 3,
+   "note": "Frankfurt. Purdue just put a time-release coat on it eighty years later.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Tianeptine, sold in smoke shops as a 'supplement,' is nicknamed what?",
+   "options": [
+    "Gas-station heroin",
+    "Hillbilly heroin",
+    "Legal meth",
+    "Church dope"
+   ],
+   "answer": 0,
+   "note": "Approved for depression in France. Approved for nothing in the US. Sold next to the beef jerky.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Which was the last US state to repeal statewide alcohol prohibition, in 1966?",
+   "options": [
+    "Utah",
+    "Mississippi",
+    "Kansas",
+    "Oklahoma"
+   ],
+   "answer": 1,
+   "note": "Thirty-three years after everyone else. Still has dry counties.",
+   "cat": "History"
+  },
+  {
+   "q": "'Jake leg,' which paralyzed tens of thousands of Americans in 1930, came from drinking what?",
+   "options": [
+    "Wood alcohol",
+    "Bathtub gin",
+    "Adulterated Jamaica ginger extract",
+    "Antifreeze"
+   ],
+   "answer": 2,
+   "note": "A patent medicine loophole during Prohibition. The additive ate their nerves.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Methamphetamine was first synthesized in 1893 in which country?",
+   "options": [
+    "Germany",
+    "United States",
+    "Switzerland",
+    "Japan"
+   ],
+   "answer": 3,
+   "note": "Nagai Nagayoshi, from ephedrine. Crystal came in 1919, also Japan.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Morphine is named after Morpheus, the Greek god of what?",
+   "options": [
+    "Dreams",
+    "Death",
+    "Pain",
+    "Sleep"
+   ],
+   "answer": 0,
+   "note": "Isolated in 1804 by a German pharmacist who tested it on himself.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Utah lowered its legal driving BAC limit in 2018 to what, the strictest in the nation?",
+   "options": [
+    "0.08",
+    "0.05",
+    "0.04",
+    "0.06"
+   ],
+   "answer": 1,
+   "note": "Two beers and you're a case number.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Over-the-counter Narcan nasal spray was approved by the FDA in what year?",
+   "options": [
+    "2015",
+    "2019",
+    "2023",
+    "2021"
+   ],
+   "answer": 2,
+   "note": "Fifty-two years after the prescription version. Now it's next to the Advil.",
+   "cat": "Drugs & Booze"
+  },
+  {
+   "q": "Which of these is a manner of death a US medical examiner can officially check on a death certificate?",
+   "options": [
+    "Misadventure",
+    "Karma",
+    "Deserved",
+    "Undetermined"
+   ],
+   "answer": 3,
+   "note": "Natural, accident, suicide, homicide, undetermined. 'Deserved' is implied.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "The 'Son of Sam' laws, which stop convicts from profiting off books and movies about their crimes, were first passed in New York because of which killer?",
+   "options": [
+    "David Berkowitz",
+    "Ted Bundy",
+    "Charles Manson",
+    "Richard Ramirez"
+   ],
+   "answer": 0,
+   "note": "Passed in 1977 before he'd sold a word. Publishers were already circling.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Norway's maximum prison sentence, handed to a man who killed 77 people in 2011, is how long?",
+   "options": [
+    "Life without parole",
+    "50 years",
+    "30 years",
+    "21 years"
+   ],
+   "answer": 3,
+   "note": "Extendable five years at a time if he's still dangerous. He will be.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "In 2010, which state carried out the first US firing-squad execution since 1996?",
+   "options": [
+    "Texas",
+    "Oklahoma",
+    "Utah",
+    "Idaho"
+   ],
+   "answer": 2,
+   "note": "Ronnie Lee Gardner chose it himself. Five rifles, one loaded with a blank.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "How many times did Ted Bundy escape from custody in Colorado in 1977?",
+   "options": [
+    "Twice",
+    "Once",
+    "Three times",
+    "Never, he was transferred"
+   ],
+   "answer": 0,
+   "note": "Courthouse window in June, jail ceiling in December. Florida caught him on a traffic stop.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "The 1973 hostage crisis that gave us the term 'Stockholm syndrome' happened during a robbery of what?",
+   "options": [
+    "A jewelry store",
+    "A bank",
+    "A post office",
+    "A pharmacy"
+   ],
+   "answer": 1,
+   "note": "Six days in a vault. The hostages later raised money for their captors' defense.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Which is the only crime specifically defined in the US Constitution?",
+   "options": [
+    "Murder",
+    "Espionage",
+    "Bribery",
+    "Treason"
+   ],
+   "answer": 3,
+   "note": "Article III, Section 3. Two witnesses or a confession in open court. Fewer than 40 ever charged.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "The 1932 'Lindbergh Law' made which crime a federal offense when it crosses state lines?",
+   "options": [
+    "Bank robbery",
+    "Car theft",
+    "Kidnapping",
+    "Mail fraud"
+   ],
+   "answer": 2,
+   "note": "Passed weeks after the baby was found dead. Marked ransom bills caught the guy.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Al Capone's older brother Vincenzo changed his name and spent the 1920s working as what?",
+   "options": [
+    "A Catholic priest",
+    "A Prohibition agent",
+    "A Chicago cop",
+    "A federal judge"
+   ],
+   "answer": 1,
+   "note": "Richard 'Two-Gun' Hart, busting bootleggers in Nebraska while his brother ran Chicago.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Jeffrey Dahmer was killed in prison in 1994 by an inmate wielding what?",
+   "options": [
+    "A metal bar from the gym",
+    "A sharpened toothbrush",
+    "A mop handle",
+    "A food tray"
+   ],
+   "answer": 0,
+   "note": "Christopher Scarver said Dahmer shaped his prison food to look like severed limbs.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Which serial killer's last words before his 1994 execution were reportedly 'Kiss my ass'?",
+   "options": [
+    "Ted Bundy",
+    "Aileen Wuornos",
+    "Richard Ramirez",
+    "John Wayne Gacy"
+   ],
+   "answer": 3,
+   "note": "Thirty-three victims, zero remorse. His brain was removed for study. It was normal.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "The DEA was created in 1973 by which president?",
+   "options": [
+    "Ronald Reagan",
+    "Lyndon Johnson",
+    "Richard Nixon",
+    "Gerald Ford"
+   ],
+   "answer": 2,
+   "note": "He also declared drugs 'public enemy number one.' An aide later said it was about hippies.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "New York's Rikers Island jail is named after a family whose most notorious member, Richard Riker, did what as a judge?",
+   "options": [
+    "Hanged pirates on the island",
+    "Ran a leper colony there",
+    "Pardoned his own relatives",
+    "Sent free Black New Yorkers south into slavery"
+   ],
+   "answer": 3,
+   "note": "The 'Kidnapping Club,' 1830s. Abolitionists coined the name. The jail kept his.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "France carried out its last execution by guillotine in what year?",
+   "options": [
+    "1977",
+    "1939",
+    "1958",
+    "1962"
+   ],
+   "answer": 0,
+   "note": "Same year Star Wars came out. Hamida Djandoubi, Marseille, behind closed doors.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "Under a law from 1872 that is still on the books, it is technically illegal in England to be drunk where?",
+   "options": [
+    "In a church",
+    "In a pub",
+    "In your own home",
+    "At a football match"
+   ],
+   "answer": 1,
+   "note": "Licensing Act 1872, section 12. Every pub in the country is a crime scene by 9pm.",
+   "cat": "Crime & Law"
+  },
+  {
+   "q": "In 1518, hundreds of people in which city danced uncontrollably for weeks, some reportedly until they died?",
+   "options": [
+    "Strasbourg",
+    "Vienna",
+    "Prague",
+    "Antwerp"
+   ],
+   "answer": 0,
+   "note": "The city's cure was to hire musicians and build a stage. It made things worse.",
+   "cat": "History"
+  },
+  {
+   "q": "In 1919, a 2-million-gallon wave of molasses killed 21 people in which US city?",
+   "options": [
+    "Baltimore",
+    "New Orleans",
+    "Boston",
+    "Philadelphia"
+   ],
+   "answer": 2,
+   "note": "The tank burst in the North End. Locals swore you could smell it on hot days for decades.",
+   "cat": "History"
+  },
+  {
+   "q": "George Washington's doctors treated his final illness in 1799 by draining roughly what share of his blood in under a day?",
+   "options": [
+    "About 5 percent",
+    "About 15 percent",
+    "About 70 percent",
+    "About 40 percent"
+   ],
+   "answer": 3,
+   "note": "Four bleedings, plus blistering and an enema. He had a sore throat.",
+   "cat": "History"
+  },
+  {
+   "q": "President Garfield survived his 1881 shooting for 80 days. What most likely killed him?",
+   "options": [
+    "The bullet lodged in his spine",
+    "Pneumonia",
+    "His doctors probing the wound with unwashed fingers",
+    "A second assassin"
+   ],
+   "answer": 2,
+   "note": "His assassin's defense: 'The doctors killed him. I just shot him.' Hanged anyway.",
+   "cat": "History"
+  },
+  {
+   "q": "London's 'Great Stink' of 1858 shut down Parliament. What caused it?",
+   "options": [
+    "Raw sewage cooking in the Thames",
+    "A tannery fire",
+    "Rotting fish at the market",
+    "Burning coal dust"
+   ],
+   "answer": 0,
+   "note": "Curtains soaked in chloride of lime didn't help. They built the sewers after that.",
+   "cat": "History"
+  },
+  {
+   "q": "In the 1700s, Londoners paid admission to tour which institution for entertainment?",
+   "options": [
+    "Newgate prison",
+    "The Royal Mint",
+    "A smallpox ward",
+    "Bethlem psychiatric hospital"
+   ],
+   "answer": 3,
+   "note": "Bedlam. Visitors poked patients with sticks. It's where the word comes from.",
+   "cat": "History"
+  },
+  {
+   "q": "During Prohibition, the US government ordered manufacturers to add what to industrial alcohol to stop people drinking it?",
+   "options": [
+    "Methanol and other poisons",
+    "Red dye",
+    "Soap",
+    "Salt"
+   ],
+   "answer": 0,
+   "note": "People drank it anyway. An estimated 10,000 died. The policy continued.",
+   "cat": "History"
+  },
+  {
+   "q": "Immediately after Rasputin was murdered in 1916, his killers did what with his body?",
+   "options": [
+    "Burned it in a furnace",
+    "Buried it under the palace",
+    "Dropped it through the ice into a river",
+    "Shipped it to Siberia"
+   ],
+   "answer": 2,
+   "note": "Poisoned, shot, beaten, then dumped. The autopsy said the bullets did it.",
+   "cat": "History"
+  },
+  {
+   "q": "In 897, Pope Stephen VI had his predecessor Formosus dug up and did what with the corpse?",
+   "options": [
+    "Put it on trial",
+    "Crowned it again",
+    "Burned it as a heretic",
+    "Married it off"
+   ],
+   "answer": 0,
+   "note": "The Cadaver Synod. A deacon answered for the body. It lost.",
+   "cat": "History"
+  },
+  {
+   "q": "In 1184, dozens of German nobles meeting in Erfurt died when a floor collapsed and dropped them into what?",
+   "options": [
+    "A river",
+    "A cesspit",
+    "A wine cellar",
+    "A furnace"
+   ],
+   "answer": 1,
+   "note": "Drowned in latrine. The king survived by clinging to a window niche.",
+   "cat": "History"
+  },
+  {
+   "q": "Sweden's King Adolf Frederick died in 1771 after a huge meal that reportedly ended with 14 servings of what?",
+   "options": [
+    "Oysters",
+    "Pickled herring",
+    "Semla cream buns",
+    "Lobster"
+   ],
+   "answer": 2,
+   "note": "Lobster, caviar, sauerkraut, champagne, then the buns. Swedes call him the king who ate himself to death.",
+   "cat": "History"
+  },
+  {
+   "q": "Astronomer Tycho Brahe lost part of his nose in a 1566 duel fought over what?",
+   "options": [
+    "A woman",
+    "A horse",
+    "A gambling debt",
+    "A math formula"
+   ],
+   "answer": 3,
+   "note": "He wore a metal nose for life. Legend says he died from refusing to leave a banquet to pee.",
+   "cat": "History"
+  },
+  {
+   "q": "In the CIA's 'Operation Midnight Climax,' agents dosed unwitting men with LSD after luring them with what?",
+   "options": [
+    "Prostitutes",
+    "Free beer",
+    "Job interviews",
+    "Church socials"
+   ],
+   "answer": 0,
+   "note": "Safehouses in San Francisco, two-way mirrors, taxpayer-funded. The 1950s and 60s.",
+   "cat": "History"
+  },
+  {
+   "q": "In 1998, renovators found more than 1,200 human bones buried under whose former London home?",
+   "options": [
+    "Charles Dickens",
+    "Charles Darwin",
+    "Benjamin Franklin",
+    "Isaac Newton"
+   ],
+   "answer": 2,
+   "note": "A friend ran an illegal anatomy school in the basement. Probably. Franklin was 'out of town.'",
+   "cat": "History"
+  },
+  {
+   "q": "The Hatfield-McCoy feud's first courtroom fight, in 1878, was over who owned what?",
+   "options": [
+    "A horse",
+    "A hog",
+    "A still",
+    "A woman"
+   ],
+   "answer": 1,
+   "note": "The witness who testified about the pig was murdered two years later. Over the pig.",
+   "cat": "History"
+  },
+  {
+   "q": "Which US president personally led troops into the field while in office, to put down a 1794 tax revolt over whiskey?",
+   "options": [
+    "Andrew Jackson",
+    "Thomas Jefferson",
+    "Ulysses Grant",
+    "George Washington"
+   ],
+   "answer": 3,
+   "note": "The Whiskey Rebellion. The only sitting president to command an army in the field.",
+   "cat": "History"
+  },
+  {
+   "q": "Plague doctors' beaked masks were stuffed with what?",
+   "options": [
+    "Herbs and spices",
+    "Charcoal",
+    "Mercury",
+    "Wet sponges"
+   ],
+   "answer": 0,
+   "note": "To block 'bad air.' The disease came from fleas. The beak did nothing but look great.",
+   "cat": "History"
+  },
+  {
+   "q": "Giles Corey, accused of witchcraft at Salem in 1692, was executed how?",
+   "options": [
+    "Hanged",
+    "Burned",
+    "Drowned",
+    "Crushed under stones"
+   ],
+   "answer": 3,
+   "note": "Took two days. His only recorded words: 'More weight.'",
+   "cat": "History"
+  },
+  {
+   "q": "Lincoln's bodyguard at Ford's Theatre, John Parker, was away from his post doing what when Booth walked in?",
+   "options": [
+    "Sleeping in the lobby",
+    "Drinking at the saloon next door",
+    "Visiting a brothel",
+    "Playing cards backstage"
+   ],
+   "answer": 1,
+   "note": "He was never disciplined. He kept his job, guarding Mary Lincoln.",
+   "cat": "History"
+  },
+  {
+   "q": "The shortest war in history, Britain vs. Zanzibar in 1896, lasted roughly how long?",
+   "options": [
+    "About 6 hours",
+    "About 3 days",
+    "About 40 minutes",
+    "About 2 weeks"
+   ],
+   "answer": 2,
+   "note": "The sultan fled to the German consulate. One British sailor was wounded.",
+   "cat": "History"
+  },
+  {
+   "q": "In 1726, Englishwoman Mary Toft fooled the king's surgeons into believing she had given birth to what?",
+   "options": [
+    "Rabbits",
+    "Kittens",
+    "Eels",
+    "A goat"
+   ],
+   "answer": 0,
+   "note": "Several of them, in pieces. She'd been inserting them. The doctors published first, checked later.",
+   "cat": "History"
+  },
+  {
+   "q": "In Tasmania, wallabies have been caught breaking into licensed farms, eating what, and hopping in circles?",
+   "options": [
+    "Opium poppies",
+    "Cannabis",
+    "Hops",
+    "Tobacco"
+   ],
+   "answer": 0,
+   "note": "Tasmania grows about half the world's legal opiate crop. The wallabies know.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Male antechinus, a small Australian marsupial, die every year after doing what?",
+   "options": [
+    "Fighting over territory",
+    "Migrating",
+    "Mating for up to 14 hours at a stretch for weeks",
+    "Building nests"
+   ],
+   "answer": 2,
+   "note": "Stress hormones wreck their immune systems. Fur falling out, bleeding internally, still at it.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Which of these animals is physically unable to vomit?",
+   "options": [
+    "Dog",
+    "Horse",
+    "Cat",
+    "Pig"
+   ],
+   "answer": 1,
+   "note": "A strong one-way valve into the stomach. Eat something bad and it's colic or death.",
+   "cat": "Animals"
+  },
+  {
+   "q": "A turkey vulture's main defense against a threat is to do what?",
+   "options": [
+    "Spray musk",
+    "Play dead",
+    "Shriek",
+    "Projectile vomit on it"
+   ],
+   "answer": 3,
+   "note": "Half-digested roadkill, several feet. It also poops on its own legs to cool down.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Male sea otters off California have been documented forcibly mating with, and killing, what?",
+   "options": [
+    "Baby harbor seals",
+    "Sea lions",
+    "Penguins",
+    "Seagulls"
+   ],
+   "answer": 0,
+   "note": "Nineteen cases in one study. Nature's cuddliest mascot has a record.",
+   "cat": "Animals"
+  },
+  {
+   "q": "A 1915 report on Adelie penguins' sex lives was so disturbing to its author that it was what?",
+   "options": [
+    "Burned on the ship home",
+    "Written entirely in Latin",
+    "Awarded a medal",
+    "Kept out of print for nearly 100 years"
+   ],
+   "answer": 3,
+   "note": "Necrophilia, coercion, abuse of chicks. He wrote the worst parts in Greek letters.",
+   "cat": "Animals"
+  },
+  {
+   "q": "The Argentine lake duck holds the vertebrate record for penis length relative to body size. About how long?",
+   "options": [
+    "3 inches",
+    "17 inches",
+    "8 inches",
+    "3 feet"
+   ],
+   "answer": 1,
+   "note": "Corkscrew-shaped, brush-tipped, used like a lasso. The duck itself is about 16 inches.",
+   "cat": "Animals"
+  },
+  {
+   "q": "A male honeybee dies shortly after mating because what happens?",
+   "options": [
+    "The queen bites his head off",
+    "Workers sting him",
+    "His genitals rip off inside the queen",
+    "He forgets how to fly"
+   ],
+   "answer": 2,
+   "note": "The next drone has to pull the previous guy's parts out first. Romance.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Dutch biologist Kees Moeliker won an Ig Nobel Prize for documenting a mallard duck doing what for 75 minutes?",
+   "options": [
+    "Mating with a dead duck",
+    "Walking in a circle",
+    "Quacking at its reflection",
+    "Eating a cigarette"
+   ],
+   "answer": 0,
+   "note": "The dead duck had hit his museum window. There is now an annual Dead Duck Day.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Hippos mark territory by doing what while they poop?",
+   "options": [
+    "Roaring",
+    "Spinning their tails like a propeller",
+    "Submerging",
+    "Charging"
+   ],
+   "answer": 1,
+   "note": "Zookeepers call it muck-spreading. Stand well back.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Which animal produces cube-shaped poop?",
+   "options": [
+    "Koala",
+    "Platypus",
+    "Wombat",
+    "Echidna"
+   ],
+   "answer": 2,
+   "note": "Up to 100 cubes a night, stacked to mark territory. Science figured out how in 2018.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Which US animal can give humans leprosy?",
+   "options": [
+    "Raccoon",
+    "Opossum",
+    "Skunk",
+    "Armadillo"
+   ],
+   "answer": 3,
+   "note": "A chunk of US leprosy cases trace back to them. Don't eat them. People eat them.",
+   "cat": "Animals"
+  },
+  {
+   "q": "The cat parasite Toxoplasma gondii changes rat behavior how?",
+   "options": [
+    "Makes them attracted to cat urine",
+    "Makes them hoard food",
+    "Makes them sterile",
+    "Makes them run faster"
+   ],
+   "answer": 0,
+   "note": "Rat walks up to cat, gets eaten, parasite breeds in cat. Roughly a third of humans carry it.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Lobsters urinate from where?",
+   "options": [
+    "Their tails",
+    "Their claws",
+    "Their faces",
+    "Their gills"
+   ],
+   "answer": 2,
+   "note": "Nozzles under the antennae. They pee at each other to flirt and to fight.",
+   "cat": "Animals"
+  },
+  {
+   "q": "A male giraffe checks whether a female is ready to mate by doing what?",
+   "options": [
+    "Sniffing her ears",
+    "Tasting her urine",
+    "Licking her tail",
+    "Nudging her stomach"
+   ],
+   "answer": 1,
+   "note": "He nudges her until she pees, then gargles it. It's called the flehmen response.",
+   "cat": "Animals"
+  },
+  {
+   "q": "After a male deep-sea anglerfish finds a mate, what happens to him?",
+   "options": [
+    "He dies immediately",
+    "He grows to her size",
+    "He changes sex",
+    "He fuses to her body permanently"
+   ],
+   "answer": 3,
+   "note": "His organs dissolve, their blood merges, and he becomes a sperm pouch she carries around.",
+   "cat": "Animals"
+  },
+  {
+   "q": "An unspayed female ferret that doesn't mate can die. Why?",
+   "options": [
+    "She stays in heat and estrogen poisons her bone marrow",
+    "She stops eating",
+    "Her uterus ruptures",
+    "She overheats"
+   ],
+   "answer": 0,
+   "note": "Aplastic anemia. The fix is spaying, a hormone shot, or a vasectomized male. That's a job title.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Sloths climb down from their trees roughly once a week to do what?",
+   "options": [
+    "Drink",
+    "Mate",
+    "Eat dirt",
+    "Poop"
+   ],
+   "answer": 3,
+   "note": "They lose up to a third of their body weight doing it. Many get eaten on the trip.",
+   "cat": "Animals"
+  },
+  {
+   "q": "In World War II, psychologist B.F. Skinner trained which animal to guide missiles by pecking at a screen?",
+   "options": [
+    "Dolphins",
+    "Pigeons",
+    "Dogs",
+    "Rats"
+   ],
+   "answer": 1,
+   "note": "Project Pigeon. It worked in tests. The military cut it anyway.",
+   "cat": "Animals"
+  },
+  {
+   "q": "The US military's WWII 'Project X-Ray' planned to firebomb Japanese cities using what?",
+   "options": [
+    "Pigeons",
+    "Rats",
+    "Bats carrying tiny incendiaries",
+    "Kamikaze drones"
+   ],
+   "answer": 2,
+   "note": "Test bats escaped and burned down a US air base in New Mexico. Project cancelled.",
+   "cat": "Animals"
+  },
+  {
+   "q": "In the 1960s, the CIA spent millions surgically wiring what animal with a microphone to spy on Soviets?",
+   "options": [
+    "A cat",
+    "A pigeon",
+    "A dog",
+    "A raven"
+   ],
+   "answer": 0,
+   "note": "Acoustic Kitty. The cat wandered off whenever it felt like it. Project abandoned.",
+   "cat": "Animals"
+  },
+  {
+   "q": "A rabbit hunt staged for Napoleon in 1807 went wrong when the rabbits did what?",
+   "options": [
+    "All dropped dead",
+    "Swarmed him",
+    "Refused to leave their cages",
+    "Ate the picnic"
+   ],
+   "answer": 1,
+   "note": "Hundreds of tame rabbits thought he had food. He fled to his carriage.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Tasmanian devils are being wiped out by a cancer that spreads how?",
+   "options": [
+    "Mosquito bites",
+    "Contaminated water",
+    "Biting each other's faces",
+    "Eating infected roadkill"
+   ],
+   "answer": 2,
+   "note": "One of a handful of contagious cancers known. The devils bite faces constantly. Bad combination.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Santino, a chimp at a Swedish zoo, made headlines in 2009 for calmly doing what each morning?",
+   "options": [
+    "Picking the lock on his cage",
+    "Stealing phones",
+    "Painting",
+    "Stockpiling rocks to throw at visitors"
+   ],
+   "answer": 3,
+   "note": "He hid them under hay and behind logs. Scientists called it evidence of planning.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Stubbs, honorary mayor of Talkeetna, Alaska for about 20 years, was a what?",
+   "options": [
+    "Cat",
+    "Dog",
+    "Goat",
+    "Moose"
+   ],
+   "answer": 0,
+   "note": "A write-in protest vote. Drank catnip water from a margarita glass at the bar daily.",
+   "cat": "Animals"
+  },
+  {
+   "q": "In 1903, Topsy the elephant was publicly killed at Coney Island by what method?",
+   "options": [
+    "Hanging",
+    "Firing squad",
+    "Electrocution",
+    "Drowning"
+   ],
+   "answer": 2,
+   "note": "6,600 volts, filmed by Edison's company. They fed her cyanide-laced carrots first.",
+   "cat": "Animals"
+  },
+  {
+   "q": "In Switzerland, it is illegal to own just one of which pet?",
+   "options": [
+    "Goldfish",
+    "Guinea pig",
+    "Hamster",
+    "Parrot"
+   ],
+   "answer": 1,
+   "note": "Social animals need company by law. A rental service supplies a friend when one dies.",
+   "cat": "Animals"
+  },
+  {
+   "q": "Under a Texas law still on the books, owning how many or more 'obscene devices' is presumed to mean you're selling them?",
+   "options": [
+    "Six",
+    "Two",
+    "Ten",
+    "Twenty"
+   ],
+   "answer": 0,
+   "note": "A federal court struck it down in 2008. Texas never repealed it. Five is personal, six is a business.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The first condom commercial on US network television aired in 1991 on which network?",
+   "options": [
+    "NBC",
+    "CBS",
+    "Fox",
+    "ABC"
+   ],
+   "answer": 2,
+   "note": "During 'Herman's Head.' The big three held out for years.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The 2015 hack of which website dumped data on roughly 32 million users seeking affairs?",
+   "options": [
+    "Tinder",
+    "Ashley Madison",
+    "eHarmony",
+    "Craigslist"
+   ],
+   "answer": 1,
+   "note": "Slogan: 'Life is short. Have an affair.' Most of the women turned out to be bots.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "In 2017, the maker of the We-Vibe smart vibrator paid millions to settle a lawsuit over doing what?",
+   "options": [
+    "Overheating",
+    "Selling customer names to churches",
+    "Recording audio",
+    "Secretly collecting data on when and how it was used"
+   ],
+   "answer": 3,
+   "note": "Temperature, intensity, timestamps, all sent to Canada. Up to $10,000 each for app users.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Nevada's legal brothels are only allowed in counties with populations under what?",
+   "options": [
+    "50,000",
+    "700,000",
+    "2 million",
+    "100,000"
+   ],
+   "answer": 1,
+   "note": "Which rules out Las Vegas. Everything there is illegal and happening anyway.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "A 28,000-year-old polished stone phallus was dug up in 2005 in a cave in which country?",
+   "options": [
+    "France",
+    "Turkey",
+    "Germany",
+    "Egypt"
+   ],
+   "answer": 2,
+   "note": "Eight inches of siltstone. Archaeologists say it may also have been used to knap flint. Sure.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "An ancient Egyptian medical papyrus recommended which contraceptive?",
+   "options": [
+    "Crocodile dung",
+    "Olive oil",
+    "Beeswax",
+    "Goat's blood"
+   ],
+   "answer": 0,
+   "note": "Kahun Papyrus, around 1800 BC. Mixed with fermented dough. It may have sort of worked.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The Italians called syphilis 'the French disease.' What did the French call it?",
+   "options": [
+    "The English disease",
+    "The Spanish disease",
+    "The German disease",
+    "The Neapolitan disease"
+   ],
+   "answer": 3,
+   "note": "Russians called it the Polish disease. Poles called it the German disease. Nobody owned it.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The first US state to legally marry same-sex couples, in 2004, was which?",
+   "options": [
+    "Vermont",
+    "California",
+    "Massachusetts",
+    "Hawaii"
+   ],
+   "answer": 2,
+   "note": "Eleven years before the Supreme Court made it national. Vermont had civil unions first.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Which state was the last to remove its ban on interracial marriage from its constitution, by a vote in 2000?",
+   "options": [
+    "Mississippi",
+    "Alabama",
+    "Georgia",
+    "Louisiana"
+   ],
+   "answer": 1,
+   "note": "Unenforceable since 1967. Forty percent still voted to keep it.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Which ape species is known for defusing tension with sex, including between females?",
+   "options": [
+    "Bonobos",
+    "Gorillas",
+    "Orangutans",
+    "Chimpanzees"
+   ],
+   "answer": 0,
+   "note": "Food arrives, everyone gets tense, everyone has sex, everyone eats. Run by the females, too.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Match.com, one of the first online dating sites, launched in what year?",
+   "options": [
+    "1989",
+    "2001",
+    "1998",
+    "1995"
+   ],
+   "answer": 3,
+   "note": "Dial-up speeds. You'd wait minutes for a photo you'd regret seeing.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The word 'pornography' comes from Greek roots meaning what?",
+   "options": [
+    "Writing about prostitutes",
+    "Pictures of flesh",
+    "Forbidden images",
+    "Pleasure books"
+   ],
+   "answer": 0,
+   "note": "Porne plus graphein. Coined in the 1800s when they dug up Pompeii and needed a shelf label.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Lambskin condoms prevent pregnancy but do not reliably prevent what?",
+   "options": [
+    "Chafing",
+    "Latex allergies",
+    "Sexually transmitted infections",
+    "Loss of sensation"
+   ],
+   "answer": 2,
+   "note": "Natural pores are big enough for viruses, too small for sperm. Read the box.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The G-spot is named after which German gynecologist?",
+   "options": [
+    "Gustav Gross",
+    "Ernst Grafenberg",
+    "Georg Goldstein",
+    "Gunter Grass"
+   ],
+   "answer": 1,
+   "note": "He also invented an early IUD. He described the spot in 1950. The debate continues.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The Kinsey scale rates sexual orientation on a scale of 0 to what?",
+   "options": [
+    "10",
+    "5",
+    "100",
+    "6"
+   ],
+   "answer": 3,
+   "note": "Zero is exclusively heterosexual, six exclusively homosexual. There's also an X for 'none.'",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Priapism, the condition in every Viagra warning, is named after a Greek god of what?",
+   "options": [
+    "War",
+    "Fertility",
+    "Wine",
+    "Sleep"
+   ],
+   "answer": 1,
+   "note": "Priapus, always depicted with a permanent and enormous erection. Patron saint of the 4-hour rule.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Which rodent is science's go-to model for monogamy because it mates for life?",
+   "options": [
+    "Hamster",
+    "Gerbil",
+    "Prairie vole",
+    "Chinchilla"
+   ],
+   "answer": 2,
+   "note": "Its cousin the meadow vole sleeps around. The difference is receptor density. Love is a brain region.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "In 2014, OkCupid admitted it had secretly experimented on users by doing what?",
+   "options": [
+    "Telling bad matches they were great matches",
+    "Hiding profile photos",
+    "Charging random fees",
+    "Deleting messages"
+   ],
+   "answer": 0,
+   "note": "The blog post was titled 'We Experiment On Human Beings!' People kept swiping.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "In 2020, Utah reduced polygamy among consenting adults to what level of offense?",
+   "options": [
+    "A Class A misdemeanor",
+    "A third-degree felony",
+    "Fully legal, no penalty",
+    "An infraction, like a traffic ticket"
+   ],
+   "answer": 3,
+   "note": "Still a felony if fraud or abuse is involved. Otherwise, it's a fine.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Adultery is still technically a felony in which state?",
+   "options": [
+    "Nevada",
+    "Oregon",
+    "Wisconsin",
+    "Colorado"
+   ],
+   "answer": 2,
+   "note": "Up to 3.5 years and $10,000. Nobody's been charged in decades. Still there.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The word 'sadism' comes from the name of which French aristocrat?",
+   "options": [
+    "Duke of Orleans",
+    "Marquis de Sade",
+    "Cardinal Richelieu",
+    "Marquis de Lafayette"
+   ],
+   "answer": 1,
+   "note": "He spent 32 years in prisons and asylums and wrote the books there. Napoleon had him locked up.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "'Masochism' is named after Leopold von Sacher-Masoch, a 19th-century Austrian who was a what?",
+   "options": [
+    "Novelist",
+    "Surgeon",
+    "Priest",
+    "General"
+   ],
+   "answer": 0,
+   "note": "He wrote 'Venus in Furs.' He hated that the word was named after him. Which is fitting.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "A 2017 meta-analysis found sperm counts in Western men fell by roughly how much between 1973 and 2011?",
+   "options": [
+    "About 10 percent",
+    "About 90 percent",
+    "They rose slightly",
+    "About half"
+   ],
+   "answer": 3,
+   "note": "No sign of leveling off. The authors blamed chemicals, obesity and stress. So, everything.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "'Blue balls' has an actual medical name. What is it?",
+   "options": [
+    "Epididymal hypertension",
+    "Testicular torsion",
+    "Varicocele",
+    "Orchitis"
+   ],
+   "answer": 0,
+   "note": "Yes, it's real. No, it's not dangerous. No, that's not an argument.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "The first country to legalize same-sex marriage, in 2001, was which?",
+   "options": [
+    "Denmark",
+    "Canada",
+    "Netherlands",
+    "Belgium"
+   ],
+   "answer": 2,
+   "note": "Four couples married at midnight in Amsterdam. The mayor officiated.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Pompeii's best-preserved brothel is called the Lupanar, from the Latin for what?",
+   "options": [
+    "Red door",
+    "She-wolf",
+    "Pleasure house",
+    "Cave"
+   ],
+   "answer": 1,
+   "note": "Lupa was slang for prostitute. Stone beds, erotic frescoes as a menu, and graffiti reviews.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Speed dating was invented in 1998 by a what?",
+   "options": [
+    "Catholic priest",
+    "Marketing executive",
+    "Psychologist",
+    "Rabbi"
+   ],
+   "answer": 3,
+   "note": "Yaacov Deyo, to help Jewish singles in LA. Seven minutes, then a bell.",
+   "cat": "Sex & Dating"
+  },
+  {
+   "q": "Nike's 'Just Do It' slogan was inspired by the last words of whom?",
+   "options": [
+    "A murderer facing a firing squad",
+    "A marathon runner",
+    "Muhammad Ali",
+    "An astronaut"
+   ],
+   "answer": 0,
+   "note": "Gary Gilmore, Utah, 1977: 'Let's do it.' The ad man changed one word.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Before acting, Steve Buscemi worked for four years as a what in New York?",
+   "options": [
+    "Cab driver",
+    "Firefighter",
+    "Mortician",
+    "Bartender"
+   ],
+   "answer": 1,
+   "note": "He went back to his old firehouse after 9/11 and dug for days. Didn't tell the press.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Danny DeVito's Frank Reynolds joined It's Always Sunny in which season?",
+   "options": [
+    "Season 2",
+    "Season 1",
+    "Season 3",
+    "Season 4"
+   ],
+   "answer": 0,
+   "note": "FX said add a star or get cancelled. He came out of the couch and never left.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Shane Gillis was fired from SNL in 2019 before his first episode. He first hosted the show in what year?",
+   "options": [
+    "2022",
+    "2023",
+    "2021",
+    "2024"
+   ],
+   "answer": 3,
+   "note": "His monologue told viewers not to Google why. Everyone Googled why.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Fred Rogers kept his weight at exactly 143 pounds for decades. Why that number?",
+   "options": [
+    "It was his draft number",
+    "It spells 'I love you' in letter counts",
+    "His mother's birthday",
+    "His father's weight"
+   ],
+   "answer": 1,
+   "note": "One letter, four letters, three letters. He swam daily to hold it. This man was not from here.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Before 'The Joy of Painting,' Bob Ross spent 20 years as what?",
+   "options": [
+    "A prison guard",
+    "A funeral director",
+    "An Air Force master sergeant",
+    "A used car salesman"
+   ],
+   "answer": 2,
+   "note": "He was the guy screaming at recruits. He vowed never to raise his voice again.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "As a teenager, Christopher Walken worked in a circus as a what?",
+   "options": [
+    "Lion tamer's assistant",
+    "Trapeze catcher",
+    "Clown",
+    "Human cannonball"
+   ],
+   "answer": 0,
+   "note": "The lioness was named Sheba. He says she was more like a dog. He was 16.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "The famous 'Wilhelm scream' stock sound effect is named after a character in what kind of movie?",
+   "options": [
+    "A 1930s horror film",
+    "A WWII war movie",
+    "A Star Wars film",
+    "A 1953 Western"
+   ],
+   "answer": 3,
+   "note": "Private Wilhelm takes an arrow in the leg in 'The Charge at Feather River.' Reused in 400+ films.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Brandon Lee, Bruce Lee's son, was killed on set in 1993 while filming which movie?",
+   "options": [
+    "Rapid Fire",
+    "Showdown in Little Tokyo",
+    "The Crow",
+    "Dragon"
+   ],
+   "answer": 2,
+   "note": "A dummy bullet left in a prop gun. They finished the film with a double and early CGI.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "The LA medical examiner ruled Matthew Perry's 2023 death was caused by the acute effects of what?",
+   "options": [
+    "Fentanyl",
+    "Ketamine",
+    "Alcohol",
+    "Oxycodone"
+   ],
+   "answer": 1,
+   "note": "He was in legit ketamine therapy. The levels found were anesthesia-grade. Five people were charged.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "While filming Groundhog Day, Bill Murray was bitten twice by what?",
+   "options": [
+    "The groundhog",
+    "A horse",
+    "Andie MacDowell's dog",
+    "A snake"
+   ],
+   "answer": 0,
+   "note": "He needed rabies shots. 'Who the hell trained this gopher?'",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "The mechanical shark in Jaws was nicknamed Bruce, after whom?",
+   "options": [
+    "Spielberg's father",
+    "A Universal executive",
+    "The boat's captain",
+    "Spielberg's lawyer"
+   ],
+   "answer": 3,
+   "note": "It kept sinking in salt water. That's why you barely see it. That's why the movie works.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "The first video ever uploaded to YouTube, in 2005, is 18 seconds of a co-founder talking about what?",
+   "options": [
+    "Elephants at the zoo",
+    "His cat",
+    "A skateboard trick",
+    "A sandwich"
+   ],
+   "answer": 0,
+   "note": "'The cool thing about these guys is they have really, really long trunks.' Civilization followed.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "In 2007, Keith Richards told NME he had snorted what, mixed with cocaine?",
+   "options": [
+    "Crushed glass",
+    "Gunpowder",
+    "His father's ashes",
+    "Dirt from Graceland"
+   ],
+   "answer": 2,
+   "note": "He said it was a joke. Then his memoir said it was true. It's Keith Richards.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Motley Crue's Nikki Sixx was declared dead for two minutes in 1987 after a heroin overdose. What song came out of it?",
+   "options": [
+    "Dr. Feelgood",
+    "Kickstart My Heart",
+    "Home Sweet Home",
+    "Wild Side"
+   ],
+   "answer": 1,
+   "note": "Two adrenaline shots to the chest. He went home and shot up again that night.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "In 1965, Johnny Cash was sued by the federal government for accidentally doing what?",
+   "options": [
+    "Shooting a bald eagle",
+    "Flooding a dam",
+    "Crashing into a national monument",
+    "Starting a forest fire"
+   ],
+   "answer": 3,
+   "note": "His truck caught fire in Los Padres National Forest. He said he didn't care about 'your yellow buzzards.'",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "In 1995, rapper Ol' Dirty Bastard took MTV cameras along to do what?",
+   "options": [
+    "Buy a Rolls-Royce in cash",
+    "Pick up his welfare check in a limo",
+    "Get his teeth gold-plated",
+    "Adopt a tiger"
+   ],
+   "answer": 1,
+   "note": "He had a platinum record at the time. Food stamps and a check, then back in the limo.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Richard Hatch, the first Survivor winner, went to prison for what?",
+   "options": [
+    "Assaulting a contestant",
+    "Insurance fraud",
+    "Not paying taxes on his $1 million prize",
+    "Running a Ponzi scheme"
+   ],
+   "answer": 2,
+   "note": "He claimed CBS had agreed to pay the tax. CBS had not. 51 months.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Toy Story 2 was nearly lost in 1998 when someone ran a delete command on Pixar's servers. What saved it?",
+   "options": [
+    "A backup on an employee's home computer",
+    "Printed storyboards",
+    "A copy at Disney",
+    "An intern's laptop"
+   ],
+   "answer": 0,
+   "note": "The backups had been failing silently for a month. Galyn Susman was home with a newborn.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Danny Trejo got into acting in 1985 because he was on a film set working as what?",
+   "options": [
+    "A stuntman",
+    "A caterer",
+    "A security guard",
+    "A drug counselor for a cast member"
+   ],
+   "answer": 3,
+   "note": "He'd done time in San Quentin. The screenwriter recognized him from prison. 400 movies later.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "In 2015, Nicolas Cage agreed to return a $276,000 purchase to Mongolia. What was it?",
+   "options": [
+    "A Genghis Khan sword",
+    "A dinosaur egg",
+    "A stolen dinosaur skull",
+    "A yak"
+   ],
+   "answer": 2,
+   "note": "He outbid Leonardo DiCaprio for it. It had been smuggled out. He was not charged.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "Shane Gillis's Netflix sitcom 'Tires' is set in what kind of business?",
+   "options": [
+    "A bowling alley",
+    "An auto repair shop",
+    "A pizza place",
+    "A car wash"
+   ],
+   "answer": 1,
+   "note": "Shot in Pennsylvania. Renewed for season two before season one even aired.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "The 'Nigerian prince' email scam is also called the 419 scam. What's the 419?",
+   "options": [
+    "The fraud section of Nigeria's criminal code",
+    "The number of emails in the first batch",
+    "The area code it came from",
+    "The year it started, 1419"
+   ],
+   "answer": 0,
+   "note": "Advance-fee fraud. It predates email. It used to come by fax, and before that, by letter.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "In 2000, 50 Cent survived being shot how many times?",
+   "options": [
+    "Three",
+    "Five",
+    "Twelve",
+    "Nine"
+   ],
+   "answer": 3,
+   "note": "Including once in the face. The fragment in his tongue gave him the slur.",
+   "cat": "Pop Culture"
+  },
+  {
+   "q": "In 1848, railroad foreman Phineas Gage survived what passing completely through his skull?",
+   "options": [
+    "A railroad spike",
+    "A 3-foot iron tamping rod",
+    "A pickaxe",
+    "A musket ball"
+   ],
+   "answer": 1,
+   "note": "He sat up and talked. He lived 12 more years. Friends said he was 'no longer Gage.'",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Fecal transplants are an approved treatment for recurring infections of which bacterium?",
+   "options": [
+    "E. coli",
+    "Salmonella",
+    "Clostridioides difficile",
+    "MRSA"
+   ],
+   "answer": 2,
+   "note": "About 90 percent cure rate. The first FDA-approved version is an enema. Of someone else.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "The Tuskegee syphilis study, in which Black men were left untreated for research, ran until what year?",
+   "options": [
+    "1945",
+    "1972",
+    "1958",
+    "1964"
+   ],
+   "answer": 1,
+   "note": "Forty years. Penicillin was standard treatment by 1947. A whistleblower went to the press.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "HeLa cells, the first immortal human cell line, were taken in 1951 from a woman's what?",
+   "options": [
+    "Bone marrow",
+    "Liver",
+    "Cervical tumor",
+    "Skin"
+   ],
+   "answer": 2,
+   "note": "Henrietta Lacks. No consent. They've been to space and helped make the polio vaccine.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "The chainsaw was originally invented in the 1780s to help with what?",
+   "options": [
+    "Amputations",
+    "Childbirth",
+    "Dentistry",
+    "Logging"
+   ],
+   "answer": 1,
+   "note": "Cutting through the pelvis to get the baby out. Pre-anesthesia. Called symphysiotomy.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "In 2004 the FDA cleared which two living animals for sale as medical devices?",
+   "options": [
+    "Bees and ants",
+    "Snails and slugs",
+    "Leeches and maggots",
+    "Fish and frogs"
+   ],
+   "answer": 2,
+   "note": "Leeches for reattachment surgery, maggots for dead tissue. Both still in use.",
+   "cat": "Bodies & Medicine"
+  },
+  {
+   "q": "Which is the only US state with no seat belt law for adults?",
+   "options": [
+    "New Hampshire",
+    "Montana",
+    "Wyoming",
+    "Alaska"
+   ],
+   "answer": 0,
+   "note": "Live Free or Die. Mostly the second part.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "In the 1830s, an Ohio doctor sold what as a patent medicine in pill form?",
+   "options": [
+    "Mustard",
+    "Mayonnaise",
+    "Pickle brine",
+    "Ketchup"
+   ],
+   "answer": 3,
+   "note": "Dr. John Cook Bennett's tomato pills. Cured diarrhea, jaundice and indigestion, he said.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "In 2012, a Florida man died after winning a cockroach-eating contest. The prize was what?",
+   "options": [
+    "$1,000",
+    "A truck",
+    "A python",
+    "A year of free pizza"
+   ],
+   "answer": 2,
+   "note": "He choked on arthropod body parts. The python went to his estate.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "In 2009, which country issued a 100-trillion-dollar banknote?",
+   "options": [
+    "Venezuela",
+    "Argentina",
+    "Turkey",
+    "Zimbabwe"
+   ],
+   "answer": 3,
+   "note": "Worth about 30 US dollars at the time. Worth more than that now on eBay.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Which is the only US state with a flag that isn't a rectangle?",
+   "options": [
+    "Texas",
+    "Ohio",
+    "Maryland",
+    "Alaska"
+   ],
+   "answer": 1,
+   "note": "A swallowtail pennant. There's an official 17-step method for folding it.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "If you were at Point Nemo, the most remote spot in the ocean, the nearest humans would often be where?",
+   "options": [
+    "On Easter Island",
+    "In Antarctica",
+    "On the International Space Station",
+    "On a fishing boat"
+   ],
+   "answer": 2,
+   "note": "The ISS passes 250 miles overhead. Land is 1,670 miles away. Dead spacecraft get dumped there.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "From which US city can you drive directly south into Canada?",
+   "options": [
+    "Detroit",
+    "Buffalo",
+    "Seattle",
+    "Duluth"
+   ],
+   "answer": 0,
+   "note": "Windsor, Ontario sits south of Detroit. The tunnel takes a few minutes.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Which of these cities is farthest west?",
+   "options": [
+    "Los Angeles, California",
+    "San Diego, California",
+    "Las Vegas, Nevada",
+    "Reno, Nevada"
+   ],
+   "answer": 3,
+   "note": "Reno beats LA by about 90 miles of longitude. Check a map, then check it again.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Which US state is closest to Africa?",
+   "options": [
+    "Florida",
+    "Georgia",
+    "Maine",
+    "North Carolina"
+   ],
+   "answer": 2,
+   "note": "Quoddy Head to Morocco, about 3,150 miles. The globe is round, which ruins everything.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Which country has banned the sale of chewing gum since 1992?",
+   "options": [
+    "Japan",
+    "Singapore",
+    "Switzerland",
+    "Saudi Arabia"
+   ],
+   "answer": 1,
+   "note": "People stuck it on subway door sensors. Pharmacies can sell nicotine gum, with ID.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Charles Osborne of Iowa holds the record for the longest attack of hiccups. How long?",
+   "options": [
+    "68 years",
+    "8 years",
+    "14 months",
+    "3 years"
+   ],
+   "answer": 0,
+   "note": "1922 to 1990, roughly 430 million hiccups. He married twice and had eight kids.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "The record for the longest documented time without sleep, 11 days, was set in 1964 by a what?",
+   "options": [
+    "Navy SEAL",
+    "Doctor",
+    "Truck driver",
+    "High school student"
+   ],
+   "answer": 3,
+   "note": "Randy Gardner, 17, for a science fair. Guinness stopped tracking it because people kept trying.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Which US state eats the most Spam per person?",
+   "options": [
+    "Hawaii",
+    "Alaska",
+    "Minnesota",
+    "Texas"
+   ],
+   "answer": 0,
+   "note": "About 7 million cans a year. It's on the McDonald's menu there.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Ranch dressing was invented in the 1950s at an actual ranch in which state?",
+   "options": [
+    "Texas",
+    "Montana",
+    "California",
+    "Colorado"
+   ],
+   "answer": 2,
+   "note": "Hidden Valley Ranch, near Santa Barbara. A plumber from Alaska mixed it for guests.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Fortune cookies are nearly impossible to find in which country?",
+   "options": [
+    "Japan",
+    "China",
+    "United States",
+    "Canada"
+   ],
+   "answer": 1,
+   "note": "They're Japanese, popularized by Japanese immigrants in California. China finds them weird.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "In 2024, it cost the US Mint roughly how much to make one penny?",
+   "options": [
+    "0.8 cents",
+    "1.2 cents",
+    "9 cents",
+    "3.7 cents"
+   ],
+   "answer": 3,
+   "note": "Nickels cost almost 14 cents. The Treasury finally ordered the last penny blanks in 2025.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "In 2011, which entire country could be rented for about $70,000 a night?",
+   "options": [
+    "Monaco",
+    "Liechtenstein",
+    "Luxembourg",
+    "San Marino"
+   ],
+   "answer": 1,
+   "note": "Through Airbnb. Came with custom currency and temporary street signs with your name.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Which country has more pyramids than Egypt?",
+   "options": [
+    "Mexico",
+    "Peru",
+    "Sudan",
+    "Iraq"
+   ],
+   "answer": 2,
+   "note": "Around 200 at Meroe and elsewhere. Smaller, steeper. An Italian treasure hunter blew the tops off.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Which US state is both the westernmost and the easternmost?",
+   "options": [
+    "Alaska",
+    "Hawaii",
+    "Maine",
+    "Florida"
+   ],
+   "answer": 0,
+   "note": "The Aleutians cross the 180th meridian. Maine is furious.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "The island nation of Nauru briefly had the world's highest income per person in the 1970s thanks to mining what?",
+   "options": [
+    "Gold",
+    "Diamonds",
+    "Oil",
+    "Bird droppings"
+   ],
+   "answer": 3,
+   "note": "Phosphate from millennia of guano. They strip-mined 80 percent of the island and the money's gone.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Casu marzu, a Sardinian cheese, is famous for containing what?",
+   "options": [
+    "Blood",
+    "Sheep eyes",
+    "Live maggots",
+    "Volcanic ash"
+   ],
+   "answer": 2,
+   "note": "The larvae jump up to six inches. Illegal to sell in the EU, so a local will know a guy.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Fredric Baur, who designed the Pringles can, was buried how in 2008?",
+   "options": [
+    "In a giant potato",
+    "Partly inside a Pringles can",
+    "At sea in a chip bag",
+    "Under the Pringles factory"
+   ],
+   "answer": 1,
+   "note": "His kids stopped at Walgreens on the way to the funeral home to buy the can. Original flavor.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "The town of Dildo is in which Canadian province?",
+   "options": [
+    "Newfoundland and Labrador",
+    "Nova Scotia",
+    "Manitoba",
+    "New Brunswick"
+   ],
+   "answer": 0,
+   "note": "Residents voted to keep the name in the 80s. Jimmy Kimmel is honorary mayor.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "The longest place name in the US, a 45-letter lake name, is in which state?",
+   "options": [
+    "Maine",
+    "Minnesota",
+    "Wisconsin",
+    "Massachusetts"
+   ],
+   "answer": 3,
+   "note": "Webster Lake. The road signs were misspelled for years. Nobody noticed because how would you.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Which is the only US state capital without a McDonald's?",
+   "options": [
+    "Montpelier, Vermont",
+    "Juneau, Alaska",
+    "Pierre, South Dakota",
+    "Augusta, Maine"
+   ],
+   "answer": 0,
+   "note": "Population about 8,000. There's a Burger King in the next town. Nobody's proud of that either.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "The Norwegian Arctic town of Longyearbyen has not allowed burials since 1950. Why?",
+   "options": [
+    "It's considered bad luck",
+    "The ground is too rocky",
+    "Permafrost keeps bodies from decomposing",
+    "Polar bears dig them up"
+   ],
+   "answer": 2,
+   "note": "Bodies buried in 1918 still held traces of the flu virus. The dying get flown to the mainland.",
+   "cat": "Grab Bag"
+  },
+  {
+   "q": "Who is banned from gambling at the Casino de Monte-Carlo?",
+   "options": [
+    "Anyone under 25",
+    "Citizens of Monaco",
+    "French citizens",
+    "Clergy"
+   ],
+   "answer": 1,
+   "note": "Since the 1800s. The princes wanted foreign money, not local ruin. Staff check your passport.",
+   "cat": "Grab Bag"
+  }
+ ]
+}
