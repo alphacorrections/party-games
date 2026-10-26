@@ -120,6 +120,15 @@ export const sound = {
               this._chord([523, 659, 784, 1047], { gain: 0.11, dur: 1.4, delay: 0.42, d: 0.3, sus: 0.5, r: 0.6 });
               this._noise({ gain: 0.06, dur: 0.9, delay: 0.42, hp: 4000, lp: 12000, decay: 0.35 }); },
 
+  // Horror: a dissonant low cluster with a scrape on top (Body Count's Basement).
+  sting()   { this._noise({ gain: 0.16, dur: 0.5, hp: 2000, lp: 9000, decay: 0.2 });
+              [55, 58.3, 82.4, 87.3].forEach((f, i) => this._voice(f, { type: 'sawtooth', gain: 0.09, dur: 1.6, lp: 600, delay: i * 0.02, d: 0.4, sus: 0.6, r: 0.8 }));
+              this._voice(1244, { type: 'sine', gain: 0.03, dur: 1.2, slide: -300, delay: 0.1, d: 0.6, sus: 0.3 }); },
+  // A body hitting the floor.
+  die()     { this._noise({ gain: 0.25, dur: 0.25, hp: 40, lp: 400, decay: 0.09 });
+              this._voice(98, { type: 'sine', gain: 0.25, dur: 0.6, slide: -60, d: 0.3, sus: 0.2 });
+              this._voice(146, { type: 'sawtooth', gain: 0.05, dur: 0.9, slide: -100, lp: 500, delay: 0.15, d: 0.4, sus: 0.4 }); },
+
   // Intro sting for the title card.
   intro()   { this._noise({ gain: 0.12, dur: 0.15, hp: 80, lp: 700, decay: 0.07 });
               this._chord([262, 392, 523], { gain: 0.1, dur: 0.9, d: 0.25, sus: 0.4, r: 0.4 }); }

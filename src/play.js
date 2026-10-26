@@ -334,8 +334,10 @@ class PlayApp {
       }
     }
 
+    // A live widget (Body Count's timed trials) owns its screen until the key changes.
+    const liveWidget = !isNew && stage.querySelector('[data-live][data-mounted]');
     if (isNew) { swapIn(stage, html, key); stagger(stage, '.pbtn, .card, .hugebtn, .gamebtn, .opt, .vcard', 45); }
-    else if (stage.innerHTML !== html) stage.innerHTML = html;
+    else if (!liveWidget && stage.innerHTML !== html) stage.innerHTML = html;
 
     // New screen that also has a textarea (rare: same phase re-keyed): restore text.
     const ta2 = stage.querySelector('.ptext');
@@ -344,6 +346,9 @@ class PlayApp {
     this.mountDieIfNeeded(stage);
     this.mountTiltIfNeeded(stage);
     if (this.gameId === 'board' && this.mod?.patchPlayer) this.mod.patchPlayer(stage, this.board, this.me);
+    if (this.mod?.mountPlayer && this.round) this.mod.mountPlayer(stage, { room: this.room, me: this.me, round: this.round, fx: { sound, haptic } });
+    document.body.classList.toggle('horror', this.gameId === 'bodycount' && Boolean(this.mod));
+    document.body.classList.toggle('ghostmode', Boolean(stage.querySelector('.ghostmode')));
     // Heads Up turns the whole phone light so the word reads from across the room.
     document.body.classList.toggle('headsup', Boolean(stage.querySelector('.hu')));
     this.afterRender();

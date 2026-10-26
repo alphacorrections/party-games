@@ -206,6 +206,7 @@ class HostApp {
   render() {
     const stage = el('stage');
     if (!stage) return;
+    document.body.classList.toggle('horror', this.gameId === 'bodycount' && this.phase !== 'lobby');
     this._patchWaiting(stage);
 
     if (this.gameId === 'board' && this.board && this.phase !== 'lobby' && this.mod) {
@@ -333,10 +334,17 @@ class HostApp {
     this._fxKey = key;
     const stage = el('stage');
     const ph = this.round?.phase;
+    if (this.gameId === 'bodycount') {
+      if (ph === 'question' || ph === 'escape') { stagger(stage, '.opt', 90); sound.tick(); }
+      if (ph === 'reveal' || ph === 'escapeReveal') { const bad = (this.round.doomed || []).length || (this.round.caught || []).length; bad ? sound.wrong() : sound.correct(); }
+      if (ph === 'doom' || ph === 'escapeIntro') { sound.sting(); }
+      if (ph === 'trialEnd') { const deaths = Object.values(this.round.outcome || {}).filter(v => v === 'die').length; deaths ? sound.die() : sound.correct(); stagger(stage, '.bc-res', 260); }
+      if (ph === 'escaped') { sound.win(); setTimeout(() => confetti(), 300); }
+    }
     if (ph === 'intro')      { sound.intro(); }
-    if (ph === 'question')   { stagger(stage, '.opt', 90); sound.reveal(); }
+    if (ph === 'question' && this.gameId !== 'bodycount') { stagger(stage, '.opt', 90); sound.reveal(); }
     if (ph === 'vote')       { stagger(stage, '.vcard', 110); sound.reveal(); }
-    if (ph === 'reveal')     { stagger(stage, '.vcard, .opt, .rrow', 70); sound.correct(); }
+    if (ph === 'reveal' && this.gameId !== 'bodycount') { stagger(stage, '.vcard, .opt, .rrow', 70); sound.correct(); }
     if (ph === 'playing')    { sound.tick(); }
     if (ph === 'roundEnd')   { stagger(stage, '.wlist li', 50); }
     if (ph === 'final')      {

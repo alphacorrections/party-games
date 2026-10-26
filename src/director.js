@@ -19,7 +19,8 @@ export const ENGINES = {
   charades:   () => import('./games/charades.js'),
   board:      () => import('./games/board.js'),
   liars:      () => import('./games/liars.js'),
-  blindvote:  () => import('./games/blindvote.js')
+  blindvote:  () => import('./games/blindvote.js'),
+  bodycount:  () => import('./games/bodycount.js')
 };
 
 /**
@@ -30,6 +31,7 @@ export const ENGINES = {
 export const GAME_MENU = [
   { id: 'quiz',       opts: {},                                 label: 'Degenerate Trivia',        sub: 'Four options. Speed scores.',          mirror: true },
   { id: 'liars',      opts: {},                                 label: "Liar's Trivia",            sub: 'Write a fake. Spot the truth.',        mirror: true },
+  { id: 'bodycount',  opts: {},                                 label: 'Body Count',               sub: 'Horror trivia. Wrong answers die.',    mirror: true },
   { id: 'promptvote', opts: { mode: 'pick', judge: 'all' },      label: 'Fill In The Blank',        sub: 'Play a card. Everyone votes.',          mirror: true },
   { id: 'promptvote', opts: { mode: 'pick', judge: 'czar' },     label: 'Fill In The Blank, Judge', sub: 'One rotating judge picks.',             mirror: true },
   { id: 'promptvote', opts: { mode: 'type', judge: 'all' },      label: 'Write Your Own',           sub: 'Type an answer. Funniest wins.',        mirror: true },
