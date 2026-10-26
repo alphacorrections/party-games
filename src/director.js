@@ -168,11 +168,31 @@ export class Director {
     }
   }
 
+  /** Party standings: every finished game in this room adds to a running total. */
+  async addToParty() {
+    const ranked = sortedPlayers(this.players);
+    if (!ranked.length) return;
+    const top = ranked[0].score || 0;
+    const party = (await this.room.t.get(`${this.base}/party`)) || {};
+    const patch = {};
+    for (const p of ranked) {
+      const cur = party[p.id] || { total: 0, wins: 0, games: 0 };
+      patch[p.id] = {
+        name: p.name, emoji: p.emoji || '',
+        total: (cur.total || 0) + (p.score || 0),
+        wins: (cur.wins || 0) + (top > 0 && (p.score || 0) === top ? 1 : 0),
+        games: (cur.games || 0) + 1
+      };
+    }
+    await this.room.t.update(`${this.base}/party`, patch);
+  }
+
   async commitIfNeeded() {
     if (this._committed || !this.gameId) return;
     this._committed = true;
     const results = sortedPlayers(this.players).map(p => ({ name: p.name, score: p.score || 0 }));
     try { await commitGame(this.gameId, this.room.code, results); } catch (e) { console.error(e); }
+    try { await this.addToParty(); } catch (e) { console.error(e); }
     // Tell screens the all-time board has the new totals.
     await this.room.t.set(`${this.base}/committed`, Date.now());
   }

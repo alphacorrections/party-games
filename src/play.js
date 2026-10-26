@@ -5,6 +5,7 @@
 //      the Director, and every phone (including that one) renders full state.
 // ---------------------------------------------------------------------------
 
+import { partyChipsHTML } from './util.js';
 import { Room, playerIdFor, rememberName, recalledName, localPlayerId } from './room.js';
 import { getTransport } from './transport.js';
 import { esc, playerList, countdown, finalScoreboard } from './util.js';
@@ -152,6 +153,7 @@ class PlayApp {
     room.on('hasScreen', v => { this.hasScreen = Boolean(v); this.render(); });
     room.on('length',    v => { this.length = v || 'standard'; this.render(); });
     room.on('highlights', v => { this.highlights = v || {}; this.render(); });
+    room.on('party',      v => { this.party = v || {}; this.render(); });
     room.on('director',  v => this.onDirector(v));
     // A dead director stops writing, so its staleness is the absence of an
     // event. Check on a timer as well as on change.
@@ -372,8 +374,8 @@ class PlayApp {
 
   lobbyHTML() {
     const list = playerList(this.players || {});
-    const chips = list.map(p => `<span class="chip"><span>${p.emoji || '🎲'}</span>${esc(p.name)}</span>`).join('')
-      || '<p class="muted">Just you so far.</p>';
+    const chips = list.length ? partyChipsHTML(this.players, this.party) : '<p class="muted">Just you so far.</p>';
+    const ranked = Object.values(this.party || {}).some(r => r && r.games);
     const share = `<div class="sharebox">
         <div class="sharecode">${esc(this.room.code)}</div>
         <p class="phint small">Friends: open the site, join with this code. Or tap to share the link.</p>
@@ -383,7 +385,7 @@ class PlayApp {
       return `<div class="pcard">
         <h2>${this.hasScreen ? "You're in" : 'In the party'}</h2>
         ${this.hasScreen ? '<p>Waiting for the host to pick a game.</p>' : share}
-        <div class="plist">${chips}</div>
+        ${ranked ? '<h3 class="lobbyh">Party standings</h3>' : ''}<div class="plist">${chips}</div>
       </div>`;
     }
     const menu = GAME_MENU.map((g, i) => {
@@ -394,7 +396,7 @@ class PlayApp {
     }).join('');
     return `<div class="pcard">
       ${share}
-      <h3 class="lobbyh">Players (${list.length})</h3>
+      <h3 class="lobbyh">${ranked ? 'Party standings' : `Players (${list.length})`}</h3>
       <div class="plist">${chips}</div>
       <h3 class="lobbyh">Game length</h3>
       <div class="tabs lenpick">${Object.entries(LENGTHS).map(([k, v]) =>

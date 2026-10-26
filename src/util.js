@@ -189,3 +189,22 @@ export function bestMoments(highlights, players) {
   return Object.entries(by).map(([pid, h]) => ({ pid, name: players[pid]?.name, emoji: players[pid]?.emoji, text: h.text }))
     .filter(x => x.name);
 }
+
+/**
+ * Lobby chips ranked by party standings (points from every finished game in
+ * this room). Falls back to plain chips before the first game finishes.
+ * opts.kick adds the TV's remove button.
+ */
+export function partyChipsHTML(players, party, opts = {}) {
+  const list = playerList(players || {});
+  const pt = party || {};
+  const any = Object.values(pt).some(r => r && r.games);
+  const rows = list.map(p => ({ p, r: pt[p.id] || { total: 0, wins: 0, games: 0 } }));
+  if (any) rows.sort((a, b) => (b.r.total || 0) - (a.r.total || 0) || (b.r.wins || 0) - (a.r.wins || 0));
+  return rows.map(({ p, r }, i) => `
+    <div class="chip ${any ? 'ranked' : ''} ${p.connected === false ? 'off' : ''} ${any && i === 0 && r.total ? 'lead' : ''}" data-chip="${p.id}">
+      ${any ? `<i class="crank">${i + 1}</i>` : ''}<span>${p.emoji || '🎲'}</span>${esc(p.name)}
+      ${any ? `<b class="ctotal">${(r.total || 0).toLocaleString()}</b>${r.wins ? `<i class="cwins">🏆${r.wins > 1 ? '×' + r.wins : ''}</i>` : ''}` : ''}
+      ${opts.kick ? `<button class="kick" data-kick="${p.id}" title="Remove">×</button>` : ''}
+    </div>`).join('');
+}

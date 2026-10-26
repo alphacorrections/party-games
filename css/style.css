@@ -388,6 +388,13 @@ body.playing #lobby { display: none; }
   font-weight: 600;
 }
 .chip.off { opacity: .45; }
+/* party standings: chips ranked by points across the night's games */
+.chip.ranked { gap: .45rem; }
+.chip .crank { font-style: normal; font-family: var(--display); color: var(--mute); min-width: 1.1em; text-align: right; }
+.chip .ctotal { font-family: var(--display); color: var(--volt); margin-left: .2rem; letter-spacing: .02em; }
+.chip .cwins { font-style: normal; font-size: .85em; }
+.chip.lead { border-color: var(--volt); box-shadow: 0 0 0 1px var(--volt) inset; }
+.chip.lead .crank { color: var(--volt); }
 .kick {
   background: none;
   border: 0;

@@ -2,6 +2,7 @@
 // Host screen: the TV. Renders the room; the Director runs the game.
 // ---------------------------------------------------------------------------
 
+import { partyChipsHTML } from './util.js';
 import { Room, localPlayerId } from './room.js';
 import { getTransport } from './transport.js';
 import { esc, playerList, countdown, finalScoreboard } from './util.js';
@@ -73,6 +74,7 @@ class HostApp {
     this.room.on('phase',   v => { this.phase = v; this.render(); });
     this.room.on('length',  v => this.renderLength(v || 'standard'));
     this.room.on('highlights', v => { this.highlights = v || {}; if (this.round?.phase === 'final') this.render(); });
+    this.room.on('party',      v => { this.party = v || {}; this.onPlayers(); });
     this.room.on('committed',  v => { if (v) this.loadAllTime(); else this.allTime = null; });
 
     this.renderMenu();
@@ -103,12 +105,10 @@ class HostApp {
   onPlayers() {
     const list = playerList(this.players);
     const html = list.length
-      ? list.map(p => `
-          <div class="chip ${p.connected === false ? 'off' : ''}" data-chip="${p.id}">
-            <span>${p.emoji || '🎲'}</span>${esc(p.name)}
-            <button class="kick" data-kick="${p.id}" title="Remove">×</button>
-          </div>`).join('')
+      ? partyChipsHTML(this.players, this.party, { kick: true })
       : '<p class="muted">Nobody yet. Scan the code.</p>';
+    const ranked = Object.values(this.party || {}).some(r => r && r.games);
+    const h = el('plisth'); if (h) h.innerHTML = ranked ? `Party standings <span class="muted small">(${list.length} playing)</span>` : `Players (<span id="pcount">${list.length}</span>)`;
     const box = el('plist');
     if (box && box.innerHTML !== html) {
       const before = new Set([...box.querySelectorAll('[data-chip]')].map(n => n.dataset.chip));
