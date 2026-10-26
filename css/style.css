@@ -243,14 +243,18 @@ a { color: var(--hot); }
 /* charades word */
 .word {
   font-family: var(--display);
-  font-size: clamp(3rem, 13vw, 11rem);
+  /* Sized to width AND height so phrases never run off a short TV screen. */
+  font-size: clamp(2.6rem, min(13vw, 24vh), 11rem);
   line-height: 1.05;
   letter-spacing: var(--track-xl);
+  text-wrap: balance;
   color: var(--card);
   padding: .1em .2em;
   max-width: 100%;
   word-break: break-word;
 }
+.word.w-mid  { font-size: clamp(2.2rem, min(9vw, 16vh), 8rem); }
+.word.w-long { font-size: clamp(1.8rem, min(6.5vw, 11.5vh), 6rem); letter-spacing: var(--track-lg); }
 .word.flash-got  { color: var(--volt); }
 .word.flash-skip { color: var(--mute); }
 

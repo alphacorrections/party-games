@@ -237,7 +237,7 @@ export function hostView(round, players) {
     return `
       ${header}
       ${timerHTML(round.deadline, TURN_MS, true)}
-      <div class="word ${round.flash === 'got' ? 'flash-got' : round.flash === 'skip' ? 'flash-skip' : ''}">${esc(round.word || '')}</div>
+      <div class="word ${wordFit(round.word)} ${round.flash === 'got' ? 'flash-got' : round.flash === 'skip' ? 'flash-skip' : ''}">${esc(round.word || '')}</div>
       <p class="phint">${who.emoji || '🎲'} ${esc(who.name || '')} is guessing &nbsp;&nbsp; ${got} so far</p>`;
   }
 
@@ -332,6 +332,12 @@ export function playerView(round, me, _a, _b, _c, extra = {}) {
       <button class="hugebtn skip" data-action="skip">SKIP</button>
       <p class="phint small">Don't look at the screen.</p>
     </div>`;
+}
+
+/** Length bucket for the TV word: long phrases get a smaller size. */
+function wordFit(word) {
+  const w = String(word || ''), longest = Math.max(...w.split(/\s+/).map(x => x.length), 1);
+  return w.length > 18 || longest > 11 ? 'w-long' : w.length > 10 || longest > 8 ? 'w-mid' : '';
 }
 
 function needsMotionPrompt() {
