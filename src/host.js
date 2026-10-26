@@ -2,7 +2,7 @@
 // Host screen: the TV. Renders the room; the Director runs the game.
 // ---------------------------------------------------------------------------
 
-import { partyChipsHTML } from './util.js';
+import { partyChipsHTML, isPresent } from './util.js';
 import { Room, localPlayerId } from './room.js';
 import { getTransport } from './transport.js';
 import { esc, playerList, countdown, finalScoreboard } from './util.js';
@@ -14,11 +14,18 @@ import { getLeaderboard, keyFor } from './scores.js';
 
 const el = id => document.getElementById(id);
 
-function introHTML(round) {
-  return `<div class="intro">
-    <div class="intro-kicker">Up next</div>
-    <div class="intro-title">${esc(round.title || '')}</div>
-    <div class="intro-hint">${esc(round.hint || '')}</div>
+function introHTML(round, players) {
+  const rules = round.rules || [];
+  const list = playerList(players || {}).filter(isPresent);
+  const ready = round.ready || {};
+  const chips = list.map(p => `<span class="rchip ${ready[p.id] ? 'on' : ''}">${ready[p.id] ? '✓' : (p.emoji || '🎲')} ${esc(p.name)}</span>`).join('');
+  return `<div class="intro rules">
+    <div class="intro-kicker">How to play</div>
+    <div class="intro-title">${esc(round.title || '')}${round.mode ? `<span class="intro-mode">${esc(round.mode)}</span>` : ''}</div>
+    ${rules.length ? `<ol class="rules-list">${rules.map(r => `<li>${esc(r)}</li>`).join('')}</ol>` : `<div class="intro-hint">${esc(round.hint || '')}</div>`}
+    <div class="ready-row">${chips}</div>
+    <button class="nextbtn big" data-next="1">Start</button>
+    <p class="phint">Starts when everyone taps I'm ready, or when you hit Start.</p>
   </div>`;
 }
 const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
@@ -255,7 +262,7 @@ class HostApp {
       this.afterRender(key); this.onFinal(); return;
     }
     if (this.round.phase === 'intro') {
-      swapIn(stage, introHTML(this.round), key);
+      swapIn(stage, introHTML(this.round, this.players), key);
       this.afterRender(key);
       return;
     }

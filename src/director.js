@@ -10,7 +10,7 @@
 // heartbeat and a phone that sees the heartbeat go stale can take over.
 // ---------------------------------------------------------------------------
 
-import { sortedPlayers } from './util.js';
+import { sortedPlayers, isPresent } from './util.js';
 import { commitGame } from './scores.js';
 
 export const ENGINES = {
@@ -31,18 +31,18 @@ export const ENGINES = {
  * game state themselves when there is no shared screen.
  */
 export const GAME_MENU = [
-  { id: 'quiz',       opts: {},                                 label: 'Degenerate Trivia',        sub: 'Four options. Speed scores.',          mirror: true },
-  { id: 'liars',      opts: {},                                 label: "Liar's Trivia",            sub: 'Write a fake. Spot the truth.',        mirror: true },
-  { id: 'doubledown', opts: {},                                 label: 'Double Down',              sub: 'Quiz-show board. Buzz in. Solo or teams.', mirror: true, pick: 'Pick a mode', noRandom: true },
-  { id: 'bodycount',  opts: {},                                 label: 'Body Count',               sub: 'Horror trivia. Wrong answers die.',    mirror: true },
-  { id: 'promptvote', opts: { mode: 'pick', judge: 'all' },      label: 'Fill In The Blank',        sub: 'Play a card. Everyone votes.',          mirror: true },
-  { id: 'promptvote', opts: { mode: 'pick', judge: 'czar' },     label: 'Fill In The Blank, Judge', sub: 'One rotating judge picks.',             mirror: true },
-  { id: 'promptvote', opts: { mode: 'type', judge: 'all' },      label: 'Write Your Own',           sub: 'Type an answer. Funniest wins.',        mirror: true },
-  { id: 'context',    opts: {},                                  label: 'Out of Context',           sub: 'Your answer. Their setting. 3+ players.', mirror: true },
-  { id: 'blindvote',  opts: { mode: 'wyr' },                     label: 'Would You Rather',         sub: 'Two bad options. The room splits.',     mirror: true },
-  { id: 'blindvote',  opts: { mode: 'likely' },                  label: 'Most Likely To',           sub: 'Vote for a person. Results reveal.',    mirror: true },
-  { id: 'charades',   opts: {},                                  label: 'Shout It Out',             sub: 'Word on the TV, you face away.',        tv: true, phoneMode: 'headsup' },
-  { id: 'board',      opts: {},                                  label: 'Spiral',                   sub: 'A board. Minigames. Consequences.',     tv: true }
+  { id: 'quiz',       opts: {},                                 label: 'Degenerate Trivia', rules: ["A question and four answers. Pick on your phone.", "Right answers score. Faster answers score more.", "Pick a category, or Mixed for a bit of everything."],        sub: 'Four options. Speed scores.',          mirror: true },
+  { id: 'liars',      opts: {},                                 label: "Liar's Trivia", rules: ["You'll see a real fact with a blank in it.", "Write a fake answer that sounds true.", "Then find the truth among everyone's lies.", "Points for spotting the truth, and for everyone your lie fools."],            sub: 'Write a fake. Spot the truth.',        mirror: true },
+  { id: 'doubledown', opts: {},                                 label: 'Double Down', rules: ["A board of categories and dollar values. Whoever has control picks a square on their phone.", "Everyone can buzz. First buzz answers from four choices.", "Right: win the money and control. Wrong: lose the money, and the others can buzz.", "One square is hidden: the picker wagers on it.", "Last Call: everyone bets on one final question."],              sub: 'Quiz-show board. Buzz in. Solo or teams.', mirror: true, pick: 'Pick a mode', noRandom: true },
+  { id: 'bodycount',  opts: {},                                 label: 'Body Count', rules: ["Trivia. Right answers pay 1,000 while you're alive.", "Wrong answer: you go to the Basement for a quick trial on your phone. Lose it and you die.", "The dead keep playing as ghosts for smaller points.", "Final round, the Escape: right answers move you toward the door, and the killer moves every question.", "First one out wins big. Ghosts can escape too."],               sub: 'Horror trivia. Wrong answers die.',    mirror: true },
+  { id: 'promptvote', opts: { mode: 'pick', judge: 'all' },      label: 'Fill In The Blank', rules: ["You get a hand of answer cards.", "Play the card that best fills the blank.", "Everyone votes for the funniest. Not your own.", "Hate your hand? You get one mulligan."],        sub: 'Play a card. Everyone votes.',          mirror: true },
+  { id: 'promptvote', opts: { mode: 'pick', judge: 'czar' },     label: 'Fill In The Blank, Judge', rules: ["You get a hand of answer cards.", "Play the card that best fills the blank.", "One judge picks the winner each round. The judge rotates.", "Hate your hand? You get one mulligan."], sub: 'One rotating judge picks.',             mirror: true },
+  { id: 'promptvote', opts: { mode: 'type', judge: 'all' },      label: 'Write Your Own', rules: ["Type your own answer to the prompt.", "Everyone votes for the funniest. Not your own.", "Points for every vote you get."],           sub: 'Type an answer. Funniest wins.',        mirror: true },
+  { id: 'context',    opts: {},                                  label: 'Out of Context', rules: ["Answer a normal question about yourself.", "Your answer goes to someone else, who writes the setting that makes it look worst.", "Everyone votes for the best one. The writer gets 500 a vote, the original author 200.", "Last round counts double. Needs 3+ players."],           sub: 'Your answer. Their setting. 3+ players.', mirror: true },
+  { id: 'blindvote',  opts: { mode: 'wyr' },                     label: 'Would You Rather', rules: ["Two bad options. Pick one on your phone.", "Side with the majority to score.", "The minority has to explain themselves."],         sub: 'Two bad options. The room splits.',     mirror: true },
+  { id: 'blindvote',  opts: { mode: 'likely' },                  label: 'Most Likely To', rules: ["Vote for who's most likely to do it. You can vote for yourself.", "Points if you voted with the room."],           sub: 'Vote for a person. Results reveal.',    mirror: true },
+  { id: 'charades',   opts: {},                                  label: 'Shout It Out', rules: ["One person stands with their back to the TV.", "Everyone else shouts clues. No saying the word, rhyming it, or spelling it.", "The guesser taps Got it or Skip on their phone. 60 seconds a turn.", "The guesser gets an I'm ready button to start when set."],             sub: 'Word on the TV, you face away.',        tv: true, phoneMode: 'headsup' },
+  { id: 'board',      opts: {},                                  label: 'Spiral', rules: ["Take turns rolling on your phone and moving around the board.", "Spaces pay, cost, hand out items, or start minigames.", "At a fork, choose your path on your phone.", "Land on someone and you duel. Most points at the end wins."],                   sub: 'A board. Minigames. Consequences.',     tv: true }
 ];
 
 export const LENGTHS = {
@@ -52,7 +52,8 @@ export const LENGTHS = {
 };
 
 const HEARTBEAT_MS = 4000;
-const INTRO_MS     = 2600;
+const RULES_MAX_MS = 120000;   // rules screen starts the game on its own after this
+const HEADSUP_RULES = ['Hold the phone sideways on your forehead, screen facing out.', 'Everyone else shouts clues. No saying the word.', 'Tip down for got it, tip up to skip. 60 seconds a turn.', 'The guesser can tap I\'m ready to start early.'];
 const STALE_MS     = 12000;
 
 export class Director {
@@ -91,8 +92,13 @@ export class Director {
     const mod = await ENGINES[game]();
     const engine = new mod.Host(this.room, (GAME_MENU_REF || GAME_MENU)[menuIndex]?.opts || {});
     await engine.load();
-    if (engine.resume) await engine.resume();
     this.mod = mod; this.engine = engine; this.gameId = game;
+    const r = await this.room.t.get(`${this.base}/round`);
+    if (r && r.phase === 'intro') {
+      this.waitIntro().then(go => { if (go && this.engine === engine) engine.begin(); });
+      return true;
+    }
+    if (engine.resume) await engine.resume();
     return true;
   }
 
@@ -129,6 +135,10 @@ export class Director {
     if (!this.engine) return;
     if (intent.at && intent.at === this._lastIntentAt) return;
     this._lastIntentAt = intent.at;
+    if (this._introDone && (intent.action === 'ready' || intent.action === 'next')) {
+      await this.room.t.remove(`${this.base}/intent`);
+      return intent.action === 'ready' ? this.markReady(intent.by) : this.startNow();
+    }
     if (intent.action === 'roll' || intent.action === 'useitem' || intent.action === 'fork') {
       await this.engine.onIntent?.(intent);
     } else if (intent.action === 'next' || intent.action === 'skip' || intent.action === 'mulligan') {
@@ -162,14 +172,16 @@ export class Director {
       this.engine = engine;
       this._committed = false;
       await this.room.t.set(`${this.base}/menuIndex`, menuIndex);
-      // Title card so everyone looks up before round one.
+      // Rules screen. Waits for the host's Start, or everyone tapping Ready.
       const title = (extraOpts.headsup ? 'Heads Up' : choice.label);
       const hint  = mod.meta?.blurb || choice.sub || '';
+      const rules = extraOpts.headsup ? HEADSUP_RULES : (choice.rules || []);
+      const mode  = extraOpts.category ? String(extraOpts.category) : '';
       await this.room.setGame(choice.id);
       await this.room.setPhase('playing');
-      await this.room.setRound({ phase: 'intro', title, hint, until: Date.now() + INTRO_MS });
-      await new Promise(r => setTimeout(r, INTRO_MS));
-      if (this.engine !== engine) return;      // ended during the intro
+      await this.room.setRound({ phase: 'intro', title, hint, rules, mode, ready: {}, until: Date.now() + RULES_MAX_MS });
+      const go = await this.waitIntro();
+      if (!go || this.engine !== engine) return;      // ended during the rules
       await engine.begin();
     } finally {
       this._launching = false;
@@ -207,6 +219,7 @@ export class Director {
 
   /** Back to the lobby. Keeps players; does not record the abandoned game. */
   async endGame() {
+    if (this._introDone) this._introDone(false);
     this.engine?.stop?.();
     this.engine = null; this.mod = null; this.gameId = null;
     this._committed = false;
@@ -228,7 +241,27 @@ export class Director {
   }
 
   /** Host screen or hosting phone: advance a reveal, or skip a straggler. */
+  /** Resolve true when the host starts, everyone's ready, or the timer runs out; false if ended. */
+  waitIntro() {
+    clearTimeout(this._introT);
+    return new Promise(resolve => {
+      this._introDone = v => { clearTimeout(this._introT); const f = this._introDone; this._introDone = null; if (f) resolve(v); };
+      this._introT = setTimeout(() => this._introDone && this._introDone(true), RULES_MAX_MS);
+    });
+  }
+  startNow() { if (this._introDone) this._introDone(true); }
+
+  async markReady(pid) {
+    if (!this._introDone || !pid) return;
+    await this.room.t.set(`${this.base}/round/ready/${pid}`, true);
+    const r = await this.room.t.get(`${this.base}/round`);
+    const ready = (r && r.ready) || {};
+    const here = Object.entries(this.players || {}).filter(([, p]) => isPresent(p)).map(([id]) => id);
+    if (here.length && here.every(id => ready[id])) this.startNow();
+  }
+
   async nudge(kind, pid) {
+    if (this._introDone && kind === 'next') return this.startNow();
     if (this.engine) return this.engine.nudge?.(kind, pid);
   }
 

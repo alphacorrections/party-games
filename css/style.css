@@ -1946,3 +1946,18 @@ body.horror .oc-card { color: #1B1420; }
 .dd-pcell:active { transform: scale(.95); }
 .dd-pcell.used { background: #0B1F55; }
 .hugebtn.dd-buzzbtn { min-height: 14rem; font-size: 3.4rem; border-radius: 50%; aspect-ratio: 1; width: min(80vw, 18rem); align-self: center; background: #E02424; color: #fff; box-shadow: 0 10px 0 #8E1414; }
+
+/* ============================= RULES SCREEN ============================== */
+.intro.rules { gap: clamp(.4rem, 1.4vh, 1rem); max-width: 60rem; }
+.intro-mode { display: inline-block; margin-left: .6rem; font-size: .45em; vertical-align: middle; padding: .2em .6em; border-radius: 99px; background: var(--ink-3); color: var(--chalk); letter-spacing: .04em; }
+.rules-list { text-align: left; margin: .4rem auto; padding-left: 1.6em; max-width: 52rem;
+  font-size: clamp(1rem, min(2.1vw, 3.5vh), 1.6rem); line-height: 1.35; color: var(--chalk); counter-reset: r; list-style: none; }
+.rules-list li { position: relative; margin: .35em 0; }
+.rules-list li::before { counter-increment: r; content: counter(r); position: absolute; left: -1.6em; top: .05em; width: 1.2em; height: 1.2em;
+  border-radius: 50%; background: var(--hot); color: #fff; font-family: var(--display); font-size: .8em; display: grid; place-items: center; }
+.ready-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; }
+.rchip { padding: .25rem .7rem; border-radius: 99px; background: var(--ink-2); border: 2px solid var(--ink-3); font-weight: 700; font-size: clamp(.85rem, min(1.4vw, 2.4vh), 1.1rem); color: var(--mute); }
+.rchip.on { border-color: var(--volt); color: var(--volt); }
+.nextbtn.big { font-size: clamp(1.2rem, min(2.4vw, 4vh), 1.8rem); padding: .5em 2.2em; }
+.rules-p .rules-list { font-size: 1rem; padding-left: 1.8em; }
+.rules-p .intro-title { font-size: 2.2rem; }

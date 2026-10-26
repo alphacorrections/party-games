@@ -278,10 +278,15 @@ class PlayApp {
       </div>`;
       key = `final|${Object.keys(this.players || {}).length}|${Object.keys(this.highlights || {}).length}`;
     } else if (this.round && this.round.phase === 'intro' && this.mod) {
-      html = `<div class="pcard intro-p"><div class="intro-kicker">Up next</div>
-        <div class="intro-title">${esc(this.round.title || '')}</div>
-        <div class="intro-hint">${esc(this.round.hint || '')}</div></div>`;
-      key = `intro|${this.round.title}`;
+      const r = this.round, rules = r.rules || [], amReady = Boolean((r.ready || {})[this.me.id]);
+      const nReady = Object.keys(r.ready || {}).length, nHere = playerList(this.players || {}).length;
+      html = `<div class="pcard intro-p rules-p"><div class="intro-kicker">How to play</div>
+        <div class="intro-title">${esc(r.title || '')}</div>
+        ${r.mode ? `<div class="intro-hint">${esc(r.mode)}</div>` : ''}
+        ${rules.length ? `<ol class="rules-list">${rules.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : `<div class="intro-hint">${esc(r.hint || '')}</div>`}
+        ${amReady ? `<button class="pbtn" disabled>Ready ✓ · ${nReady}/${nHere}</button>` : `<button class="pbtn primary" data-action="ready">I'm ready</button>`}
+        ${this.isDirector ? '<button class="pbtn" data-action="next">Start now</button>' : ''}</div>`;
+      key = `intro|${r.title}|${amReady}`;
     } else if (!this.mod || (this.gameId && this.mod.meta && this.mod.meta.id !== this.gameId)) {
       html = this.lobbyHTML();
       key = `lobby|${this.isDirector}|${Object.keys(this.players || {}).length}|${this.hasScreen}|${this.length}`;
@@ -494,6 +499,10 @@ class PlayApp {
     }
     if (action.action === 'setlen') return this.director?.setLength(action.len);
     if (action.action === 'again')  return this.director?.playAgain();
+    if (action.action === 'ready') {
+      if (this.director) return this.director.markReady(this.me.id);
+      return this.room.t.set(`${this.room.base}/intent`, { by: this.me.id, action: 'ready', at: Date.now() });
+    }
     if (action.action === 'tolobby') return this.room.t.set(`${this.room.base}/intent`, { by: this.me.id, action: 'endgame', at: Date.now() });
     if (action.action === 'mulligan') {
       this.state.draft = [];
