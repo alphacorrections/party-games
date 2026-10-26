@@ -77,6 +77,19 @@ export class Director {
     await this.room.t.onDisconnectRemove(`${this.base}/director`);
   }
 
+  /** Pick up a game that's already running (after a reload or takeover). */
+  async adoptRunning(GAME_MENU_REF) {
+    const game = await this.room.t.get(`${this.base}/game`);
+    const menuIndex = await this.room.t.get(`${this.base}/menuIndex`);
+    if (!game || menuIndex === null || menuIndex === undefined || !ENGINES[game]) return false;
+    const mod = await ENGINES[game]();
+    const engine = new mod.Host(this.room, (GAME_MENU_REF || GAME_MENU)[menuIndex]?.opts || {});
+    await engine.load();
+    if (engine.resume) await engine.resume();
+    this.mod = mod; this.engine = engine; this.gameId = game;
+    return true;
+  }
+
   static isStale(director) {
     return !director || !director.at || (Date.now() - director.at) > STALE_MS;
   }
@@ -99,13 +112,17 @@ export class Director {
   }
 
   async onIntent(intent) {
-    if (!intent || !this.engine) return;
-    if (intent.at && intent.at === this._lastIntentAt) return;
-    this._lastIntentAt = intent.at;
+    if (!intent) return;
     if (intent.action === 'endgame') {
+      // Any phone can send the room back to the lobby, even after the game finished.
+      if (intent.at && intent.at === this._lastIntentAt) return;
+      this._lastIntentAt = intent.at;
       await this.room.t.remove(`${this.base}/intent`);
       return this.endGame();
     }
+    if (!this.engine) return;
+    if (intent.at && intent.at === this._lastIntentAt) return;
+    this._lastIntentAt = intent.at;
     if (intent.action === 'roll' || intent.action === 'useitem' || intent.action === 'fork') {
       await this.engine.onIntent?.(intent);
     } else if (intent.action === 'next' || intent.action === 'skip' || intent.action === 'mulligan') {

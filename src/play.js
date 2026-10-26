@@ -188,17 +188,7 @@ class PlayApp {
     await this.director.claim();
     this.director.attach();
     // If a game is already mid-flight (we took over), rehydrate the engine.
-    const game = await this.room.t.get(`${this.room.base}/game`);
-    const menuIndex = await this.room.t.get(`${this.room.base}/menuIndex`);
-    if (game && menuIndex !== null && menuIndex !== undefined) {
-      // Re-create the engine without restarting the round. Engines that can
-      // resume do so from room state; others just pick up at the next phase.
-      const mod = await ENGINES[game]();
-      const engine = new mod.Host(this.room, GAME_MENU[menuIndex]?.opts || {});
-      await engine.load();
-      if (engine.resume) await engine.resume();
-      this.director.mod = mod; this.director.engine = engine; this.director.gameId = game;
-    }
+    await this.director.adoptRunning();
     this.render();
   }
 
@@ -282,7 +272,7 @@ class PlayApp {
       // With no TV the phone is the screen: show the podium, not "check the big screen".
       // With a TV, a compact version so you can see where you landed without looking up.
       html = `<div class="pcard final-p">${finalScoreboard(this.players || {}, mirror ? 'Final scores' : 'Final', mirror ? this.highlights : null)}
-        ${this.isDirector ? `<button class="pbtn primary" data-action="again">Back to the lobby</button>` : '<p class="phint center">Host picks the next one.</p>'}
+        <button class="pbtn primary" data-action="${this.isDirector ? 'again' : 'tolobby'}">Back to the lobby</button>
       </div>`;
       key = `final|${Object.keys(this.players || {}).length}|${Object.keys(this.highlights || {}).length}`;
     } else if (this.round && this.round.phase === 'intro' && this.mod) {
@@ -497,6 +487,7 @@ class PlayApp {
     }
     if (action.action === 'setlen') return this.director?.setLength(action.len);
     if (action.action === 'again')  return this.director?.playAgain();
+    if (action.action === 'tolobby') return this.room.t.set(`${this.room.base}/intent`, { by: this.me.id, action: 'endgame', at: Date.now() });
     if (action.action === 'mulligan') {
       this.state.draft = [];
       if (this.director) return this.director.nudge('mulligan', this.me.id);

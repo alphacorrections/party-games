@@ -41,7 +41,10 @@ class HostApp {
     el('modebadge').className = `badge ${t.mode}`;
     mountSoundToggle(el('topbar-tools'));
 
-    this.room = await Room.create(this.hostId);
+    // A reload (or the TV browser restarting) reopens the same room instead
+    // of stranding everyone in the old one. ?new=1 forces a fresh room.
+    this.room = await this.reopenRoom(t) || await Room.create(this.hostId);
+    try { localStorage.setItem('pg_host_room', JSON.stringify({ code: this.room.code, at: Date.now() })); } catch {}
     await this.room.t.set(`${this.room.base}/hasScreen`, true);
     el('code').textContent = this.room.code;
 
@@ -53,6 +56,9 @@ class HostApp {
     this.director = new Director(this.room, { id: this.hostId, onState: () => { this.onPlayers(); this.render(); } });
     await this.director.claim();
     this.director.attach();
+    if (this._reopened) {
+      try { await this.director.adoptRunning(); } catch (e) { console.warn('resume failed', e); }
+    }
 
     this.room.on('players', v => {
       const prev = this.players || {};
@@ -76,7 +82,7 @@ class HostApp {
       this.director.stop();
       this.room.detach();
       clearInterval(this.tickTimer);
-      this.room.destroy();
+      // Don't delete the room: a reload reopens it. Rooms expire on their own.
     });
   }
 
@@ -113,6 +119,17 @@ class HostApp {
       });
     }
     setText('pcount', list.length);
+  }
+
+  async reopenRoom(t) {
+    if (new URLSearchParams(location.search).has('new')) return null;
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem('pg_host_room') || 'null'); } catch {}
+    if (!saved || !saved.code || Date.now() - (saved.at || 0) > 6 * 3600 * 1000) return null;
+    const meta = await t.get(`rooms/${saved.code}/meta`);
+    if (!meta || (meta.expiresAt && meta.expiresAt < Date.now())) return null;
+    this._reopened = true;
+    return Room.open(saved.code);
   }
 
   renderLength(cur) {
