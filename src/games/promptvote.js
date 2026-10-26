@@ -27,7 +27,7 @@ export const meta = {
 
 const HAND_SIZE   = 7;
 const ANSWER_MS   = 90000;
-const VOTE_MS     = 45000;
+const VOTE_MS     = 75000;   // time to read every answer and pick
 const REVEAL_MS   = 9000;
 const PER_VOTE    = 300;
 const CZAR_PRIZE  = 1000;
@@ -449,7 +449,7 @@ export function playerView(round, me, hand, submitted, voted, draft, extra = {})
       <div class="pcard">
         ${mirror ? `<div class="qmeta">Round ${round.index + 1} of ${round.total}</div>${timerHTML(round.deadline, ANSWER_MS)}` : ''}
         <p class="phint prompt">${esc(round.prompt)}</p>
-        <textarea class="ptext" data-role="answer" maxlength="140"
+        <textarea class="ptext" data-role="answer" maxlength="200"
                   placeholder="Make it hurt"></textarea>
         <button class="pbtn primary" data-action="submittext">Send it</button>
       </div>`;
@@ -506,7 +506,7 @@ export async function handleAction(room, me, action, round, state) {
   }
 
   if (action.action === 'submittext' && round.phase === 'answer') {
-    const text = (action.text || '').trim().slice(0, 140);
+    const text = (action.text || '').trim().slice(0, 200);
     if (!text) return;
     await room.submit(me.id, { text });
     return { rerender: true };

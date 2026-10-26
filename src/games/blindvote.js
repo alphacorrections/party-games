@@ -111,7 +111,10 @@ export class Host {
       await this.room.patchRound({ phase: 'reveal', tally, winners, gained, votes });
     }
     const n = round.mode === 'wyr' ? Object.keys(votes).length : Object.keys(round.tally || {}).length;
-    this.timer = setTimeout(() => this.ask(round.index + 1), revealMs(n, { base: 5000, per: 900 }));
+    // WYR reveal is where the minority defends itself: give it real time. Next skips ahead.
+    const hold = round.mode === 'wyr' ? 30000 : revealMs(n, { base: 5000, per: 900 });
+    await this.room.patchRound({ revealUntil: Date.now() + hold });
+    this.timer = setTimeout(() => this.ask(round.index + 1), hold);
   }
 
   async nudge(kind, pid) {
@@ -204,7 +207,7 @@ export function hostView(round, players) {
       <h1 class="question">…${esc(round.text)}?</h1>
       ${waitingHTML(pendingPlayers(players, liveVotes, spectators(round, players)), { skippable: true })}`;
   }
-  return `${header}${round.mode === 'wyr' ? wyrSplit(round, players) : `<h2 class="subq">…${esc(round.text)}?</h2>${likelyReveal(round, players)}`}
+  return `${header}${round.mode === 'wyr' && round.revealUntil ? timerHTML(round.revealUntil, 30000) : ''}${round.mode === 'wyr' ? wyrSplit(round, players) : `<h2 class="subq">…${esc(round.text)}?</h2>${likelyReveal(round, players)}`}
     <button class="nextbtn" data-next="1">Next</button>`;
 }
 
@@ -231,7 +234,7 @@ export function playerView(round, me, submitted, voted, players, extra = {}) {
       </div>`;
     }
     const btns = playerList(players || {}).map(p =>
-      `<button class="pbtn" data-action="vote" data-slot="${p.id}"><span class="letter">${p.emoji || '🎲'}</span>${esc(p.name)}</button>`).join('');
+      `<button class="pbtn" data-action="vote" data-slot="${p.id}"><span class="letter">${p.emoji || '🎲'}</span>${esc(p.name)}${p.id === me.id ? ' <span class="muted">(you)</span>' : ''}</button>`).join('');
     return `<div class="pcard">
       ${mirror ? timerHTML(round.deadline, VOTE_MS) : ''}
       <p class="phint">Who's most likely to…</p><h2 class="small-h">${esc(round.text)}?</h2>${btns}</div>`;
@@ -251,7 +254,6 @@ export const mirrorView = playerView;
 
 export async function handleAction(room, me, action, round) {
   if (!round || round.phase !== 'vote' || action.action !== 'vote') return;
-  if (round.mode === 'likely' && action.slot === me.id) return;   // can't vote yourself
   await room.vote(me.id, action.slot);
   return { rerender: true };
 }

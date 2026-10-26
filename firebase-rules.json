@@ -55,7 +55,7 @@
         "submissions": {
           "$pid": {
             "text": {
-              ".validate": "newData.isString() && newData.val().length <= 200"
+              ".validate": "newData.isString() && newData.val().length <= 1000"
             }
           }
         }
