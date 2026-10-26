@@ -77,10 +77,15 @@ export function fitStage(stage) {
   // A portrait phone should just scroll.
   if (window.innerHeight > window.innerWidth) { document.documentElement.classList.add('portrait'); return; }
   document.documentElement.classList.remove('portrait');
-  const avail = stage.parentElement ? stage.parentElement.clientHeight : window.innerHeight;
+  const par = stage.parentElement;
+  let avail = window.innerHeight;
+  if (par) {
+    const cs = getComputedStyle(par);
+    avail = par.clientHeight - parseFloat(cs.paddingTop || 0) - parseFloat(cs.paddingBottom || 0);
+  }
   const need = stage.scrollHeight;
-  if (need > avail && avail > 0) {
-    const k = Math.max(0.55, avail / need);
+  if (need > avail + 1 && avail > 0) {
+    const k = Math.max(0.45, (avail - 4) / need);
     stage.style.transformOrigin = '50% 0';
     stage.style.transform = `scale(${k})`;
   }
@@ -103,6 +108,11 @@ export function installViewport({ stageId = 'stage', remoteKeys = true } = {}) {
     });
   };
   window.addEventListener('resize', refit);
+  // Content grows after a render too (fonts, QR, late data): refit on size change.
+  if (typeof ResizeObserver !== 'undefined') {
+    const ro = new ResizeObserver(refit);
+    for (const id of [stageId, 'lobby']) { const n = document.getElementById(id); if (n) ro.observe(n); }
+  }
   window.addEventListener('orientationchange', refit);
 
   // Remote-control / keyboard adjustment of the inset. Arrow keys are what

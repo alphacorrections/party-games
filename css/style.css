@@ -115,7 +115,11 @@ a { color: var(--hot); }
 .stage {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* Not justify-content:center: when content is taller than the screen,
+     centering pushes its top up under the title bar. Auto margins on the
+     children centre when there's room and pin to the top when there isn't
+     (works on old TV browsers, unlike 'safe center'). */
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   padding: clamp(.6rem, 1.6vh, 1.6rem) clamp(1rem, 4vw, 4rem);
@@ -343,6 +347,7 @@ a { color: var(--hot); }
   width: 100%;
 }
 #stage:empty { display: none; }
+.stage > #lobby, .stage > #stage { margin-block: auto; flex-shrink: 0; }
 body.playing #lobby { display: none; }
 
 .joinpanel { }
