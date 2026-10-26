@@ -208,7 +208,8 @@ export class Host {
     const slots = entries.map(([pid, s], i) => ({
       slot: i,
       pid,
-      text: s.text || ''
+      text: s.text || '',
+      cards: Array.isArray(s.cards) && s.cards.length > 1 ? s.cards : null   // multi-blank: one card per blank
     }));
 
     if (!slots.length) return this.ask(round.index + 1);
@@ -347,7 +348,7 @@ export function hostView(round, players) {
   if (round.phase === 'vote') {
     const cards = round.slots.map(s => `
       <div class="vcard"><div class="vtext">${
-        round.mode === 'pick' ? fillBlanks(round.prompt, [s.text]) : esc(s.text)
+        round.mode === 'pick' ? fillBlanks(round.prompt, s.cards && s.cards.length ? s.cards : [s.text]) : esc(s.text)
       }</div></div>`).join('');
     return `
       ${header}
@@ -368,7 +369,7 @@ export function hostView(round, players) {
     return `
       <div class="vcard ${pts ? 'won' : ''}">
         <div class="vtext">${round.mode === 'pick'
-          ? fillBlanks(round.prompt, [s.text]) : esc(s.text)}</div>
+          ? fillBlanks(round.prompt, s.cards && s.cards.length ? s.cards : [s.text]) : esc(s.text)}</div>
         <div class="vwho">${who.emoji || '🎲'} ${esc(who.name || '')}
           ${n ? `&nbsp;&nbsp; ${n} vote${n === 1 ? '' : 's'}` : ''}
           ${pts ? `<b>+${pts}</b>` : ''}</div>
@@ -400,7 +401,7 @@ export function playerView(round, me, hand, submitted, voted, draft, extra = {})
         const pts = (round.gained || {})[s.pid] || 0;
         const who = byId[s.pid] || {};
         return `<div class="vcard small ${pts ? 'won' : ''}">
-          <div class="vtext">${round.mode === 'pick' ? fillBlanks(round.prompt, [s.text]) : esc(s.text)}</div>
+          <div class="vtext">${round.mode === 'pick' ? fillBlanks(round.prompt, s.cards && s.cards.length ? s.cards : [s.text]) : esc(s.text)}</div>
           <div class="vwho">${who.emoji || ''} ${esc(who.name || '')}${n ? ` &nbsp; ${n} vote${n === 1 ? '' : 's'}` : ''}${pts ? ` <b>+${pts}</b>` : ''}</div>
         </div>`;
       }).join('');
@@ -465,7 +466,7 @@ export function playerView(round, me, hand, submitted, voted, draft, extra = {})
 
   const btns = round.slots.map(s => {
     const own = s.pid === me.id && round.judge !== 'czar';
-    const body = (mirror && round.mode === 'pick') ? fillBlanks(round.prompt, [s.text]) : esc(s.text);
+    const body = (mirror && round.mode === 'pick') ? fillBlanks(round.prompt, s.cards && s.cards.length ? s.cards : [s.text]) : esc(s.text);
     return `<button class="pbtn vote ${own ? 'own' : ''}" data-action="vote"
       data-slot="${s.slot}" ${own ? 'disabled' : ''}>
       ${body}${own ? ' <i>(yours)</i>' : ''}</button>`;
