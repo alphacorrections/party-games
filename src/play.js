@@ -119,7 +119,7 @@ class PlayApp {
     let name = el('name').value.trim();
     if (!name) return this.err('Put your name in first.');
     name = await this.resolveName(name);
-    const room = await Room.create(localPlayerId());
+    const room = await Room.create(playerIdFor(name));     // the creator's player id: they get hosting back after a takeover
     await room.t.set(`${room.base}/hasScreen`, false);
     await this.enter(room, name);
     await this.becomeDirector();
@@ -151,6 +151,7 @@ class PlayApp {
     });
 
     room.on('hasScreen', v => { this.hasScreen = Boolean(v); this.render(); });
+    room.t.get(`${room.base}/meta/hostId`).then(v => { this.ownerId = v || null; }).catch(() => {});
     room.on('length',    v => { this.length = v || 'standard'; this.render(); });
     room.on('highlights', v => { this.highlights = v || {}; this.render(); });
     room.on('party',      v => { this.party = v || {}; this.render(); });
@@ -186,7 +187,15 @@ class PlayApp {
 
   async becomeDirector() {
     if (this.director) return;
-    this.director = new Director(this.room, { id: this.me.id, onState: () => this.render() });
+    this.director = new Director(this.room, { id: this.me.id, onState: () => this.render(),
+      onDemoted: byId => {
+        this.director = null;
+        this._screenKey = null;
+        const who = (this.players || {})[byId]?.name;
+        if (!this.isOwner) this.toast(who ? `${who} is hosting now` : 'Someone else is hosting now');
+        this.render();
+        this.onDirector(this.directorInfo);      // the creator takes it straight back
+      } });
     await this.director.claim();
     this.director.attach();
     // If a game is already mid-flight (we took over), rehydrate the engine.
@@ -195,10 +204,23 @@ class PlayApp {
   }
 
   /** Watch leadership. If the director disappears, the first player takes over. */
+  get isOwner() { return Boolean(this.ownerId && this.ownerId === this.me.id); }
+
   onDirector(info) {
     this.directorInfo = info;
+    if (info && info.at) this._lastDirAt = info.at;
     if (this.isDirector) return;
     if (this.hasScreen) return;              // a TV is driving; phones never take over
+    // The phone that started the party takes hosting back when it returns.
+    if (this.isOwner && info && info.id && info.id !== this.me.id) {
+      if (this._reclaim) return;
+      this._reclaim = setTimeout(async () => {
+        this._reclaim = null;
+        if (this.isDirector) return;
+        await this.becomeDirector();
+      }, 700);
+      return;
+    }
     if (!Director.isStale(info)) {
       // A live director: cancel any pending takeover.
       clearTimeout(this._takeover); this._takeover = null;
@@ -212,6 +234,10 @@ class PlayApp {
       this._takeover = null;
       const cur = await this.room.t.get(`${this.room.base}/director`);
       if (!Director.isStale(cur)) return;
+      if (!cur && this._lastDirAt && Date.now() - this._lastDirAt < Director.STALE_MS) {
+        return this.onDirector(cur);         // host's connection blipped: check again shortly
+      }
+      if (this.isDirector) return;
       await this.becomeDirector();
       this.toast('You\'re hosting now');
     }, 1500 + rank * 1200);

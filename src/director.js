@@ -57,10 +57,11 @@ const HEADSUP_RULES = ['Hold the phone sideways on your forehead, screen facing 
 const STALE_MS     = 12000;
 
 export class Director {
-  constructor(room, { id, onState } = {}) {
+  constructor(room, { id, onState, onDemoted } = {}) {
     this.room = room;
     this.id = id;
     this.onState = onState || (() => {});
+    this.onDemoted = onDemoted || null;
     this.engine = null;
     this.mod = null;
     this.gameId = null;
@@ -76,12 +77,35 @@ export class Director {
   /* ----------------------------- leadership ----------------------------- */
 
   async claim() {
+    this.demoted = false;
     await this.room.t.set(`${this.base}/director`, { id: this.id, at: Date.now() });
-    this._hb = setInterval(() => {
-      this.room.t.update(`${this.base}/director`, { at: Date.now() }).catch(() => {});
-    }, HEARTBEAT_MS);
     // If this tab dies, drop the claim so another device can take over.
     await this.room.t.onDisconnectRemove(`${this.base}/director`);
+    this._hb = setInterval(() => this.heartbeat().catch(() => {}), HEARTBEAT_MS);
+    // Only one device may run the game. If someone else holds a live claim
+    // (they took over while this phone was asleep), stop immediately.
+    this._dirUnsub = this.room.on('director', v => {
+      if (v && v.id && v.id !== this.id && !Director.isStale(v)) this.stepDown(v.id);
+    });
+  }
+
+  async heartbeat() {
+    if (this.demoted) return;
+    const cur = await this.room.t.get(`${this.base}/director`);
+    if (cur && cur.id && cur.id !== this.id && !Director.isStale(cur)) return this.stepDown(cur.id);
+    await this.room.t.set(`${this.base}/director`, { id: this.id, at: Date.now() });
+    // A dropped connection fires (and uses up) the disconnect handler: re-arm it.
+    if (!cur || cur.id !== this.id) await this.room.t.onDisconnectRemove(`${this.base}/director`);
+  }
+
+  /** Another device is running the game now. Stop everything here. */
+  stepDown(byId) {
+    if (this.demoted) return;
+    this.demoted = true;
+    if (this._introDone) { const f = this._introDone; this._introDone = null; }
+    this.stop();
+    this.engine = null; this.mod = null; this.gameId = null;
+    this.onDemoted?.(byId);
   }
 
   /** Pick up a game that's already running (after a reload or takeover). */
@@ -101,6 +125,8 @@ export class Director {
     if (engine.resume) await engine.resume();
     return true;
   }
+
+  static get STALE_MS() { return STALE_MS; }
 
   static isStale(director) {
     return !director || !director.at || (Date.now() - director.at) > STALE_MS;
@@ -270,6 +296,7 @@ export class Director {
 
   stop() {
     clearInterval(this._hb);
+    try { this._dirUnsub?.(); } catch {} this._dirUnsub = null;
     this.engine?.stop?.();
     for (const u of this._unsubs) { try { u(); } catch {} }
     this._unsubs = [];
