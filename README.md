@@ -241,3 +241,7 @@ Everything in `content/` is original, written for this repo. None of it is taken
 Cards Against Humanity, What Do You Meme, Jackbox or any other published deck — those
 are copyrighted, and copying them into a public repo is how a public repo gets a
 takedown notice.
+
+## Deploying
+
+Run `python3 tools/stamp.py` before every commit. It gives every JS/CSS file the same `?v=` so phones never run a mix of old and new files.

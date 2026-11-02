@@ -7,7 +7,7 @@
 //   d.idle()               -> gentle hover while waiting
 // ---------------------------------------------------------------------------
 
-import { reducedMotion } from './fx.js';
+import { reducedMotion } from './fx.js?v=16c4f57-11012044';
 
 // Which 3x3 cells are filled for each value.
 const PIPS = {

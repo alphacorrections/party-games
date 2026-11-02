@@ -11,8 +11,8 @@
 // whether a pack was "questions", "prompts", "pairs" or "categories".
 // ---------------------------------------------------------------------------
 
-import { getTransport } from './transport.js';
-import { hashKey, loadJSON, contentURL } from './util.js';
+import { getTransport } from './transport.js?v=16c4f57-11012044';
+import { hashKey, loadJSON, contentURL } from './util.js?v=16c4f57-11012044';
 
 /** Which top-level key in each JSON file holds the items. */
 const SHAPES = {

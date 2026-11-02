@@ -5,16 +5,16 @@
 //      the Director, and every phone (including that one) renders full state.
 // ---------------------------------------------------------------------------
 
-import { partyChipsHTML } from './util.js';
-import { Room, playerIdFor, rememberName, recalledName, localPlayerId } from './room.js';
-import { getTransport } from './transport.js';
-import { esc, playerList, countdown, finalScoreboard } from './util.js';
-import { swapIn, stagger, countUp, sound, haptic, mountSoundToggle, flash, confetti } from './fx.js';
-import { mountDie } from './dice.js';
-import { installViewport } from './viewport.js';
-import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js';
-import { matchRosterName, getRoster } from './scores.js';
-import { startTilt, goSideways, leaveSideways, keepAwake, browserLandscape } from './tilt.js';
+import { partyChipsHTML } from './util.js?v=16c4f57-11012044';
+import { Room, playerIdFor, rememberName, recalledName, localPlayerId } from './room.js?v=16c4f57-11012044';
+import { getTransport } from './transport.js?v=16c4f57-11012044';
+import { esc, playerList, countdown, finalScoreboard } from './util.js?v=16c4f57-11012044';
+import { swapIn, stagger, countUp, sound, haptic, mountSoundToggle, flash, confetti } from './fx.js?v=16c4f57-11012044';
+import { mountDie } from './dice.js?v=16c4f57-11012044';
+import { installViewport } from './viewport.js?v=16c4f57-11012044';
+import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js?v=16c4f57-11012044';
+import { matchRosterName, getRoster } from './scores.js?v=16c4f57-11012044';
+import { startTilt, goSideways, leaveSideways, keepAwake, browserLandscape } from './tilt.js?v=16c4f57-11012044';
 
 const el = id => document.getElementById(id);
 const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
@@ -252,6 +252,7 @@ class PlayApp {
   /* ----------------------------- game state ----------------------------- */
 
   async onGame(id) {
+    this._picking = false;
     if (id === this.gameId) return;
     if (!id) {
       this.gameId = null; this.mod = null; this.round = null; this.hand = [];
@@ -314,6 +315,7 @@ class PlayApp {
         ${this.isDirector ? '<button class="pbtn" data-action="next">Start now</button>' : ''}</div>`;
       key = `intro|${r.title}|${amReady}`;
     } else if (!this.mod || (this.gameId && this.mod.meta && this.mod.meta.id !== this.gameId)) {
+      if (this._picking && this.isDirector) return;     // category/mode list is up: background updates leave it alone
       html = this.lobbyHTML();
       key = `lobby|${this.isDirector}|${Object.keys(this.players || {}).length}|${this.hasScreen}|${this.length}`;
     } else if (this.gameId === 'board') {
@@ -519,6 +521,7 @@ class PlayApp {
       const i = Number(action.game);
       const choice = GAME_MENU[i];
       if ((choice.pick || choice.id === 'charades' || choice.id === 'quiz') && !action.cat && !action.random) return this.pickCategory(i);
+      this._picking = false;
       const opts = action.cat ? { category: action.cat } : {};
       if (!this.hasScreen && choice.phoneMode === 'headsup') opts.headsup = true;
       return this.director?.launch(i, opts);
@@ -562,6 +565,7 @@ class PlayApp {
       <button class="gamebtn" data-action="launch" data-game="${i}" data-cat="${esc(c.name)}">
         <b>${c.emoji} ${esc(c.name)}</b><span>${esc(c.blurb || `${c.count} questions`)}</span></button>`).join('');
     const hasMixed = cats.some(c => c.name === 'Mixed') || GAME_MENU[i].noRandom;
+    this._picking = true;
     swapIn(el('pstage'), `<div class="pcard"><h2>${esc(GAME_MENU[i].pick || 'Pick a category')}</h2><div class="menu">${cards}
       ${hasMixed ? '' : `<button class="gamebtn" data-action="launch" data-game="${i}" data-random="1"><b>🎲 Surprise me</b><span>Mixed bag</span></button>`}
       </div><button class="linkbtn" data-action="back">Back</button></div>`, 'catpick');
@@ -619,7 +623,7 @@ document.addEventListener('click', e => {
   if (!btn || btn.disabled) return;
   const action = { ...btn.dataset };
   if (!action.action && action.game !== undefined) action.action = 'launch';
-  if (action.action === 'back') { app._screenKey = null; return app.render(); }
+  if (action.action === 'back') { app._picking = false; app._screenKey = null; return app.render(); }
   if (action.action === 'submittext') {
     const ta = document.querySelector('[data-role="answer"]'); action.text = ta ? ta.value : '';
   }

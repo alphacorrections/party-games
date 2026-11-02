@@ -16,8 +16,8 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, esc, playerList, sortedPlayers, timerHTML, finalScoreboard,
-         isPresent, sampleUnseen, highlight } from '../util.js';
-import { loadPack } from '../content.js';
+         isPresent, sampleUnseen, highlight } from '../util.js?v=16c4f57-11012044';
+import { loadPack } from '../content.js?v=16c4f57-11012044';
 
 export const meta = {
   id: 'doubledown',

@@ -2,15 +2,15 @@
 // Host screen: the TV. Renders the room; the Director runs the game.
 // ---------------------------------------------------------------------------
 
-import { partyChipsHTML, isPresent } from './util.js';
-import { Room, localPlayerId } from './room.js';
-import { getTransport } from './transport.js';
-import { esc, playerList, countdown, finalScoreboard } from './util.js';
-import * as fx from './fx.js';
-import { swapIn, stagger, countUp, confetti, mountSoundToggle, sound } from './fx.js';
-import { installViewport } from './viewport.js';
-import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js';
-import { getLeaderboard, keyFor } from './scores.js';
+import { partyChipsHTML, isPresent } from './util.js?v=16c4f57-11012044';
+import { Room, localPlayerId } from './room.js?v=16c4f57-11012044';
+import { getTransport } from './transport.js?v=16c4f57-11012044';
+import { esc, playerList, countdown, finalScoreboard } from './util.js?v=16c4f57-11012044';
+import * as fx from './fx.js?v=16c4f57-11012044';
+import { swapIn, stagger, countUp, confetti, mountSoundToggle, sound } from './fx.js?v=16c4f57-11012044';
+import { installViewport } from './viewport.js?v=16c4f57-11012044';
+import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js?v=16c4f57-11012044';
+import { getLeaderboard, keyFor } from './scores.js?v=16c4f57-11012044';
 
 const el = id => document.getElementById(id);
 

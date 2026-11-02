@@ -9,8 +9,8 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, esc, sortedPlayers, playerList, countdown,
-         timerHTML, finalScoreboard, hashKey, highlight } from '../util.js';
-import { loadPack } from '../content.js';
+         timerHTML, finalScoreboard, hashKey, highlight } from '../util.js?v=16c4f57-11012044';
+import { loadPack } from '../content.js?v=16c4f57-11012044';
 
 export const meta = {
   id: 'charades',

@@ -18,7 +18,7 @@
 //   rooms/{code}/mini    { id, label, duel?: [pidA, pidB] } while one runs
 // ---------------------------------------------------------------------------
 
-import { shuffle, esc, sortedPlayers, playerList, finalScoreboard, highlight } from '../util.js';
+import { shuffle, esc, sortedPlayers, playerList, finalScoreboard, highlight } from '../util.js?v=16c4f57-11012044';
 
 export const meta = {
   id: 'board',
@@ -143,11 +143,11 @@ const MINIS = {
 const DUEL_MINIS = ['quiz', 'liars', 'blindvote-wyr'];
 
 const ENGINES = {
-  quiz:       () => import('./quiz.js'),
-  promptvote: () => import('./promptvote.js'),
-  charades:   () => import('./charades.js'),
-  liars:      () => import('./liars.js'),
-  blindvote:  () => import('./blindvote.js')
+  quiz:       () => import('./quiz.js?v=16c4f57-11012044'),
+  promptvote: () => import('./promptvote.js?v=16c4f57-11012044'),
+  charades:   () => import('./charades.js?v=16c4f57-11012044'),
+  liars:      () => import('./liars.js?v=16c4f57-11012044'),
+  blindvote:  () => import('./blindvote.js?v=16c4f57-11012044')
 };
 
 /* --------------------------------- tiles --------------------------------- */

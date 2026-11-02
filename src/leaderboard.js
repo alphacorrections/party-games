@@ -4,9 +4,9 @@
 
 import { getLeaderboard, getRoster, getHistory, addToRoster,
          deactivateRosterEntry, reactivateRosterEntry, purgePlayer,
-         resetAllScores } from './scores.js';
-import { getTransport } from './transport.js';
-import { esc } from './util.js';
+         resetAllScores } from './scores.js?v=16c4f57-11012044';
+import { getTransport } from './transport.js?v=16c4f57-11012044';
+import { esc } from './util.js?v=16c4f57-11012044';
 
 const GAME_NAMES = {
   quiz: 'Trivia',

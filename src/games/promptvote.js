@@ -14,8 +14,8 @@
 
 import { shuffle, sample, esc, sortedPlayers, playerList, countdown,
          fillBlanks, timerHTML, finalScoreboard,
-         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js';
-import { loadPack } from '../content.js';
+         pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js?v=16c4f57-11012044';
+import { loadPack } from '../content.js?v=16c4f57-11012044';
 
 export const meta = {
   id: 'promptvote',

@@ -2,9 +2,9 @@
 // Manage content: seed from the bundle, add, disable, delete.
 // ---------------------------------------------------------------------------
 
-import { getTransport } from './transport.js';
-import { PACKS, seedFromBundle, reseedReplacing, listPack, addItem, setEnabled, removeItem, packCounts } from './content.js';
-import { esc } from './util.js';
+import { getTransport } from './transport.js?v=16c4f57-11012044';
+import { PACKS, seedFromBundle, reseedReplacing, listPack, addItem, setEnabled, removeItem, packCounts } from './content.js?v=16c4f57-11012044';
+import { esc } from './util.js?v=16c4f57-11012044';
 
 const LABELS = {
   trivia: 'Trivia', liars: "Liar's Trivia", fillblank: 'Fill-in prompts', answers: 'Answer cards',

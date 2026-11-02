@@ -11,9 +11,9 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, sample, esc, sortedPlayers, playerList,
-         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js';
-import { loadPack } from '../content.js';
-import { hashKey } from '../util.js';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js?v=16c4f57-11012044';
+import { loadPack } from '../content.js?v=16c4f57-11012044';
+import { hashKey } from '../util.js?v=16c4f57-11012044';
 
 // The truth has to live on the round so a new director can resume, but it
 // shouldn't be readable at a glance in devtools during the writing phase.
