@@ -13,8 +13,8 @@
 //   rooms/{CODE}/votes           game-specific, cleared between rounds
 // ---------------------------------------------------------------------------
 
-import { ROOM_CODE_CHARS, ROOM_CODE_LEN, ROOM_TTL_MS } from './config.js?v=16c4f57-11012044';
-import { getTransport } from './transport.js?v=16c4f57-11012044';
+import { ROOM_CODE_CHARS, ROOM_CODE_LEN, ROOM_TTL_MS } from './config.js?v=e41d2d7-11032002';
+import { getTransport } from './transport.js?v=e41d2d7-11032002';
 
 export const EMOJI = [
   '🦝','🐸','🍆','💀','🔥','🐍','🦴','👹','🧃','🪳',

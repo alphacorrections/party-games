@@ -208,3 +208,13 @@ export function partyChipsHTML(players, party, opts = {}) {
       ${opts.kick ? `<button class="kick" data-kick="${p.id}" title="Remove">×</button>` : ''}
     </div>`).join('');
 }
+
+/** Which music mood a screen should have. null = silence. */
+export function musicLevel(gameId, round) {
+  if (gameId !== 'bodycount' || !round) return null;
+  const ph = round.phase;
+  if (ph === 'final' || ph === 'escaped') return null;
+  if (/^(doom|trial|trialEnd)$/.test(ph)) return 'tense';
+  if (/^escape/.test(ph)) return 'chase';
+  return 'calm';
+}

@@ -5,16 +5,16 @@
 //      the Director, and every phone (including that one) renders full state.
 // ---------------------------------------------------------------------------
 
-import { partyChipsHTML } from './util.js?v=16c4f57-11012044';
-import { Room, playerIdFor, rememberName, recalledName, localPlayerId } from './room.js?v=16c4f57-11012044';
-import { getTransport } from './transport.js?v=16c4f57-11012044';
-import { esc, playerList, countdown, finalScoreboard } from './util.js?v=16c4f57-11012044';
-import { swapIn, stagger, countUp, sound, haptic, mountSoundToggle, flash, confetti } from './fx.js?v=16c4f57-11012044';
-import { mountDie } from './dice.js?v=16c4f57-11012044';
-import { installViewport } from './viewport.js?v=16c4f57-11012044';
-import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js?v=16c4f57-11012044';
-import { matchRosterName, getRoster } from './scores.js?v=16c4f57-11012044';
-import { startTilt, goSideways, leaveSideways, keepAwake, browserLandscape } from './tilt.js?v=16c4f57-11012044';
+import { partyChipsHTML, musicLevel } from './util.js?v=e41d2d7-11032002';
+import { Room, playerIdFor, rememberName, recalledName, localPlayerId } from './room.js?v=e41d2d7-11032002';
+import { getTransport } from './transport.js?v=e41d2d7-11032002';
+import { esc, playerList, countdown, finalScoreboard } from './util.js?v=e41d2d7-11032002';
+import { swapIn, stagger, countUp, sound, music, haptic, mountSoundToggle, flash, confetti } from './fx.js?v=e41d2d7-11032002';
+import { mountDie } from './dice.js?v=e41d2d7-11032002';
+import { installViewport } from './viewport.js?v=e41d2d7-11032002';
+import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js?v=e41d2d7-11032002';
+import { matchRosterName, getRoster } from './scores.js?v=e41d2d7-11032002';
+import { startTilt, goSideways, leaveSideways, keepAwake, browserLandscape } from './tilt.js?v=e41d2d7-11032002';
 
 const el = id => document.getElementById(id);
 const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
@@ -285,6 +285,16 @@ class PlayApp {
     this.round = round;
     if (round && prev && (round.phase !== prev.phase || round.index !== prev.index)) this.state.draft = [];
     if (round?.phase === 'final' && prev?.phase !== 'final') { sound.win(); haptic.win(); setTimeout(() => confetti(60), 300); }
+    if (this.gameId === 'bodycount' && round && prev && round.phase !== prev.phase) {
+      const me = this.me.id;
+      const hit = (round.phase === 'reveal' && (round.doomed || []).includes(me))
+        || (round.phase === 'escapeReveal' && (round.caught || []).includes(me))
+        || (round.phase === 'trialEnd' && (round.outcome || {})[me] === 'die');
+      const good = (round.phase === 'reveal' && (round.gained || {})[me]) || (round.phase === 'trialEnd' && (round.outcome || {})[me] === 'live');
+      if (hit) { flash('blood'); haptic._v?.([120, 60, 220]); }
+      else if (good) { flash('volt'); haptic.correct?.(); }
+      if (round.phase === 'doom' && (round.victims || []).includes(me)) { flash('blood'); haptic._v?.([60, 40, 60, 40, 300]); }
+    }
     this.render();
   }
 
@@ -381,6 +391,8 @@ class PlayApp {
     if (this.gameId === 'board' && this.mod?.patchPlayer) this.mod.patchPlayer(stage, this.board, this.me);
     if (this.mod?.mountPlayer && this.round) this.mod.mountPlayer(stage, { room: this.room, me: this.me, round: this.round, fx: { sound, haptic } });
     document.body.classList.toggle('horror', this.gameId === 'bodycount' && Boolean(this.mod));
+    // No TV: the hosting phone is the speaker.
+    music.set(!this.hasScreen && this.isDirector && this.mod ? musicLevel(this.gameId, this.round) : null);
     document.body.classList.toggle('ghostmode', Boolean(stage.querySelector('.ghostmode')));
     // Heads Up turns the whole phone light so the word reads from across the room.
     document.body.classList.toggle('headsup', Boolean(stage.querySelector('.hu')));
@@ -634,6 +646,8 @@ document.addEventListener('click', e => {
 });
 
 window.addEventListener('resize', () => { if (app._tilt) app.applyRotation(); });
+
+window.addEventListener('pg-sound', () => app.render());
 
 document.addEventListener('focusin', e => {
   if (e.target.matches('.ptext')) setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }), 250);

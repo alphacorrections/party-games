@@ -10,8 +10,8 @@
 // ---------------------------------------------------------------------------
 
 import { sample, esc, sortedPlayers, playerList,
-         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js?v=16c4f57-11012044';
-import { loadPack } from '../content.js?v=16c4f57-11012044';
+         timerHTML, finalScoreboard, pendingPlayers, waitingHTML, revealMs, sampleUnseen, isPresent, roundMeta, highlight } from '../util.js?v=e41d2d7-11032002';
+import { loadPack } from '../content.js?v=e41d2d7-11032002';
 
 export const meta = {
   id: 'blindvote',

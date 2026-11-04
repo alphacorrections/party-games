@@ -12,7 +12,7 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, esc, playerList, timerHTML, finalScoreboard, isPresent,
-         sampleUnseen, highlight, loadJSON, contentURL } from '../util.js?v=16c4f57-11012044';
+         sampleUnseen, highlight, loadJSON, contentURL } from '../util.js?v=e41d2d7-11032002';
 
 export const meta = {
   id: 'context',

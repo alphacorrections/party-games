@@ -10,19 +10,19 @@
 // heartbeat and a phone that sees the heartbeat go stale can take over.
 // ---------------------------------------------------------------------------
 
-import { sortedPlayers, isPresent } from './util.js?v=16c4f57-11012044';
-import { commitGame } from './scores.js?v=16c4f57-11012044';
+import { sortedPlayers, isPresent } from './util.js?v=e41d2d7-11032002';
+import { commitGame } from './scores.js?v=e41d2d7-11032002';
 
 export const ENGINES = {
-  quiz:       () => import('./games/quiz.js?v=16c4f57-11012044'),
-  promptvote: () => import('./games/promptvote.js?v=16c4f57-11012044'),
-  charades:   () => import('./games/charades.js?v=16c4f57-11012044'),
-  board:      () => import('./games/board.js?v=16c4f57-11012044'),
-  liars:      () => import('./games/liars.js?v=16c4f57-11012044'),
-  blindvote:  () => import('./games/blindvote.js?v=16c4f57-11012044'),
-  bodycount:  () => import('./games/bodycount.js?v=16c4f57-11012044'),
-  context:    () => import('./games/context.js?v=16c4f57-11012044'),
-  doubledown: () => import('./games/doubledown.js?v=16c4f57-11012044')
+  quiz:       () => import('./games/quiz.js?v=e41d2d7-11032002'),
+  promptvote: () => import('./games/promptvote.js?v=e41d2d7-11032002'),
+  charades:   () => import('./games/charades.js?v=e41d2d7-11032002'),
+  board:      () => import('./games/board.js?v=e41d2d7-11032002'),
+  liars:      () => import('./games/liars.js?v=e41d2d7-11032002'),
+  blindvote:  () => import('./games/blindvote.js?v=e41d2d7-11032002'),
+  bodycount:  () => import('./games/bodycount.js?v=e41d2d7-11032002'),
+  context:    () => import('./games/context.js?v=e41d2d7-11032002'),
+  doubledown: () => import('./games/doubledown.js?v=e41d2d7-11032002')
 };
 
 /**

@@ -2,15 +2,15 @@
 // Host screen: the TV. Renders the room; the Director runs the game.
 // ---------------------------------------------------------------------------
 
-import { partyChipsHTML, isPresent } from './util.js?v=16c4f57-11012044';
-import { Room, localPlayerId } from './room.js?v=16c4f57-11012044';
-import { getTransport } from './transport.js?v=16c4f57-11012044';
-import { esc, playerList, countdown, finalScoreboard } from './util.js?v=16c4f57-11012044';
-import * as fx from './fx.js?v=16c4f57-11012044';
-import { swapIn, stagger, countUp, confetti, mountSoundToggle, sound } from './fx.js?v=16c4f57-11012044';
-import { installViewport } from './viewport.js?v=16c4f57-11012044';
-import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js?v=16c4f57-11012044';
-import { getLeaderboard, keyFor } from './scores.js?v=16c4f57-11012044';
+import { partyChipsHTML, isPresent, musicLevel } from './util.js?v=e41d2d7-11032002';
+import { Room, localPlayerId } from './room.js?v=e41d2d7-11032002';
+import { getTransport } from './transport.js?v=e41d2d7-11032002';
+import { esc, playerList, countdown, finalScoreboard } from './util.js?v=e41d2d7-11032002';
+import * as fx from './fx.js?v=e41d2d7-11032002';
+import { swapIn, stagger, countUp, confetti, mountSoundToggle, sound, music } from './fx.js?v=e41d2d7-11032002';
+import { installViewport } from './viewport.js?v=e41d2d7-11032002';
+import { Director, ENGINES, GAME_MENU, LENGTHS } from './director.js?v=e41d2d7-11032002';
+import { getLeaderboard, keyFor } from './scores.js?v=e41d2d7-11032002';
 
 const el = id => document.getElementById(id);
 
@@ -27,6 +27,11 @@ function introHTML(round, players) {
     <button class="nextbtn big" data-next="1">Start</button>
     <p class="phint">Starts when everyone taps I'm ready, or when you hit Start.</p>
   </div>`;
+}
+/** Shake the whole stage once (Body Count hits). */
+function shake() {
+  const n = document.querySelector('main.stage'); if (!n || fx.reducedMotion()) return;
+  n.classList.remove('bc-quake'); void n.offsetWidth; n.classList.add('bc-quake');
 }
 const setHTML = (id, html) => { const n = el(id); if (n) n.innerHTML = html; };
 const setText = (id, txt)  => { const n = el(id); if (n) n.textContent = txt; };
@@ -214,6 +219,7 @@ class HostApp {
     const stage = el('stage');
     if (!stage) return;
     document.body.classList.toggle('horror', this.gameId === 'bodycount' && this.phase !== 'lobby');
+    music.set(this.phase === 'lobby' ? null : musicLevel(this.gameId, this.round));
     this._patchWaiting(stage);
 
     if (this.gameId === 'board' && this.board && this.phase !== 'lobby' && this.mod) {
@@ -344,8 +350,15 @@ class HostApp {
     if (this.gameId === 'bodycount') {
       if (ph === 'question' || ph === 'escape') { stagger(stage, '.opt', 90); sound.tick(); }
       if (ph === 'reveal' || ph === 'escapeReveal') { const bad = (this.round.doomed || []).length || (this.round.caught || []).length; bad ? sound.wrong() : sound.correct(); }
-      if (ph === 'doom' || ph === 'escapeIntro') { sound.sting(); }
-      if (ph === 'trialEnd') { const deaths = Object.values(this.round.outcome || {}).filter(v => v === 'die').length; deaths ? sound.die() : sound.correct(); stagger(stage, '.bc-res', 260); }
+      if (ph === 'reveal' && (this.round.doomed || []).length) setTimeout(() => { fx.flash('blood'); shake(); }, 900);
+      if (ph === 'escapeReveal' && (this.round.caught || []).length) setTimeout(() => { fx.flash('blood'); shake(); }, 700);
+      if (ph === 'doom' || ph === 'escapeIntro') { sound.sting(); fx.flash('blood'); shake(); }
+      if (ph === 'trial') { stagger(stage, '.bc-v', 150); }
+      if (ph === 'trialEnd') {
+        const deaths = Object.values(this.round.outcome || {}).filter(v => v === 'die').length;
+        stagger(stage, '.bc-res', 260);
+        if (deaths) setTimeout(() => { sound.die(); fx.flash('blood'); shake(); }, 900); else sound.correct();
+      }
       if (ph === 'escaped') { sound.win(); setTimeout(() => confetti(), 300); }
     }
     if (ph === 'intro')      { sound.intro(); }
@@ -391,6 +404,7 @@ class HostApp {
   }
 
   async backToLobby() {
+    music.stop();
     // Flip the screen first so the lobby is usable immediately; the room
     // writes catch up behind it.
     this._finalShown = false;
@@ -409,6 +423,7 @@ class HostApp {
 }
 
 window.__pgBooted = true;
+window.addEventListener('pg-sound', () => app?.render?.());
 installViewport({ stageId: 'stage' });
 
 const app = new HostApp();

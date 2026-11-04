@@ -134,6 +134,143 @@ export const sound = {
               this._chord([262, 392, 523], { gain: 0.1, dur: 0.9, d: 0.25, sus: 0.4, r: 0.4 }); }
 };
 
+/* -------------------------------- music -------------------------------- */
+// Generative horror score for Body Count. No files: a drone, a music box that
+// plays stray notes, and a heartbeat whose speed follows the game.
+//   calm  — questions: drone + sparse music box
+//   tense — the Basement: heartbeat, darker filter, more notes
+//   chase — the Escape: fast heartbeat + bass pulse
+// Safe to call repeatedly; set() only changes what's different.
+
+const SCALE = [220, 233.1, 261.6, 277.2, 311.1, 329.6, 392, 415.3, 440, 466.2, 523.3];   // A phrygian-ish, with tritones
+const LEVELS = {
+  calm:  { drone: 0.050, lp: 260, beat: 0,   bass: 0,    box: 0.30, pad: 0.012 },
+  tense: { drone: 0.065, lp: 180, beat: 84,  bass: 0,    box: 0.45, pad: 0.020 },
+  chase: { drone: 0.060, lp: 420, beat: 128, bass: 0.09, box: 0.20, pad: 0.010 },
+  dead:  { drone: 0.030, lp: 140, beat: 0,   bass: 0,    box: 0.15, pad: 0.025 }
+};
+
+export const music = {
+  level: null, _nodes: null, _timer: null, _next: 0, _beatAt: 0, _bassAt: 0, _step: 0,
+
+  set(level) {
+    if (!enabled || !level) return this.stop();
+    const c = ac(); if (!c) return;
+    if (c.state === 'suspended') c.resume().catch(() => {});
+    if (!this._nodes) this._build(c);
+    if (level === this.level) return;
+    this.level = level;
+    const L = LEVELS[level] || LEVELS.calm, t = c.currentTime;
+    const n = this._nodes;
+    n.droneGain.gain.setTargetAtTime(L.drone, t, 1.2);
+    n.filter.frequency.setTargetAtTime(L.lp, t, 1.5);
+    n.padGain.gain.setTargetAtTime(L.pad, t, 2.0);
+    if (!this._timer) this._timer = setInterval(() => this._tick(), 90);
+  },
+
+  stop() {
+    this.level = null;
+    clearInterval(this._timer); this._timer = null;
+    const n = this._nodes; if (!n) return;
+    const c = ac(), t = c.currentTime;
+    n.master.gain.setTargetAtTime(0.0001, t, 0.4);
+    const old = n; this._nodes = null;
+    setTimeout(() => { try { old.oscs.forEach(o => o.stop()); old.master.disconnect(); } catch {} }, 2500);
+  },
+
+  _build(c) {
+    const master = c.createGain(); master.gain.value = 0.0001;
+    const comp = c.createDynamicsCompressor(); comp.threshold.value = -18;
+    master.connect(comp).connect(c.destination);
+    master.gain.setTargetAtTime(0.9, c.currentTime, 1.5);
+    // Echo bus for the music box: makes it sound like an empty house.
+    const delay = c.createDelay(1.5); delay.delayTime.value = 0.42;
+    const fb = c.createGain(); fb.gain.value = 0.42;
+    const wet = c.createGain(); wet.gain.value = 0.55;
+    const damp = c.createBiquadFilter(); damp.type = 'lowpass'; damp.frequency.value = 2200;
+    delay.connect(damp).connect(fb).connect(delay); damp.connect(wet).connect(master);
+    // Drone: detuned saws through a slowly breathing lowpass.
+    const filter = c.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 260; filter.Q.value = 6;
+    const droneGain = c.createGain(); droneGain.gain.value = 0.0001;
+    filter.connect(droneGain).connect(master);
+    const oscs = [];
+    for (const [f, type, det] of [[55, 'sawtooth', -6], [55, 'sawtooth', 7], [27.5, 'sine', 0], [82.4, 'triangle', 3]]) {
+      const o = c.createOscillator(); o.type = type; o.frequency.value = f; o.detune.value = det; o.connect(filter); o.start(); oscs.push(o);
+    }
+    const lfo = c.createOscillator(); lfo.frequency.value = 0.06;
+    const lfoAmt = c.createGain(); lfoAmt.gain.value = 90; lfo.connect(lfoAmt).connect(filter.frequency); lfo.start(); oscs.push(lfo);
+    // Pad: a high tritone that wavers in and out.
+    const padGain = c.createGain(); padGain.gain.value = 0.0001; padGain.connect(master);
+    for (const f of [622.3, 880]) {
+      const o = c.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const trem = c.createGain(); trem.gain.value = 0.5;
+      const tl = c.createOscillator(); tl.frequency.value = 0.13 + Math.random() * .1;
+      const ta = c.createGain(); ta.gain.value = 0.5; tl.connect(ta).connect(trem.gain);
+      o.connect(trem).connect(padGain); o.start(); tl.start(); oscs.push(o, tl);
+    }
+    this._nodes = { master, filter, droneGain, padGain, delay, oscs };
+    this._next = c.currentTime + 1.5; this._beatAt = c.currentTime + 0.5; this._bassAt = c.currentTime + 0.5;
+  },
+
+  _tick() {
+    const c = ac(), n = this._nodes; if (!c || !n || !enabled) return;
+    const L = LEVELS[this.level] || LEVELS.calm, now = c.currentTime, ahead = now + 0.25;
+    // Music box: occasional single notes, sometimes a falling pair.
+    if (this._next < ahead) {
+      if (Math.random() < L.box) {
+        const f = SCALE[Math.floor(Math.random() * SCALE.length)] * (Math.random() < .3 ? 2 : 1);
+        this._box(c, f, this._next);
+        if (Math.random() < .35) this._box(c, f * 0.749, this._next + 0.32);   // down a tritone-ish
+      }
+      this._next += 0.9 + Math.random() * 1.6;
+    }
+    // Heartbeat: lub-dub.
+    if (L.beat && this._beatAt < ahead) {
+      const gap = 60 / L.beat;
+      this._thump(c, this._beatAt, 0.32); this._thump(c, this._beatAt + gap * 0.28, 0.22);
+      this._beatAt += gap;
+    } else if (!L.beat) this._beatAt = now + 0.3;
+    // Chase bass: eighth notes, A then B-flat every other bar.
+    if (L.bass && this._bassAt < ahead) {
+      const gap = 60 / L.beat / 2;
+      const f = (Math.floor(this._step / 8) % 2) ? 58.27 : 55;
+      this._bass(c, f, this._bassAt, L.bass); this._step++; this._bassAt += gap;
+    } else if (!L.bass) this._bassAt = now + 0.3;
+  },
+
+  _box(c, f, t) {
+    const n = this._nodes; if (!n) return;
+    const o = c.createOscillator(); o.type = 'triangle'; o.frequency.value = f;
+    const o2 = c.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 4.01;
+    const g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.06, t + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+    const g2 = c.createGain(); g2.gain.value = 0.15;
+    o.connect(g); o2.connect(g2).connect(g); g.connect(n.master); g.connect(n.delay);
+    o.start(t); o2.start(t); o.stop(t + 1.7); o2.stop(t + 1.7);
+  },
+  _thump(c, t, vol) {
+    const n = this._nodes; if (!n) return;
+    const o = c.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(70, t); o.frequency.exponentialRampToValueAtTime(38, t + 0.16);
+    const g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+    o.connect(g).connect(n.master); o.start(t); o.stop(t + 0.25);
+  },
+  _bass(c, f, t, vol) {
+    const n = this._nodes; if (!n) return;
+    const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f;
+    const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(600, t); lp.frequency.exponentialRampToValueAtTime(120, t + 0.18);
+    const g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+    o.connect(lp).connect(g).connect(n.master); o.start(t); o.stop(t + 0.22);
+  }
+};
+
+if (typeof window !== 'undefined') window.__pgMusic = music;   // for debugging from the console
+
+// Browsers start audio suspended after a reload even when sound is on. The
+// first tap or remote press anywhere wakes it up.
+if (typeof window !== 'undefined') {
+  const wake = () => { if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {}); else if (enabled) { const c = ac(); c?.resume?.().catch(() => {}); } };
+  ['pointerdown', 'keydown', 'touchend'].forEach(ev => window.addEventListener(ev, wake, { passive: true }));
+}
+
 /* ------------------------------- haptics ------------------------------- */
 
 export const haptic = {
@@ -239,7 +376,12 @@ export function mountSoundToggle(container) {
     b.title = sound.enabled ? 'Sound on' : 'Sound off';
     b.setAttribute('aria-pressed', sound.enabled ? 'true' : 'false');
   };
-  b.addEventListener('click', () => { sound.enable(!sound.enabled); if (sound.enabled) sound.tap(); paint(); });
+  b.addEventListener('click', () => {
+    sound.enable(!sound.enabled);
+    if (sound.enabled) sound.tap(); else music.stop();
+    paint();
+    window.dispatchEvent(new Event('pg-sound'));     // pages re-apply music for the current screen
+  });
   paint();
   container.appendChild(b);
 }

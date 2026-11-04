@@ -9,8 +9,8 @@
 // if they rejoin from a different phone.
 // ---------------------------------------------------------------------------
 
-import { getTransport } from './transport.js?v=16c4f57-11012044';
-import { newId } from './room.js?v=16c4f57-11012044';
+import { getTransport } from './transport.js?v=e41d2d7-11032002';
+import { newId } from './room.js?v=e41d2d7-11032002';
 
 export function keyFor(name) {
   return String(name)

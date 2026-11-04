@@ -1961,3 +1961,71 @@ body.horror .oc-card { color: #1B1420; }
 .nextbtn.big { font-size: clamp(1.2rem, min(2.4vw, 4vh), 1.8rem); padding: .5em 2.2em; }
 .rules-p .rules-list { font-size: 1rem; padding-left: 1.8em; }
 .rules-p .intro-title { font-size: 2.2rem; }
+
+/* ======================= BODY COUNT: motion pass ======================== */
+.fx-flash.blood { background: radial-gradient(ellipse at center, rgba(224,27,44,.35), rgba(120,0,10,.9)); animation-duration: .8s; }
+.bc-quake { animation: bcQuake .55s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes bcQuake {
+  10%, 90% { transform: translate(-2px, 1px); } 20%, 80% { transform: translate(4px, -2px); }
+  30%, 50%, 70% { transform: translate(-7px, 3px) rotate(-.4deg); } 40%, 60% { transform: translate(7px, -3px) rotate(.4deg); }
+}
+/* the room breathes: a slow flickering light behind everything */
+body.horror::before {
+  content: ''; position: fixed; inset: -10%; pointer-events: none; z-index: -1;
+  background: radial-gradient(ellipse at 50% 30%, rgba(255,120,90,.10), transparent 55%);
+  animation: bcLamp 7s infinite;
+}
+@keyframes bcLamp { 0%,100% { opacity: .9; } 45% { opacity: .55; } 47% { opacity: .15; } 48% { opacity: .8; } 70% { opacity: .65; } }
+/* questions: drift in out of the dark */
+.bc .bc-q { animation: bcEmerge .9s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes bcEmerge { from { opacity: 0; filter: blur(8px); letter-spacing: .12em; } to { opacity: 1; filter: none; } }
+/* reveal: right answer glows, wrong picks shudder */
+.opt.bc-right { animation: bcRight 1.2s ease-out both .25s; }
+@keyframes bcRight { 0% { transform: scale(1); } 30% { transform: scale(1.04); box-shadow: 0 0 0 4px #9BC53D, 0 0 40px rgba(155,197,61,.55); } 100% { transform: scale(1); box-shadow: 0 0 0 2px #9BC53D, 0 0 18px rgba(155,197,61,.3); } }
+.opt.bc-wrong { animation: bcWrong .5s both .5s; border-color: var(--hot) !important; }
+@keyframes bcWrong { 0%,100% { transform: none; } 20% { transform: translateX(-8px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(3px); } }
+.opt .otext { flex: 1; }
+.bc-pickers { display: inline-flex; gap: .15rem; margin-left: auto; }
+.bc-pickers i { font-style: normal; font-size: 1.15em; animation: bcPop .4s cubic-bezier(.3,1.6,.5,1) both; }
+.bc-pickers i:nth-child(2) { animation-delay: .08s; } .bc-pickers i:nth-child(3) { animation-delay: .16s; } .bc-pickers i:nth-child(4) { animation-delay: .24s; }
+@keyframes bcPop { from { transform: scale(0); } to { transform: scale(1); } }
+.bc-doomline { animation: bcDripIn .7s cubic-bezier(.5,0,.3,1.4) both .8s; }
+@keyframes bcDripIn { from { transform: translateY(-30px); opacity: 0; } to { transform: none; opacity: 1; } }
+/* doom + trial titles slam in */
+.bc-doom .bc-trial-title, .bc-escape .bc-trial-title { animation: bcSlam .6s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes bcSlam { from { transform: scale(2.6); opacity: 0; filter: blur(6px); } 60% { opacity: 1; } to { transform: none; filter: none; } }
+.bc-doom .bc-line { animation: bcEmerge .8s both; }
+.bc-victims .bc-who, .bc-victims .bc-v { animation: bcHang .9s cubic-bezier(.3,1.5,.4,1) both .3s; }
+@keyframes bcHang { from { transform: translateY(-60px) rotate(-8deg); opacity: 0; } to { transform: none; opacity: 1; } }
+.bc-v.done i { animation: bcPop .3s both; }
+/* deaths: card cracks red, then a blood drip runs down it */
+.bc-res { position: relative; overflow: hidden; }
+.bc-res.died { animation: bcQuake .5s both .8s; }
+.bc-res.died::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(150,0,15,.55), rgba(150,0,15,0)); animation: bcDrip 1.6s ease-in both 1s; }
+@keyframes bcDrip { to { height: 100%; } }
+.bc-res.lived { animation: bcPop .5s cubic-bezier(.3,1.6,.5,1) both .6s; }
+/* the escape: killer lunges, door breathes, caught tokens drop */
+.bc-killer { animation: bcLunge 1.4s ease-in-out infinite; }
+@keyframes bcLunge { 0%,100% { transform: translateX(-50%) rotate(0); } 50% { transform: translateX(-38%) rotate(14deg); } }
+.bc-cell.exit { animation: bcDoor 2.4s ease-in-out infinite; }
+@keyframes bcDoor { 50% { box-shadow: 0 0 40px rgba(155,197,61,.7); } }
+.bc-fog { animation: bcFog 3s ease-in-out infinite; }
+@keyframes bcFog { 50% { opacity: .7; } }
+.bc-tag.dead { animation: bcFade .8s both; }
+@keyframes bcFade { from { opacity: 1; filter: none; } to { opacity: .55; filter: grayscale(1); } }
+/* answer box */
+.bc-answer { margin-top: .4rem; padding: .7rem .9rem; border-radius: 8px; background: rgba(155,197,61,.12); border: 2px solid #9BC53D; text-align: left; animation: bcEmerge .6s both .2s; }
+.bc-answer span { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #9BC53D; }
+.bc-answer b { font-size: 1.15rem; color: #F2F7DF; }
+.bc-answer p { margin: .35rem 0 0; font-size: .85rem; color: var(--chalk); }
+.bc-yourpick { margin: .2rem 0 0; } .bc-yourpick s { color: var(--hot); text-decoration-thickness: 2px; }
+/* phone hits */
+.bc-shake { animation: bcQuake .55s both; }
+.bc-slam { animation: bcSlam .5s cubic-bezier(.2,1.4,.4,1) both; }
+.bc-pop { animation: bcPop .45s cubic-bezier(.3,1.6,.5,1) both; }
+.bc-good { box-shadow: 0 0 0 2px #9BC53D, 0 0 30px rgba(155,197,61,.25); border-radius: 10px; padding: 1rem; }
+@media (prefers-reduced-motion: reduce) {
+  .bc-quake, .bc-shake, .bc-slam, .bc-pop, .opt.bc-right, .opt.bc-wrong, .bc-killer, .bc-cell.exit, .bc-fog, body.horror::before,
+  .bc .bc-q, .bc-res.died, .bc-res.died::after, .bc-res.lived, .bc-victims .bc-who, .bc-victims .bc-v, .bc-answer, .bc-doomline { animation: none !important; }
+}

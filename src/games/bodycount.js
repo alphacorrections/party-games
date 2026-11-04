@@ -15,8 +15,8 @@
 // ---------------------------------------------------------------------------
 
 import { shuffle, esc, playerList, sortedPlayers, timerHTML, finalScoreboard,
-         isPresent, sampleUnseen, highlight } from '../util.js?v=16c4f57-11012044';
-import { loadPack } from '../content.js?v=16c4f57-11012044';
+         isPresent, sampleUnseen, highlight } from '../util.js?v=e41d2d7-11032002';
+import { loadPack } from '../content.js?v=e41d2d7-11032002';
 
 export const meta = {
   id: 'bodycount',
@@ -28,12 +28,12 @@ export const meta = {
 
 /* ------------------------------- tuning -------------------------------- */
 const Q_MS        = 20000;
-const REVEAL_MS   = 5500;
+const REVEAL_MS   = 8000;     // long enough to read the answer and who picked what
 const DOOM_MS     = 6500;
 const TRIAL_END_MS= 7000;
 const ESC_INTRO_MS= 9000;
 const ESC_Q_MS    = 15000;
-const ESC_REV_MS  = 5000;
+const ESC_REV_MS  = 6500;
 const ALIVE_PTS   = 1000;
 const GHOST_PTS   = 300;
 const ESCAPE_LEN  = 7;          // steps from 0 to the exit
@@ -183,7 +183,9 @@ export class Host {
         if (right) { gained[p.id] = ALIVE_PTS; await this.room.addScore(p.id, ALIVE_PTS); }
         else if (isPresent(p)) doomed.push(p.id);
       }
-      await this.patch({ phase: 'reveal', gained, doomed, deadline: Date.now() + REVEAL_MS });
+      const picks = {};
+      for (const [pid, sub] of Object.entries(subs)) if (sub && sub.choice !== undefined && Number(sub.choice) >= 0) picks[pid] = Number(sub.choice);
+      await this.patch({ phase: 'reveal', gained, doomed, picks, deadline: Date.now() + REVEAL_MS });
       this.after(REVEAL_MS, this.afterReveal);
     } finally { this._busy = false; }
   }
@@ -322,7 +324,9 @@ export class Host {
       }
       const out = Object.keys(pos).filter(pid => pos[pid] >= ESCAPE_LEN);
       const escape = { ...r.escape, pos, killer, n: r.escape.n + 1 };
-      await this.patch({ phase: 'escapeReveal', escape, dead, moved, caught, fastest: fastest ? fastest.pid : null, deadline: Date.now() + ESC_REV_MS });
+      const picks = {};
+      for (const [pid, sub] of Object.entries(subs)) if (sub && sub.choice !== undefined && Number(sub.choice) >= 0) picks[pid] = Number(sub.choice);
+      await this.patch({ phase: 'escapeReveal', escape, dead, moved, caught, picks, fastest: fastest ? fastest.pid : null, deadline: Date.now() + ESC_REV_MS });
       if (out.length) {
         // Tie at the door: the one who answered fastest this question.
         const winner = out.sort((a, b) => ((subs[a] || {}).at || 0) - ((subs[b] || {}).at || 0))[0];
@@ -539,9 +543,17 @@ function trackHTML(players, r, big = true) {
   </div>`;
 }
 
-function optionsHTML(r, reveal) {
-  return (r.options || []).map((o, i) =>
-    `<div class="opt ${reveal ? (i === r.answer ? 'correct' : 'dim') : ''}"><span class="letter">${letters[i]}</span>${esc(o)}</div>`).join('');
+function optionsHTML(r, reveal, players) {
+  const picks = r.picks || {};
+  return (r.options || []).map((o, i) => {
+    const who = reveal && players ? Object.keys(picks).filter(pid => picks[pid] === i) : [];
+    const chips = who.length ? `<span class="bc-pickers">${who.map(pid => `<i title="${esc(nameOf(players, pid))}">${(r.dead || {})[pid] && r.phase !== 'reveal' ? '👻' : emojiOf(players, pid)}</i>`).join('')}</span>` : '';
+    const cls = reveal ? (i === r.answer ? 'correct bc-right' : (who.length ? 'dim bc-wrong' : 'dim')) : '';
+    return `<div class="opt ${cls}"><span class="letter">${letters[i]}</span><span class="otext">${esc(o)}</span>${chips}</div>`;
+  }).join('');
+}
+function answerHTML(r) {
+  return `<div class="bc-answer"><span>Answer</span><b>${esc((r.options || [])[r.answer] || '')}</b>${r.note ? `<p>${esc(r.note)}</p>` : ''}</div>`;
 }
 
 function waitingChips(players, r, done) {
@@ -564,7 +576,8 @@ export function hostView(r, players) {
     return `<div class="bc">${header}
       ${reveal ? '' : timerHTML(r.deadline, Q_MS)}
       <h1 class="question bc-q">${esc(r.q)}</h1>
-      <div class="opts">${optionsHTML(r, reveal)}</div>
+      <div class="opts">${optionsHTML(r, reveal, players)}</div>
+      ${reveal && r.note ? `<div class="note">${esc(r.note)}</div>` : ''}
       ${reveal ? (doomed.length
         ? `<div class="bc-doomline">To the Basement: ${doomed.map(id => who(players, id)).join(' ')}</div>`
         : '<div class="bc-safe">Nobody goes downstairs. This time.</div>')
@@ -640,7 +653,7 @@ export function hostView(r, players) {
       ${trackHTML(players, r)}
       ${reveal ? '' : timerHTML(r.deadline, ESC_Q_MS)}
       <h1 class="question bc-q small">${esc(r.q || '')}</h1>
-      <div class="opts">${optionsHTML(r, reveal)}</div>
+      <div class="opts">${optionsHTML(r, reveal, players)}</div>
       ${reveal && caught.length ? `<div class="bc-doomline">Caught: ${caught.map(id => who(players, id)).join(' ')}</div>` : ''}
       ${reveal && r.fastest ? `<div class="bc-safe">Fastest: ${who(players, r.fastest, dead[r.fastest])} moves two</div>` : ''}
       ${reveal ? '' : waitingChips(players, r, subsCache)}
@@ -669,6 +682,13 @@ function trialRules(trial, n) {
 
 /* ------------------------------ phone views ---------------------------- */
 
+function yourPickHTML(r, me) {
+  const p = (r.picks || {})[me.id];
+  if (p === undefined) return '<p class="phint bc-yourpick">You didn\'t answer.</p>';
+  if (p === r.answer) return '';
+  return `<p class="phint bc-yourpick">You said <s>${esc((r.options || [])[p] || '')}</s></p>`;
+}
+
 export function playerView(r, me, submitted, voted, players, extra = {}) {
   players = players || {};
   const mirror = extra.mirror;
@@ -688,9 +708,9 @@ export function playerView(r, me, submitted, voted, players, extra = {}) {
   if (r.phase === 'reveal') {
     const g = (r.gained || {})[me.id] || 0;
     const doomed = (r.doomed || []).includes(me.id);
-    const right = mirror ? `<p class="phint">Answer: <b>${esc((r.options || [])[r.answer] || '')}</b></p>` : '';
-    if (doomed) return wrap(`<h2 class="losec flicker">Wrong.</h2><p>You're going to the Basement.</p>${right}`, 'bc-doomed');
-    return wrap(`<h2 class="${g ? 'winc' : ''}">${g ? `+${g}` : dead ? 'Nope' : 'Safe'}</h2>${right}`);
+    const right = yourPickHTML(r, me) + answerHTML(r);
+    if (doomed) return wrap(`<h2 class="losec bc-slam">Wrong.</h2><p>You're going to the Basement.</p>${right}`, 'bc-doomed bc-shake');
+    return wrap(`<h2 class="${g ? 'winc bc-pop' : 'losec'}">${g ? `+${g}` : 'Wrong'}</h2>${right}`, g ? 'bc-good' : '');
   }
 
   if (r.phase === 'doom') {
@@ -717,8 +737,9 @@ export function playerView(r, me, submitted, voted, players, extra = {}) {
   if (r.phase === 'escapeReveal') {
     const pos = (r.escape.pos || {})[me.id] || 0;
     const caught = (r.caught || []).includes(me.id);
-    return wrap(`<h2 class="${caught ? 'losec' : ''}">${caught ? 'It got you.' : (r.moved || {})[me.id] ? `+${r.moved[me.id]}` : 'No move'}</h2>
-      <p>${pos >= r.escape.len ? 'You made it out.' : `${r.escape.len - pos} to the door.`}</p>${mirror ? trackHTML(players, r, false) : ''}`);
+    return wrap(`<h2 class="${caught ? 'losec bc-slam' : (r.moved || {})[me.id] ? 'winc bc-pop' : 'losec'}">${caught ? 'It got you.' : (r.moved || {})[me.id] ? `+${r.moved[me.id]}` : 'No move'}</h2>
+      <p>${pos >= r.escape.len ? 'You made it out.' : `${r.escape.len - pos} to the door.`}</p>
+      ${yourPickHTML(r, me)}${answerHTML(r)}${mirror ? trackHTML(players, r, false) : ''}`, caught ? 'bc-doomed bc-shake' : '');
   }
   if (r.phase === 'escaped') return wrap(`<h2>${r.winner === me.id ? 'You got out.' : `${esc(nameOf(players, r.winner))} got out.`}</h2>`);
   return wrap('<p>…</p>');

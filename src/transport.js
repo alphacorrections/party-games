@@ -20,7 +20,7 @@
 //   t.mode                           -> 'firebase' | 'local'
 // ---------------------------------------------------------------------------
 
-import { FIREBASE_CONFIG, FIREBASE_SDK, FIREBASE_READY } from './config.js?v=16c4f57-11012044';
+import { FIREBASE_CONFIG, FIREBASE_SDK, FIREBASE_READY } from './config.js?v=e41d2d7-11032002';
 
 /* ------------------------------ Firebase -------------------------------- */
 
